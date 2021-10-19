@@ -1,29 +1,22 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <div id="app">
-      <!-- ACCESS DATA -->
-      <div v-if="showFilms">{{ title }} - {{ mainActor }} - {{ publishYear }}</div>
-
-      <!-- CLICK EVENT -->
-      <!-- onclick function can be declared inside html or in vue js file -->
-      <button v-on:click="publishYear++">Increase Year</button>
-      <button v-on:click="publishYear--">Decrease Year</button>
-      <!-- @click is short term for v-on:click -->
-      <br>
-    </div>
+<!--    <img alt="Vue logo" src="../assets/logo.png">-->
+<!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
+    <video  autoplay muted loop>
+      <source src="../assets/video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+// import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    // HelloWorld
   },
   data() {
     return {
@@ -33,14 +26,31 @@ export default {
       publishYear: 2012
     }
   },
-  computed: {
-    a: 10,
-  }
 }
 </script>
 
 <style lang="scss">
-  button {
-    background: blue;
+  * {
+    margin: 0;
+  }
+  body {
+    //width: 100vw;
+    //min-height: 100vh;
+  }
+  .home {
+    position: relative;
+    min-height: 100vh;
+  }
+  video {
+    //position: absolute;
+    //width: 100%;
+    //left: 0;
+    //overflow-x: hidden;
+    //max-height: 100vh;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
   }
 </style>
