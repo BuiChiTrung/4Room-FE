@@ -1,11 +1,11 @@
 <template>
   <div id="navbar-wrapper">
-    <nav>
+    <nav :style="{ background: bgColor }">
       <i id="menu" class="fas fa-bars" @click="toggleSideBar"></i>
-      <div id="logo-title">
+      <a href="/" id="logo-title">
         <img id="logo" src="@/assets/images/icons/4room.svg" alt="logo">
-        <span id="title">4Room</span>
-      </div>
+        <div id="title">4Room</div>
+      </a>
       <div id="search-space">
         <div id="search-box">
           <i class="search-icon fas fa-search"></i>
@@ -20,22 +20,24 @@
 
 <script>
 export default {
-  name: "NavBar"
+  name: "NavBar",
+  props: ['bgColor']
 }
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/sass/style';
 #navbar-wrapper {
-  //height: 5rem;
-  //width: 136px !important;
+  width: 100%;
+  height: $navbar-height;
 }
 nav {
   position: fixed;
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0.5rem 0;
-  background: white;
+  padding: 0.5rem 0 1.5rem;
+  //background: red;
   i {
     font-size: 2.5rem;
   }
@@ -46,7 +48,7 @@ nav {
     display: flex;
     align-items: center;
     #title {
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-family: Roboto, sans-serif;
     }
   }
@@ -68,6 +70,7 @@ nav {
       .search-bar {
         border: none;
         border-radius: 5rem;
+        background: transparent;
         width: 55%;
       }
       .search-bar:focus {
@@ -85,7 +88,4 @@ nav {
     height: 4rem;
   }
 }
-
-
-
 </style>

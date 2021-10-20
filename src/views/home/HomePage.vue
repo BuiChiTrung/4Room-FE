@@ -1,8 +1,8 @@
 <template>
-  <NavBar></NavBar>
-  <SideBar></SideBar>
+  <NavBar bgColor="white"/>
+  <SideBar bgColor="white"/>
   <main>
-    <h1>Hello world</h1>
+    <div>Hello world</div>
   </main>
 </template>
 
@@ -16,10 +16,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/sass/style";
 main {
-  //transform: translate(7rem, 7rem);
-  overflow-x: hidden;
-  //min-height: 100vh;
-  //background: red;
+  padding-left: 2rem;
+  //background: green;
 }
 </style>

@@ -1,18 +1,17 @@
 <template>
-  >
   <video autoplay muted loop>
     <source src="@/assets/videos/video1.mp4" type="video/mp4">
   </video>
-<!--  <NavBar/>-->
-<!--  <SideBar/>-->
+  <NavBar/>
+  <SideBar/>
 </template>
 
 <script>
-// import NavBar from "@/components/layout/NavBar";
-// import SideBar from "@/components/layout/SideBar";
+import NavBar from "@/components/layout/NavBar";
+import SideBar from "@/components/layout/SideBar";
 export default {
   name: "RoomPage",
-  // components: {SideBar, NavBar}
+  components: {SideBar, NavBar}
 }
 </script>
 

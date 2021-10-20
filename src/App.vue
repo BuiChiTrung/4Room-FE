@@ -19,6 +19,7 @@ body {
   color: #2c3e50;
 
   display: flex;
+  flex-wrap: wrap;
 }
 
 #nav {
