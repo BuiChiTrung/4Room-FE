@@ -13,7 +13,16 @@
         </div>
       </div>
       <i id="notifications" class="fas fa-bell"></i>
-      <img id="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+      <div class="dropdown dropstart">
+        <a data-toggle="dropdown" href="#"  data-bs-toggle="dropdown"  aria-expanded="false">
+          <img id="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+        </a>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <li><router-link class="dropdown-item" to="#">Profile</router-link></li>
+          <li><router-link class="dropdown-item" to="/login">Logout</router-link></li>
+        </ul>
+      </div>
     </nav>
   </div>
 </template>
@@ -86,6 +95,13 @@ nav {
   }
   img {
     height: 4rem;
+  }
+  .dropdown-menu {
+    transform: translate(-2rem, 4rem) !important;
+    li {
+      width: 15rem;
+      font-size: 1.5rem;
+    }
   }
 }
 </style>
