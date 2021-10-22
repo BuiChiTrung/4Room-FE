@@ -12,16 +12,23 @@
     </div>
   </div>
 
-  <div class="row attach-file">
-<!--    <div class="col-10 d-flex mb-3">-->
-<!--      <div class="p-2 bd-highlight">-->
-<!--        <form name="uploadForm">-->
-<!--          <input id="uploadInput" type="file" name="myFiles" multiple>-->
-<!--          <div><input type="submit" value="Send file"></div>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--      <div class="ms-auto p-2 bd-highlight">Flex item</div>-->
-<!--    </div>-->
+  <div class="row attach-file justify-content-end">
+    <div class="col-10 d-flex mb-3">
+      <div class="" >
+        <input type="file" id="file" class="input-file" />
+        <label for="file" class="up-icon">
+          <img src="@/assets/images/file-upload.png" alt="file-upload" style="height: 2.8em">
+        </label>
+      </div>
+      <div style="padding-left: 1em; padding-top: 0.8em">
+        <span>networking.pdf</span>
+      </div>
+      <div class="ms-auto">
+        <figure>
+          <img src="@/assets/images/share.png" alt="file-upload" style="height: 2.8em">
+        </figure>
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -45,7 +52,6 @@ export default {
   border: 1px solid #D0D4D9;
   border-radius: 12px;
   padding-top: 2.5em;
-  padding-bottom: 2.5em;
 }
 
 .text-write-caption {
@@ -59,11 +65,26 @@ export default {
 }
 
 .attach-file {
-  margin-top: 1em;
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid #D0D4D9
 }
 
 .div-write-caption {
   display: inline;
+}
+
+.input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.up-icon {
+  margin-bottom: -3em;
 }
 
 #avatar {
@@ -93,6 +114,5 @@ $breakpoint-tablet: 500px;
     display: none;
   }
 }
-
 
 </style>
