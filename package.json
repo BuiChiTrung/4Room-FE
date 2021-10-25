@@ -9,6 +9,7 @@
     "fake-server": "json-server --watch ./fake-server/db.json"
   },
   "dependencies": {
+    "axios": "^0.23.0",
     "bootstrap": "^5.1.3",
     "core-js": "^3.6.5",
     "material-icons": "^1.10.0",

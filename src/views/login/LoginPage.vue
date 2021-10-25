@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import {login} from "@/infrastructure/apiServices";
 
 export default {
   name: "Login",
@@ -69,26 +70,36 @@ export default {
   //     location.assign('/')
   //   })
   // },
-  // methods: {
-  //   login(event) {
-  //     let self = this;
-  //     event.preventDefault()
-  //     let data = {
-  //       'email': this.email,
-  //       'password': this.password
-  //     }
-  //     api.login(data)
-  //         .then(response => {
-  //           console.log(self.email)
-  //           localStorage.setItem('access_token', response.data['jwt'])
-  //           location.assign('/')
-  //         })
-  //         .catch(err => alert('Incorrect email or Password'));
-  //   },
+  methods: {
+    async login(event) {
+      event.preventDefault()
+      let data = {
+        'email': this.email,
+        'password': this.password
+      }
+      let response = await login(data);
+      if (response.status === 200) {
+          localStorage.setItem('jwt', response.data['jwt']);
+          location.assign('/');
+      }
+      else {
+          location.assign('/login');
+          alert('Incorrect email or password');
+      }
+
+      // api.login(data)
+      //     .then(response => {
+      //       console.log(self.email)
+      //       localStorage.setItem('access_token', response.data['jwt'])
+      //       location.assign('/')
+      //     })
+      //     .catch(err => alert('Incorrect email or Password'));
+    },
     // headers: {'Content-Type': 'application/json'}
     // body: JSON.stringify({'email': this.email, 'password': this.password})
     // axios.post("http://masterdevbct.ghtk.vn/api/login")
-  // }
+    // }
+  }
 }
 </script>
 <style scoped>
