@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  //background: #FFF8F8;
+  background: #dfe3ee;
 }
 
 #app {
