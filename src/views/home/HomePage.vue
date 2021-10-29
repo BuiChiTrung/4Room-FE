@@ -6,8 +6,13 @@
     <div class="row justify-content-center">
       <div class="col-8 container newsfeed">
         <div class="row justify-content-center">
-          <div class="col-10 container">
+          <div class="col-10">
             <UpPost></UpPost>
+          </div>
+        </div>
+
+        <div class="row justify-content-center" style="margin-top: 2em">
+          <div class="col-10">
             <Posts></Posts>
           </div>
         </div>

@@ -8,8 +8,11 @@ html {
 }
 
 body {
-  background: #dfe3ee;
+  background: #f0f2f5;
+  /*dev*/
+  //background: #b5c3da;
 }
+
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

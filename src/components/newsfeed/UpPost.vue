@@ -1,19 +1,17 @@
 <template>
 <div class="up-post container">
   <div class="row row-with-caption">
-    <div class="col-2">
-      <a href="#">
-        <img id="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+    <div class="d-flex mb-3">
+      <a href="#" style="margin-right: 1em">
+        <img class="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
       </a>
-    </div>
-    <div class="col-10 div-write-caption">
       <textarea class="form-control text-write-caption" v-model="caption" name="caption" placeholder="what's on your mind?"></textarea>
     </div>
   </div>
 
   <div class="row attach-file justify-content-end">
     <div class="col-10 d-flex mb-3">
-      <div class="" >
+      <div>
         <input type="file" id="file" class="input-file" @change="handleFileUpload($event)"/>
         <label for="file" class="up-icon" style="cursor: pointer;">
           <img src="@/assets/images/file-upload.png" alt="file-upload" style="height: 2.8em">
@@ -55,6 +53,9 @@ export default {
     },
 
     submitPost() {
+      if (this.file === null) {
+        return
+      }
       let formData = new FormData()
       formData.append('caption', this.caption)
       formData.append('file', this.file)
@@ -99,17 +100,12 @@ export default {
 
 .row-with-caption {
   height: 7.7em;
-
 }
 
 .attach-file {
   margin-top: 3em;
   padding-top: 1em;
   border-top: 1px solid #D0D4D9
-}
-
-.div-write-caption {
-  display: inline;
 }
 
 .input-file {
@@ -125,7 +121,7 @@ export default {
   margin-bottom: -3em;
 }
 
-#avatar {
+.avatar {
   height: 5.5em;
 }
 
