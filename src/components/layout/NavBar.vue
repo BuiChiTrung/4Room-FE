@@ -19,8 +19,8 @@
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><router-link class="dropdown-item" to="#">Profile</router-link></li>
-          <li><router-link class="dropdown-item" to="/login">Logout</router-link></li>
+          <li><router-link class="dropdown-item" to="/profile">Profile</router-link></li>
+          <li><div class="dropdown-item" @click="logout">Logout</div></li>
         </ul>
       </div>
     </nav>
@@ -30,7 +30,13 @@
 <script>
 export default {
   name: "NavBar",
-  props: ['bgColor']
+  props: ['bgColor'],
+  methods: {
+    logout() {
+      localStorage.removeItem('jwt');
+      location.assign('/login');
+    }
+  }
 }
 </script>
 
