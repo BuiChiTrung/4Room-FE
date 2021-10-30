@@ -2,18 +2,18 @@ $navbar-height: 6rem;
 $sidebar-width: 7rem;
 $main_color: white;
 
-flex {
+@mixin flex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-flex1 {
+@mixin flex1 {
   display: flex;
   align-items: center;
 }
 
-flex2 {
+@mixin flex2 {
   display: flex;
   justify-content: center;
 }

@@ -55,6 +55,7 @@ export default {
   aside {
     position: fixed;
     //background: blue;
+    text-align: center;
     width: $sidebar-width;
     min-height: 100%;
     .room {
