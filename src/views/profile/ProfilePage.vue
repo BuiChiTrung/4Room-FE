@@ -110,14 +110,8 @@ body {
   background: blue;
 }
 
-@mixin test {
-  //min-height: 1001rem - $navbar-height;
-}
-
 main {
-  //background: skyblue;
   flex-grow: 1;
-  @include test;
 }
 
 #profile {
@@ -135,7 +129,6 @@ main {
   #profile-static {
     button {
       width: 100%;
-      //background: rgba(223, 249, 251,1.0);
       border: none;
       border-radius: 1rem;
     }
