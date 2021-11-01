@@ -33,10 +33,10 @@ export default {
   data() {
     return {
       registerForm: {
-        email: 'hajzz17@gmail.com',
-        name_in_forum: 'Straw',
-        password: 'Trung123',
-        password_confirmation: 'Trung123'
+        email: '',
+        name_in_forum: '',
+        password: '',
+        password_confirmation: ''
         // email: 'trungcspntl@gmail.com',
         // name_in_forum: 'Straw',
         // password: 'Trung123',

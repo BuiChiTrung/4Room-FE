@@ -43,10 +43,10 @@
           </div>
 
           <div class="text-center p-t-136">
-            <a class="txt2" href="#">
+            <router-link class="txt2" to="/register">
               Create your Account
               <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-            </a>
+            </router-link>
           </div>
         </form>
       </div>
