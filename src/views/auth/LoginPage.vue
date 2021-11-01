@@ -12,7 +12,7 @@
 					</span>
 
           <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-            <input class="input100" v-model="email" type="email" name="email" id="email" placeholder="Email" required>
+            <input class="input100" v-model="loginForm.email" type="email" name="email" id="email" placeholder="Email" required>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
 							<i class="fa fa-phone" aria-hidden="true"></i>
@@ -20,7 +20,7 @@
           </div>
 
           <div class="wrap-input100 validate-input" data-validate = "Password is required">
-            <input class="input100" v-model="password" type="password" name="password" id="password" placeholder="Password" required>
+            <input class="input100" v-model="loginForm.password" type="password" name="password" id="password" placeholder="Password" required>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -61,8 +61,10 @@ export default {
   name: "Login",
   data() {
     return {
-      email: null,
-      password: null
+      loginForm: {
+        email: '',
+        password: ''
+      }
     }
   },
   // beforeCreate() {
@@ -73,11 +75,7 @@ export default {
   methods: {
     async login(event) {
       event.preventDefault()
-      let data = {
-        'email': this.email,
-        'password': this.password
-      }
-      let response = await login(data);
+      let response = await login(this.loginForm);
       if (response.status === 200) {
           localStorage.setItem('jwt', response.data['jwt']);
           location.assign('/');
@@ -86,19 +84,7 @@ export default {
           location.assign('/login');
           alert('Incorrect email or password');
       }
-
-      // api.login(data)
-      //     .then(response => {
-      //       console.log(self.email)
-      //       localStorage.setItem('access_token', response.data['jwt'])
-      //       location.assign('/')
-      //     })
-      //     .catch(err => alert('Incorrect email or Password'));
     },
-    // headers: {'Content-Type': 'application/json'}
-    // body: JSON.stringify({'email': this.email, 'password': this.password})
-    // axios.post("http://masterdevbct.ghtk.vn/api/login")
-    // }
   }
 }
 </script>
