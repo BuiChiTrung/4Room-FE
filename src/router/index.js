@@ -4,6 +4,7 @@ import LoginPage from '../views/auth/LoginPage'
 import RoomPage from "@/views/room/RoomPage";
 import ProfilePage from "@/views/profile/ProfilePage";
 import RegisterPage from "@/views/auth/RegisterPage";
+import PomodoroClock from "@/views/room/PomodoroClock";
 
 const routes = [
   {
@@ -17,7 +18,7 @@ const routes = [
     component: HomePage
   },
   {
-    path: '/room',
+    path: '/room/:name',
     name: 'Room',
     component: RoomPage
   },
@@ -30,6 +31,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: RegisterPage
+  },
+  {
+    path: '/pomodoro',
+    name: 'Pomodoro',
+    component: PomodoroClock
   }
 ]
 

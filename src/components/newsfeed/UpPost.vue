@@ -1,31 +1,28 @@
 <template>
 <div class="up-post container">
   <div class="row row-with-caption">
-    <div class="col-2">
-      <a href="#">
-        <img id="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+    <div class="d-flex mb-3">
+      <a href="#" style="margin-right: 1em">
+        <img class="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
       </a>
-    </div>
-    <div class="col-10 div-write-caption">
-      <textarea class="form-control text-write-caption" name="caption" placeholder="what's on your mind?">
-      </textarea>
+      <textarea class="form-control text-write-caption" v-model="caption" name="caption" placeholder="what's on your mind?"></textarea>
     </div>
   </div>
 
   <div class="row attach-file justify-content-end">
     <div class="col-10 d-flex mb-3">
-      <div class="" >
-        <input type="file" id="file" class="input-file" />
-        <label for="file" class="up-icon">
+      <div>
+        <input type="file" id="file" class="input-file" @change="handleFileUpload($event)"/>
+        <label for="file" class="up-icon" style="cursor: pointer;">
           <img src="@/assets/images/file-upload.png" alt="file-upload" style="height: 2.8em">
         </label>
       </div>
       <div style="padding-left: 1em; padding-top: 0.8em">
-        <span>networking.pdf</span>
+        <span>{{ fileName }}</span>
       </div>
       <div class="ms-auto">
-        <figure>
-          <img src="@/assets/images/share.png" alt="file-upload" style="height: 2.8em">
+        <figure @click="submitPost()" style="cursor: pointer;">
+          <img src="@/assets/images/share.png" alt="file-upload" style="height: 2.8em" >
         </figure>
       </div>
     </div>
@@ -34,8 +31,49 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: "UpPost"
+  name: "UpPost",
+  data() {
+    return {
+      caption: '',
+      fileName: '',
+      file: null
+    }
+  },
+  methods: {
+    _reload() {
+      location.reload()
+    },
+
+    handleFileUpload(event) {
+      this.file = event.target.files[0]
+      this.fileName = this.file.name
+    },
+
+    submitPost() {
+      if (this.file === null) {
+        return
+      }
+      let formData = new FormData()
+      formData.append('caption', this.caption)
+      formData.append('file', this.file)
+      axios.post('http://localhost:3000/submit-post', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(() => {
+        console.log('Submit Post OK')
+        this._reload()
+      })
+      .catch((err) => {
+        console.log(err)
+        this._reload()
+      })
+    }
+  }
 }
 </script>
 
@@ -52,6 +90,7 @@ export default {
   border: 1px solid #D0D4D9;
   border-radius: 12px;
   padding-top: 2.5em;
+  background-color: white;
 }
 
 .text-write-caption {
@@ -61,17 +100,12 @@ export default {
 
 .row-with-caption {
   height: 7.7em;
-
 }
 
 .attach-file {
   margin-top: 3em;
   padding-top: 1em;
   border-top: 1px solid #D0D4D9
-}
-
-.div-write-caption {
-  display: inline;
 }
 
 .input-file {
@@ -87,7 +121,7 @@ export default {
   margin-bottom: -3em;
 }
 
-#avatar {
+.avatar {
   height: 5.5em;
 }
 

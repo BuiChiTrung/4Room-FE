@@ -1,13 +1,18 @@
 <template>
   <NavBar bgColor="white"/>
-  <SideBar bgColor="rgba(223, 249, 251,0.2)"/>
+  <SideBar bgColor="white"/>
 
   <main class="container w-100 vh-100 p-3">
     <div class="row justify-content-center">
       <div class="col-8 container newsfeed">
         <div class="row justify-content-center">
-          <div class="col-10 container">
+          <div class="col-10">
             <UpPost></UpPost>
+          </div>
+        </div>
+
+        <div class="row justify-content-center" style="margin-top: 2em">
+          <div class="col-10">
             <Posts></Posts>
           </div>
         </div>

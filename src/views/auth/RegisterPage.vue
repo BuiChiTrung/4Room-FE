@@ -1,6 +1,6 @@
 <template>
   <main>
-    <form @submit="registerAnAccount">
+    <form @submit="register">
       <h1>Register an account</h1>
       <div class="form-floating">
         <input class="form-control" type="email" id="email" name="email" placeholder="name@example.com" v-model="registerForm.email" required>
@@ -15,8 +15,8 @@
         <label for="password">Password</label>
       </div>
       <div class="form-floating">
-        <input class="form-control" type="password" id="passwordConfirmation" name="passwordConfirmation" placeholder="Password Confirmation" v-model="registerForm.password_confirmation" required>
-        <label for="passwordConfirmation">Password Confirmation</label>
+        <input class="form-control" type="password" id="password_confirmation" name="password_confirmation" placeholder="Password Confirmation" v-model="registerForm.password_confirmation" required>
+        <label for="password_confirmation">Password Confirmation</label>
       </div>
       <button class="login100-form-btn">
          Register
@@ -45,21 +45,16 @@ export default {
     }
   },
   methods: {
-    async registerAnAccount(e) {
-      e.preventDefault();
-      // register(this.registerForm)
-      //     .then(() => {
-      //       location.assign('/login');
-      //     })
-      //     .catch(() => alert('Invalid form'));
-      let response = await register(this.registerForm);
-      if (response.status === 200) {
-        location.assign('/login');
-        alert('Register successfully');
-      }
-      else {
-        alert('Invalid form');
-      }
+    register(event) {
+      event.preventDefault();
+      register(this.registerForm)
+          .then(() => {
+            // localStorage.setItem('jwt', response.data['jwt']);
+            location.assign('/login');
+          })
+          .catch(err => {
+            alert(err.response.data.message);
+          })
     }
   }
 }

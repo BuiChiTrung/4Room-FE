@@ -73,18 +73,18 @@ export default {
   //   })
   // },
   methods: {
-    async login(event) {
-      event.preventDefault()
-      let response = await login(this.loginForm);
-      if (response.status === 200) {
+    login(event) {
+      event.preventDefault();
+      login(this.loginForm)
+      .then(response => {
           localStorage.setItem('jwt', response.data['jwt']);
+          localStorage.setItem('user_info', JSON.stringify(response.data['user_info']));
           location.assign('/');
-      }
-      else {
-          location.assign('/login');
-          alert('Incorrect email or password');
-      }
-    },
+      })
+      .catch(err => {
+          alert(err.response.data.message);
+      })
+    }
   }
 }
 </script>
