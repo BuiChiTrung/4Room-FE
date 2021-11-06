@@ -72,9 +72,13 @@
       </form>
     </div>
 
-    <div id="posts">
-        This is a post
-    </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <Posts :typePosts="'Profile'" />
+          </div>
+        </div>
+      </div>
   </main>
 </template>
 
@@ -83,9 +87,11 @@ import NavBar from "@/components/layout/NavBar";
 import SideBar from "@/components/layout/SideBar";
 import {updateProfile} from "@/infrastructure/apiServices";
 
+import Posts from "@/components/newsfeed/Posts";
+
 export default {
   name: "ProfilePage",
-  components: {SideBar, NavBar},
+  components: {SideBar, NavBar, Posts},
   data() {
     console.log(localStorage.getItem('user_info'));
     return {
