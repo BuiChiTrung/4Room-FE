@@ -67,9 +67,12 @@
         </form>
       </div>
 
-      <div id="gege">
-        <h1>hello</h1>
-
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <Posts :typePosts="'Profile'" />
+          </div>
+        </div>
       </div>
   </main>
 </template>
@@ -77,9 +80,11 @@
 <script>
 import NavBar from "@/components/layout/NavBar";
 import SideBar from "@/components/layout/SideBar";
+import Posts from "@/components/newsfeed/Posts";
+
 export default {
   name: "ProfilePage",
-  components: {SideBar, NavBar},
+  components: {SideBar, NavBar, Posts},
   data() {
     return {
       showEditForm: true,

@@ -91,7 +91,7 @@ export default {
     return {
       liked: false,
       frontUpvote: this.$props.upvote,
-      hideComments: false, //TODO: "true" initially
+      hideComments: true, //TODO: "true" initially
       frontComments: this.$props.comments
     }
   },
