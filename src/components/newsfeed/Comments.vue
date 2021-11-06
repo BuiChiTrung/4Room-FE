@@ -15,7 +15,6 @@
           v-model.trim="reply"
           class="reply-text"
           placeholder="Leave a comment..."
-          maxlength="250"
           required
           @keyup.enter="submitComment"
       />
@@ -51,6 +50,7 @@ export default {
     submitComment() {
       if (this.reply !== '') {
         this.$emit('submit-comment', this.reply)
+        this.reply = ''
       }
     }
   }
