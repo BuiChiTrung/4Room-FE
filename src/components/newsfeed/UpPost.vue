@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { upPost } from "@/infrastructure/apiServices";
 
 export default {
   name: "UpPost",
@@ -56,20 +56,23 @@ export default {
       if (this.file === null) {
         return
       }
+
       let formData = new FormData()
       formData.append('caption', this.caption)
       formData.append('file', this.file)
-      axios.post('http://localhost:3000/submit-post', formData, {
+
+      upPost(formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
       .then(() => {
         console.log('Submit Post OK')
-        this._reload()
       })
       .catch((err) => {
         console.log(err)
+      })
+      .finally(() => {
         this._reload()
       })
     }
