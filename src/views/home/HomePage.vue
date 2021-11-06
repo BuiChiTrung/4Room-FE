@@ -13,7 +13,7 @@
 
         <div class="row justify-content-center" style="margin-top: 2em">
           <div class="col-10">
-            <Posts></Posts>
+            <Posts :typePosts="'HomePage'"></Posts>
           </div>
         </div>
       </div>

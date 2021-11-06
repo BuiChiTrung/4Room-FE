@@ -35,8 +35,8 @@
         <img src="@/assets/images/comment.png" alt="comment" style="height: 2em" >
       </figure>
 
-      <h5 class="ms-auto">{{frontUpvote}} like{{clientUpvote > 1 ? 's' : ''}}</h5>
-      <h5 style="margin-left: 0.5em">5 comments</h5>
+      <h5 class="ms-auto">{{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}</h5>
+      <h5 style="margin-left: 0.5em">{{frontComments.length}} comments</h5>
     </div>
     <hr>
   </div>
@@ -59,7 +59,7 @@ export default {
   },
   props: {
     postID: {
-      type: String,
+      type: Number,
       require: true
     },
     author: {
@@ -92,7 +92,6 @@ export default {
       liked: false,
       frontUpvote: this.$props.upvote,
       hideComments: false, //TODO: "true" initially
-      commentCount: this.$props.comments.length,
       frontComments: this.$props.comments
     }
   },
