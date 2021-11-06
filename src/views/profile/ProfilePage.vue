@@ -97,15 +97,6 @@ export default {
     return {
       showEditForm: true,
       userInfo: JSON.parse(localStorage.getItem('user_info'))
-      // userInfo: {
-      //   'email': 'trungcspntl@gmail.com',
-      //   'name_in_forum': 'Straw',
-      //   'bio': "Taylor Swift's bf",
-      //   'linkedin_link': 'https://www.linkedin.com/',
-      //   'instagram_link': 'https://www.instagram.com/',
-      //   'twitter_link': 'https://twitter.com/',
-      //   'facebook_link': 'https://www.facebook.com/'
-      // }
     }
   },
 

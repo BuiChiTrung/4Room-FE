@@ -7,8 +7,18 @@ function login(data) {
     return axios.post( baseApiUrl + '/login', data, noAuthApiConfig);
 }
 
-function upPost(data, config) {
-    return axios.post(`${baseApiUrl}/submit-post`, data, config)
+function upPost(data) {
+    console.log('haha')
+    return axios.post(`${baseApiUrl}/posts/create`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        }
+    })
+}
+
+function getAPost(postID) {
+    return axios.get(`${baseApiUrl}/posts/${postID}`, authApiConfig)
 }
 
 //TODO: add url
@@ -46,5 +56,6 @@ export {
     upVote,
     fetchPost,
     submitComment,
-    updateProfile
+    updateProfile,
+    getAPost
 }
