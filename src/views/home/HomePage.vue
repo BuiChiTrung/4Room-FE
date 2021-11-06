@@ -1,6 +1,6 @@
 <template>
   <NavBar bgColor="white"/>
-  <SideBar bgColor="rgba(223, 249, 251,0.2)"/>
+  <SideBar bgColor="white"/>
 
   <main class="container w-100 vh-100 p-3">
     <div class="row justify-content-center">

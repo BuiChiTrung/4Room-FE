@@ -3,7 +3,7 @@
     <nav :style="{ background: bgColor }">
       <i id="menu" class="fas fa-bars" @click="toggleSideBar"></i>
       <a href="/" id="logo-title">
-        <img id="logo" src="@/assets/images/icons/4room.svg" alt="logo">
+        <img id="logo" src="@/assets/images/icons/4room.png" alt="logo">
         <div id="title">4Room</div>
       </a>
       <div id="search-space">
@@ -28,13 +28,19 @@
 </template>
 
 <script>
+import {logout} from "@/infrastructure/apiServices";
+
 export default {
   name: "NavBar",
   props: ['bgColor'],
   methods: {
-    logout() {
-      localStorage.removeItem('jwt');
-      location.assign('/login');
+    async logout() {
+      let response = await logout();
+      console.log(response.data, response.status);
+      if (response.status === 200) {
+        localStorage.removeItem('jwt');
+        location.assign('/login');
+      }
     }
   }
 }
@@ -42,6 +48,9 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/assets/sass/style';
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Fruktur&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Fruktur&family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
 #navbar-wrapper {
   width: 100%;
   height: $navbar-height;
@@ -62,9 +71,17 @@ nav {
   #logo-title {
     display: flex;
     align-items: center;
+    #logo {
+      //background: white;
+      //border-radius: 30%;
+    }
     #title {
-      font-size: 2.5rem;
-      font-family: Roboto, sans-serif;
+      font-size: 2.3rem;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 800;
+      margin-left: 1rem;
+      color: #f5f3f3;
+      text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
     }
   }
   #avatar {

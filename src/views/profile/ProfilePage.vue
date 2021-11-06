@@ -1,11 +1,15 @@
 <template>
   <NavBar bgColor="white"/>
-  <SideBar bgColor="rgba(223, 249, 251,0.2)"/>
+  <SideBar bgColor="white"/>
 
   <main>
     <div id="profile">
       <img alt="avatar" src="@/assets/images/icons/avatar.png">
       <div v-if="showEditForm" id="profile-static">
+        <div>
+          <span>Following: 1000</span>
+          <span>Followed by: 50</span>
+        </div>
         <div>{{userInfo.name_in_forum}}</div>
         <div>{{userInfo.bio}}</div>
         <hr>
@@ -19,7 +23,7 @@
         </div>
       </div>
 
-      <form v-else id="edit-form">
+      <form v-else id="edit-form" @submit="updateProfile">
         <div>
           <label for="name_in_forum">Name</label>
           <input type="text" class="form-control" id="name_in_forum" v-model="userInfo.name_in_forum">
@@ -62,14 +66,14 @@
 
         <div id="buttons">
           <input type="submit" class="btn btn-info btn-save"  value="Save">
-          <button class="btn btn-outline-danger btn-cancel" @click="toggleEditForm">Cancel</button>
+          <button class="btn btn-danger btn-cancel" @click="toggleEditForm">Cancel</button>
         </div>
 
       </form>
     </div>
 
     <div id="posts">
-
+        This is a post
     </div>
   </main>
 </template>
@@ -77,27 +81,47 @@
 <script>
 import NavBar from "@/components/layout/NavBar";
 import SideBar from "@/components/layout/SideBar";
+import {updateProfile} from "@/infrastructure/apiServices";
+
 export default {
   name: "ProfilePage",
   components: {SideBar, NavBar},
   data() {
+    console.log(localStorage.getItem('user_info'));
     return {
       showEditForm: true,
-      userInfo: {
-        'email': 'trungcspntl@gmail.com',
-        'name_in_forum': 'Straw',
-        'bio': "Taylor Swift's bf",
-        'linkedin_link': 'https://www.linkedin.com/',
-        'instagram_link': 'https://www.instagram.com/',
-        'twitter_link': 'https://twitter.com/',
-        'facebook_link': 'https://www.facebook.com/'
-      }
+      userInfo: JSON.parse(localStorage.getItem('user_info'))
+      // userInfo: {
+      //   'email': 'trungcspntl@gmail.com',
+      //   'name_in_forum': 'Straw',
+      //   'bio': "Taylor Swift's bf",
+      //   'linkedin_link': 'https://www.linkedin.com/',
+      //   'instagram_link': 'https://www.instagram.com/',
+      //   'twitter_link': 'https://twitter.com/',
+      //   'facebook_link': 'https://www.facebook.com/'
+      // }
     }
+  },
+
+  created() {
+
   },
 
   methods: {
     toggleEditForm(){
       this.showEditForm = !this.showEditForm;
+    },
+    updateProfile(event) {
+      event.preventDefault();
+      updateProfile(this.userInfo)
+      .then(response => {
+        localStorage.setItem('user_info', JSON.stringify(response.data['user_info']));
+        this.userInfo = response.data['user_info'];
+        this.showEditForm = !this.showEditForm;
+      })
+      .catch(() => {
+        alert('Fail to update profile. Please try again.');
+      })
     }
   }
 }
@@ -106,31 +130,43 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/sass/style.scss';
 
-body {
-  background: blue;
-}
-
 main {
   flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
 }
+
+//@media (min-width: 1000px) {
+//  #profile {
+//    width: 50rem;
+//  }
+//}
 
 #profile {
   width: 50rem;
   font-size: 2rem;
-  padding: 8rem;
+  font-weight: bold;
+  padding: 5rem 0;
   min-height: 100vh;
-  //background: yellow;
-  background-image: linear-gradient(90deg, rgba(223, 249, 251, 0.8),rgba(248, 255, 255,0.8)), url('../../assets/images/background-1.jpg');
+  background-image: linear-gradient(45deg, rgba(45, 52, 54, 0.7),rgba(248, 255, 255,0.8)), url('../../assets/images/profile_background.jpg');
   background-size: cover;
   img {
-    width: 80%;
+    width: 30rem;
     display: block; margin: auto;
   }
+  i {
+    color: $main_color;
+  }
   #profile-static {
+    color: $main_color;
+    width: 30rem;
+    margin: 0 auto;
     button {
       width: 100%;
       border: none;
       border-radius: 1rem;
+      background: rgba(45, 52, 54,1.0);
+      color: $main_color;
     }
     #contact {
       display: flex;
@@ -138,20 +174,31 @@ main {
       justify-content: space-between;
       margin-top: 2rem;
     }
-    div:first-child {
+    div:nth-child(1) {
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      color: #2a2929;
+    }
+    div:nth-child(2){
       font-size: 4rem;
       font-weight: bold;
     }
-    div:nth-child(2) {
-
-    }
   }
   #edit-form {
+    color: $main_color;
+    width: 30rem;
+    margin: 0 auto;
     div {
       display: block;
     }
     input, textarea, button {
       font-size: 1.3rem;
+    }
+    .btn-save {
+      background: $main_color1;
+      border: $main_color1;
+      color: $main_color;
     }
     .btn-cancel {
       margin-left: 1rem;
@@ -165,4 +212,10 @@ main {
     }
   }
 }
+@media (max-width: 800px) {
+  #profile {
+    width: 100%;
+  }
+}
+
 </style>
