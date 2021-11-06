@@ -6,6 +6,10 @@
     <div id="profile">
       <img alt="avatar" src="@/assets/images/icons/avatar.png">
       <div v-if="showEditForm" id="profile-static">
+        <div>
+          <span>Following: 1000</span>
+          <span>Followed by: 50</span>
+        </div>
         <div>{{userInfo.name_in_forum}}</div>
         <div>{{userInfo.bio}}</div>
         <hr>
@@ -69,7 +73,7 @@
     </div>
 
     <div id="posts">
-
+        This is a post
     </div>
   </main>
 </template>
@@ -128,18 +132,26 @@ export default {
 
 main {
   flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
 }
+
+//@media (min-width: 1000px) {
+//  #profile {
+//    width: 50rem;
+//  }
+//}
 
 #profile {
   width: 50rem;
   font-size: 2rem;
   font-weight: bold;
-  padding: 8rem;
+  padding: 5rem 0;
   min-height: 100vh;
   background-image: linear-gradient(45deg, rgba(45, 52, 54, 0.7),rgba(248, 255, 255,0.8)), url('../../assets/images/profile_background.jpg');
   background-size: cover;
   img {
-    width: 80%;
+    width: 30rem;
     display: block; margin: auto;
   }
   i {
@@ -147,6 +159,8 @@ main {
   }
   #profile-static {
     color: $main_color;
+    width: 30rem;
+    margin: 0 auto;
     button {
       width: 100%;
       border: none;
@@ -160,13 +174,21 @@ main {
       justify-content: space-between;
       margin-top: 2rem;
     }
-    div:first-child {
+    div:nth-child(1) {
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      color: #2a2929;
+    }
+    div:nth-child(2){
       font-size: 4rem;
       font-weight: bold;
     }
   }
   #edit-form {
     color: $main_color;
+    width: 30rem;
+    margin: 0 auto;
     div {
       display: block;
     }
@@ -190,4 +212,10 @@ main {
     }
   }
 }
+@media (max-width: 800px) {
+  #profile {
+    width: 100%;
+  }
+}
+
 </style>
