@@ -1,11 +1,14 @@
 <template>
 <div class="posts">
-  <SinglePost :caption="'Hello'" :author="'Alice'" :filename="'web.pdf'" :link="'#'" :upvote="10"></SinglePost>
-  <SinglePost :caption="'Hi'" :author="'Bob'" :filename="'networking.pdf'" :link="'#'" :upvote="10"/>
-  <SinglePost :caption="'Hello hi blah blah Hello hi blah blah Hello hi blah blah Hello hi blah blah Hello hi blah blah Hello hi blah blah'" :author="'Alice'" :filename="'software.pdf'" :link="'#'" :upvote="10"/>
-<!--  <div v-for="(item, index) in postLists" :key="index">-->
-<!--    <SinglePost />-->
-<!--  </div>-->
+    <SinglePost
+        v-for="(item, index) in postLists" :key="index"
+        :postID="item.post_id"
+        :author="item.owner_id"
+        :content="item.content"
+        :filename="item.filename"
+        :upvote="item.upvote"
+        :comments="item.comments"
+    />
 <!--  <infinite-loading spinner="spiral"></infinite-loading>-->
 </div>
 </template>
@@ -21,10 +24,63 @@ export default {
     SinglePost
   },
   data() {
-    // return {
-    //   postLists: [],
-    //   firstPostId: 1
-    // }
+    return {
+      // TODO: use InfiniteLoading instead of mock-data
+      postLists: [
+        {
+          "post_id": 1,
+          "owner_id": "vuquangle",
+          "content": "hope this can help",
+          "filename": "networking.pdf",
+          "upvote": 0,
+          "comments": [
+            {
+              "user_id": "Bob",
+              "content": "oke!"
+            },
+            {
+              "user_id": "Alice",
+              "content": "it's suck!"
+            }
+          ]
+        },
+        {
+          "post_id": 2,
+          "owner_id": "vuquangle",
+          "content": "hope this can help",
+          "filename": "web.pdf",
+          "upvote": 2,
+          "comments": [
+            {
+              "user_id": "Bob",
+              "content": "oke!"
+            },
+            {
+              "user_id": "Alice",
+              "content": "it's suck!"
+            }
+          ]
+        },
+        {
+          "post_id": 3,
+          "owner_id": "vuquangle",
+          "content": "hope this can help",
+          "filename": "x.pdf",
+          "upvote": 10,
+          "comments": [
+            {
+              "user_id": "Bob",
+              "content": "oke!"
+            },
+            {
+              "user_id": "Alice",
+              "content": "it's suck!"
+            }
+          ]
+        }
+      ],
+      // firstPostId: 1
+    }
   }
 }
 </script>
