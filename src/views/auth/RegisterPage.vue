@@ -88,7 +88,7 @@ main {
   height: 100vh;
   background-image: linear-gradient(65deg, rgba(255, 204, 204,0.2), rgba(223, 249, 251,0.2)), url("../../assets/images/login_background.jpg");
   background-size: cover;
-  @include flex;
+  @include flex-center-center;
 }
 
 form {

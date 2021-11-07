@@ -1,5 +1,5 @@
 <template>
-  <router-view/>
+  <router-view :key='$route.fullPath' />
 </template>
 
 <style lang="scss">
@@ -9,8 +9,6 @@ html {
 
 body {
   background: #f0f2f5;
-  /*dev*/
-  //background: #b5c3da;
 }
 
 #app {
@@ -34,5 +32,9 @@ body {
       color: #42b983;
     }
   }
+}
+
+hr {
+  opacity: 1;
 }
 </style>

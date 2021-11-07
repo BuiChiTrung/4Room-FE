@@ -1,42 +1,42 @@
 <template>
   <div id="sidebar-wrapper">
     <aside :style="{background: bgColor}">
-      <a class="room" href="/room/piano">
+      <router-link class="room" to="/room/piano">
         <img class="room-img" src="@/assets/images/rooms/piano.jpeg" alt="room-img">
         <div class="room-name">Piano</div>
-      </a>
-      <a class="room" href="/room/lofi">
+      </router-link>
+      <router-link class="room" to="/room/lofi">
         <img class="room-img" src="@/assets/images/rooms/lofi.jpg" alt="room-img">
         <div class="room-name">Lofi</div>
-      </a>
-      <a class="room" href="/room/library">
+      </router-link>
+      <router-link class="room" to="/room/library">
         <img class="room-img" src="@/assets/images/rooms/library.jpg" alt="room-img">
         <div class="room-name">Library</div>
-      </a>
-      <a class="room" href="/room/study-with-me">
+      </router-link>
+      <router-link class="room" to="/room/study-with-me">
         <img class="room-img" src="@/assets/images/rooms/live_study.jpeg" alt="room-img">
         <div class="room-name">Live Study</div>
-      </a>
-      <a class="room" href="/room/rain">
+      </router-link>
+      <router-link class="room" to="/room/rain">
         <img class="room-img" src="@/assets/images/rooms/rain.jpeg" alt="room-img">
         <div class="room-name">Rain</div>
-      </a>
-      <a class="room" href="/room/beach">
+      </router-link>
+      <router-link class="room" to="/room/beach">
         <img class="room-img" src="@/assets/images/rooms/beach.jpeg" alt="room-img">
         <div class="room-name">Beach</div>
-      </a>
-      <a class="room" href="/room/natural">
+      </router-link>
+      <router-link class="room" to="/room/natural">
         <img class="room-img" src="@/assets/images/rooms/natural.jpg" alt="room-img">
         <div class="room-name">Natural</div>
-      </a>
-      <a class="room" href="/room/city">
+      </router-link>
+      <router-link class="room" to="/room/city">
         <img class="room-img" src="@/assets/images/rooms/city.jpg" alt="room-img">
         <div class="room-name">City</div>
-      </a>
-      <a class="room" href="/room/fantasy">
+      </router-link>
+      <router-link class="room" to="/room/fantasy">
         <img class="room-img" src="@/assets/images/rooms/fantasy.jpg" alt="room-img">
         <div class="room-name">Fantasy</div>
-      </a>
+      </router-link>
     </aside>
   </div>
 </template>
