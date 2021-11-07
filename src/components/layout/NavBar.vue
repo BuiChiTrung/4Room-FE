@@ -6,12 +6,16 @@
         <img id="logo" src="@/assets/images/icons/4room.png" alt="logo">
         <div id="title">4Room</div>
       </a>
+
       <div id="search-space">
         <div id="search-box">
           <i class="search-icon fas fa-search"></i>
-          <input class="search-bar" placeholder="Search" type="text">
+          <input class="search-bar" placeholder="Search" type="text" v-model="nameInForum">
+          <UserList :usersInfo="usersInfo" style="position: absolute;top: 2.5rem"/>
         </div>
+
       </div>
+
       <i id="notifications" class="fas fa-bell"></i>
       <div class="dropdown dropstart">
         <a data-toggle="dropdown" href="#"  data-bs-toggle="dropdown"  aria-expanded="false">
@@ -29,10 +33,21 @@
 
 <script>
 import {logout} from "@/infrastructure/apiServices";
+import {searchUserByName} from "../../infrastructure/apiServices";
+import UserList from "../element/UserList";
 
 export default {
   name: "NavBar",
+  components: {UserList},
   props: ['bgColor'],
+
+  data() {
+    return {
+      nameInForum: null,
+      usersInfo: []
+    }
+  },
+
   methods: {
     async logout() {
       let response = await logout();
@@ -41,6 +56,19 @@ export default {
         localStorage.removeItem('jwt');
         location.assign('/login');
       }
+    },
+  },
+
+  watch: {
+    nameInForum() {
+      let self = this;
+      searchUserByName({'name_in_forum': this.nameInForum})
+          .then(response => {
+            console.log(response);
+            self.usersInfo = response.data['users_info'];
+            console.log(self.usersInfo[0])
+          })
+          .catch(err => console.log(err))
     }
   }
 }
@@ -49,7 +77,6 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/sass/style';
 @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Fruktur&display=swap');
-//@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Fruktur&family=Roboto:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
 #navbar-wrapper {
   width: 100%;
@@ -61,20 +88,16 @@ nav {
   align-items: center;
   width: 100%;
   padding: 0.5rem 0 1.5rem;
-  //background: red;
   i {
     font-size: 2.5rem;
   }
   #menu {
     margin: 0 2.25rem;
   }
+
   #logo-title {
     display: flex;
     align-items: center;
-    #logo {
-      //background: white;
-      //border-radius: 30%;
-    }
     #title {
       font-size: 2.3rem;
       font-family: 'Roboto', sans-serif;
@@ -84,13 +107,16 @@ nav {
       text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
     }
   }
+
   #avatar {
     margin: 0 2rem;
   }
+
   #search-space {
     width: 60%;
     margin: auto;
     #search-box {
+      position: relative;
       margin: auto;
       width: 40%;
       border-radius: 5rem;
@@ -113,6 +139,11 @@ nav {
       }
     }
   }
+
+  #result-space {
+    //position: absolute;
+  }
+
   #notifications {
     width: 5rem;
   }

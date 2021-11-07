@@ -28,6 +28,11 @@ const routes = [
     component: ProfilePage
   },
   {
+    path: '/profile/:id',
+    name: 'User Profile',
+    component: ProfilePage
+  },
+  {
     path: '/register',
     name: 'Register',
     component: RegisterPage

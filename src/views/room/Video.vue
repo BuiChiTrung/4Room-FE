@@ -19,7 +19,6 @@ export default {
     let video = document.querySelector('video');
     video.onloadedmetadata = function() {
       this.currentTime = Math.floor(Date.now() / 1000) % Math.floor(this.duration);
-      console.log(this.currentTime, Math.floor(this.duration));
     };
   },
   methods: {

@@ -3,18 +3,18 @@ $sidebar-width: 7rem;
 $main_color: white;
 $main_color1: rgba(45, 52, 54,1.0);
 
-@mixin flex {
+@mixin flex-center-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-@mixin flex1 {
+@mixin flex-center {
   display: flex;
   align-items: center;
 }
 
-@mixin flex2 {
+@mixin flex-center-1 {
   display: flex;
   justify-content: center;
 }

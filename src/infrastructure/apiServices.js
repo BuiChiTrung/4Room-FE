@@ -4,7 +4,27 @@ import axios from 'axios';
 import { baseApiUrl } from '@/env'
 
 function login(data) {
-    return axios.post( baseApiUrl + '/login', data, noAuthApiConfig);
+    return axios.post(`${baseApiUrl}/login`, data, noAuthApiConfig);
+}
+
+function register(data) {
+    return axios.post(`${baseApiUrl}/register`, data, noAuthApiConfig);
+}
+
+function logout() {
+    return axios.get(`${baseApiUrl}/logout`, noAuthApiConfig);
+}
+
+function updateProfile(data) {
+    return axios.post(`${baseApiUrl}/profile`, data, authApiConfig);
+}
+
+function searchUserByName(data) {
+    return axios.post(`${baseApiUrl}/users/search`, data, authApiConfig);
+}
+
+function getUserInfo(id) {
+    return axios.get(`${baseApiUrl}/users/${id}`, noAuthApiConfig);
 }
 
 function upPost(data, config) {
@@ -26,18 +46,6 @@ function submitComment(data, config) {
     return axios.post(`${baseApiUrl}`, data, config)
 }
 
-function register(data) {
-    return axios.post(baseApiUrl + '/register', data, noAuthApiConfig);
-}
-
-function logout() {
-    return axios.get(baseApiUrl + '/logout', noAuthApiConfig);
-}
-
-function updateProfile(data) {
-    return axios.post(baseApiUrl + '/profile', data, authApiConfig);
-}
-
 export {
     login,
     logout,
@@ -46,5 +54,7 @@ export {
     upVote,
     fetchPost,
     submitComment,
-    updateProfile
+    updateProfile,
+    searchUserByName,
+    getUserInfo
 }
