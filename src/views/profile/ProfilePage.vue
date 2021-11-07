@@ -72,11 +72,9 @@
       </form>
     </div>
 
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-6">
+      <div id="current-posts">
+        <div class="justify-content-center">
             <Posts :typePosts="'Profile'" />
-          </div>
         </div>
       </div>
   </main>
@@ -142,14 +140,8 @@ main {
   flex-wrap: wrap;
 }
 
-//@media (min-width: 1000px) {
-//  #profile {
-//    width: 50rem;
-//  }
-//}
-
 #profile {
-  width: 50rem;
+  width: 60rem;
   font-size: 2rem;
   font-weight: bold;
   padding: 5rem 0;
@@ -218,9 +210,23 @@ main {
     }
   }
 }
+
+@media (max-width: 1200px) {
+  #profile {
+    width: 40rem;
+  }
+}
+
 @media (max-width: 800px) {
   #profile {
     width: 100%;
+  }
+}
+
+#current-posts {
+  flex-grow: 1;
+  div {
+    padding: 0 2rem;
   }
 }
 
