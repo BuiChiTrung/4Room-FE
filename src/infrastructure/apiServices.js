@@ -11,7 +11,7 @@ function upPost(data) {
     return axios.post(`${baseApiUrl}/posts/create`, data, {
         headers: {
             'Content-Type': 'multipart/form-data',
-            'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
         }
     })
 }
@@ -21,8 +21,11 @@ function getAPost(postID) {
 }
 
 //TODO: add url
-function upVote(data, config) {
-    return axios.post(`${baseApiUrl}`, data, config)
+function upVote(addUpvote, postID) {
+    return (
+        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
+        : axios.delete(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
+    )
 }
 
 //TODO: add url

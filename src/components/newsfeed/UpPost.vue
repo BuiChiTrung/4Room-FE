@@ -62,7 +62,7 @@ export default {
       formData.append('file', this.file)
 
       upPost(formData)
-      .then(response => console.log(response))
+      .then(response => console.log(response.data['success']))
       .catch((err) => {
         console.log(err)
       })

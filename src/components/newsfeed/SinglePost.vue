@@ -89,7 +89,7 @@ export default {
   },
   data() {
     return {
-      liked: false,
+      liked: false, //TODO: get from api
       frontUpvote: this.$props.upvote,
       hideComments: true, //TODO: "true" initially
       frontComments: this.$props.comments
@@ -102,20 +102,17 @@ export default {
   },
   methods: {
     votePost() {
-      if (this.$data.liked === true) {
-        this.$data.frontUpvote --
-      } else {
+      const addUpvote = this.$data.liked === false
+      if (addUpvote) {
         this.$data.frontUpvote ++
+      } else {
+        this.$data.frontUpvote --
       }
       this.$data.liked = !this.$data.liked;
 
       //TODO: need to know body request
-      upVote({
-        //data
-      }, {
-        //config
-      })
-      .then(() => console.log('Upvoted'))
+      upVote(addUpvote, this.$props.postID)
+      .then(response => console.log(response.data['success']))
       .catch(err => console.log(err))
     },
 
