@@ -12,7 +12,15 @@ function register(data) {
 }
 
 function logout() {
-    return axios.get(`${baseApiUrl}/logout`, noAuthApiConfig);
+    return axios.get(`${baseApiUrl}/logout`, authApiConfig);
+}
+
+function jwtValidate() {
+    return axios.get(`${baseApiUrl}/jwt-validate`, authApiConfig);
+}
+
+function getProfile() {
+    return axios.get(`${baseApiUrl}/profile`, authApiConfig);
 }
 
 function updateProfile(data) {
@@ -24,7 +32,7 @@ function searchUserByName(data) {
 }
 
 function getUserInfo(id) {
-    return axios.get(`${baseApiUrl}/users/${id}`, noAuthApiConfig);
+    return axios.get(`${baseApiUrl}/users/${id}`, authApiConfig);
 }
 
 function upPost(data, config) {
@@ -46,6 +54,18 @@ function submitComment(data, config) {
     return axios.post(`${baseApiUrl}`, data, config)
 }
 
+function follow(userId) {
+    return axios.post(`${baseApiUrl}/follow-user/${userId}`, {}, authApiConfig);
+}
+
+function unFollow(userId) {
+    return axios.delete(`${baseApiUrl}/follow-user/${userId}`, authApiConfig);
+}
+
+function suggestFollow() {
+    return axios.get(`${baseApiUrl}/follow/suggestion`, authApiConfig);
+}
+
 export {
     login,
     logout,
@@ -56,5 +76,10 @@ export {
     submitComment,
     updateProfile,
     searchUserByName,
-    getUserInfo
+    getUserInfo,
+    follow,
+    unFollow,
+    getProfile,
+    suggestFollow,
+    jwtValidate
 }

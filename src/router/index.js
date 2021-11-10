@@ -5,12 +5,20 @@ import RoomPage from "@/views/room/RoomPage";
 import ProfilePage from "@/views/profile/ProfilePage";
 import RegisterPage from "@/views/auth/RegisterPage";
 import PomodoroClock from "@/views/room/PomodoroClock";
+import {jwtValidate} from "../infrastructure/apiServices";
 
 const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: LoginPage
+    component: LoginPage,
+    meta: {unProtectedRoute: true}
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterPage,
+    meta: {unProtectedRoute: true}
   },
   {
     path: '/',
@@ -33,11 +41,6 @@ const routes = [
     component: ProfilePage
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: RegisterPage
-  },
-  {
     path: '/pomodoro',
     name: 'Pomodoro',
     component: PomodoroClock
@@ -47,6 +50,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.meta['unProtectedRoute']) {
+        next();
+    } else {
+        jwtValidate()
+            .then(() => next())
+            .catch(() => next('/login'))
+    }
 })
 
 export default router

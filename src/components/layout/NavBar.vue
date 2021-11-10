@@ -10,7 +10,7 @@
       <div id="search-space">
         <div id="search-box">
           <i class="search-icon fas fa-search"></i>
-          <input class="search-bar" placeholder="Search" type="text" v-model="nameInForum">
+          <input class="search-bar" placeholder="Search" type="text"  v-model="nameInForum">
           <UserList :usersInfo="usersInfo" style="position: absolute;top: 2.5rem"/>
         </div>
 
@@ -62,13 +62,16 @@ export default {
   watch: {
     nameInForum() {
       let self = this;
-      searchUserByName({'name_in_forum': this.nameInForum})
-          .then(response => {
-            console.log(response);
-            self.usersInfo = response.data['users_info'];
-            console.log(self.usersInfo[0])
-          })
-          .catch(err => console.log(err))
+      if (this.nameInForum !== '')
+        searchUserByName({'name_in_forum': this.nameInForum})
+            .then(response => {
+              console.log(response);
+              self.usersInfo = response.data['data'];
+              console.log(self.usersInfo[0])
+            })
+            .catch(err => console.log(err))
+      else
+        this.usersInfo = [];
     }
   }
 }

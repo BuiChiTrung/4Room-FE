@@ -51,9 +51,6 @@ video {
   }
 }
 
-
-
-
 i {
   color: white;
   font-size: 3rem;

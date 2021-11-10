@@ -10,7 +10,7 @@
 <script>
 export default {
   name: "UserList",
-  props: ['usersInfo']
+  props: ['usersInfo'],
 }
 </script>
 
@@ -23,9 +23,7 @@ export default {
     a {
       display: block;
       @include flex-center;
-      justify-content: flex-start;
       padding: 1rem;
-      //border-bottom: 1px solid $main-color1;
       img {
         width: 4.5rem;
         margin-right: 1rem;
@@ -33,6 +31,14 @@ export default {
       span {
         font-weight: bold;
       }
+    }
+  }
+  @media (max-width: 600px) {
+    img {
+      display: none;
+    }
+    span {
+      font-size: 1rem;
     }
   }
 </style>
