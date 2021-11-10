@@ -78,7 +78,7 @@ export default {
       login(this.loginForm)
       .then(response => {
           localStorage.setItem('jwt', response.data['jwt']);
-          localStorage.setItem('user_info', JSON.stringify(response.data['user_info']));
+          localStorage.setItem('user_info', JSON.stringify(response.data['data']));
           location.assign('/');
       })
       .catch(err => {

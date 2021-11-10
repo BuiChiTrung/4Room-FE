@@ -8,7 +8,6 @@ function login(data) {
 }
 
 function upPost(data) {
-    console.log('haha')
     return axios.post(`${baseApiUrl}/posts/create`, data, {
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -41,7 +40,7 @@ function register(data) {
 }
 
 function logout() {
-    return axios.get(baseApiUrl + '/logout', noAuthApiConfig);
+    return axios.get(baseApiUrl + '/logout', authApiConfig);
 }
 
 function updateProfile(data) {

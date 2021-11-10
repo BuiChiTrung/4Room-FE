@@ -93,7 +93,6 @@ export default {
   name: "ProfilePage",
   components: {SideBar, NavBar, Posts},
   data() {
-    console.log(localStorage.getItem('user_info'));
     return {
       showEditForm: true,
       userInfo: JSON.parse(localStorage.getItem('user_info'))

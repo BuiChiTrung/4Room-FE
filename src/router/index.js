@@ -15,7 +15,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomePage
+    component: HomePage,
   },
   {
     path: '/room/:name',
@@ -42,6 +42,12 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = (localStorage.getItem('jwt') !== null) && (localStorage.getItem('jwt') !== 'undefined')
+  if (to.name !== 'Login' && !isAuthenticated) next({name: 'Login'})
+  else next()
 })
 
 export default router
