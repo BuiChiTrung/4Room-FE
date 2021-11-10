@@ -19,7 +19,6 @@
       </div>
 
       <div class="follow col-4">
-        follow
         <Follow></Follow>
       </div>
     </div>

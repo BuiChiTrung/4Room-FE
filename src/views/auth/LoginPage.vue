@@ -15,7 +15,7 @@
             <input class="input100" v-model="loginForm.email" type="email" name="email" id="email" placeholder="Email" required>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
-							<i class="fa fa-phone" aria-hidden="true"></i>
+							<i class="far fa-envelope" aria-hidden="true"></i>
 						</span>
           </div>
 
@@ -78,7 +78,6 @@ export default {
       login(this.loginForm)
       .then(response => {
           localStorage.setItem('jwt', response.data['jwt']);
-          localStorage.setItem('user_info', JSON.stringify(response.data['user_info']));
           location.assign('/');
       })
       .catch(err => {
