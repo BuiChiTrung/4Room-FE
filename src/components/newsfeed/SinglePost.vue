@@ -5,7 +5,7 @@
       <a href="#" style="margin-right: 0.5em">
         <img class="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
       </a>
-      <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em;">{{ author }}</h4>
+      <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em; margin-left: 0.3em">{{ nameInForum }}</h4>
     </div>
   </div>
 
@@ -13,20 +13,21 @@
     <h4 class="text-start text-break text-caption"> {{ content }}</h4>
   </div>
 
-  <div class="row">
-    <a :href="downFile">
+  <div class="row" v-show="file !== null">
+    <div @click="feDownFile()" style="cursor: pointer;">
       <hr>
       <div class="d-flex file-area">
-          <figure style="cursor: pointer;">
+          <figure>
               <img class="fa-lg" src="@/assets/images/file.png" alt="file" style="height: 2.8em" >
           </figure>
-          <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ filename }}</h4>
+          <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ file === null ? '' : file.file_name }}</h4>
       </div>
       <hr>
-    </a>
+    </div>
   </div>
 
   <div class="row">
+    <hr v-show="file === null">
     <div class="d-flex mb-3">
       <figure style="cursor: pointer;" @click="votePost()">
         <img src="@/assets/images/like.png" alt="like" style="height: 2em" >
@@ -48,9 +49,9 @@
 </template>
 
 <script>
-import { baseApiUrl } from '@/env'
 import { upVote, submitComment } from "@/infrastructure/apiServices";
 import Comments from "./Comments";
+import {downFile} from "@/infrastructure/apiServices";
 
 export default {
   name: "SinglePost",
@@ -62,7 +63,11 @@ export default {
       type: Number,
       require: true
     },
-    author: {
+    ownerID: {
+      type: Number,
+      require: true
+    },
+    nameInForum: {
       type: String,
       require: true
     },
@@ -71,9 +76,9 @@ export default {
       require: false,
       default: ''
     },
-    filename: {
-      type: String,
-      require: true
+    file: {
+      type: Object,
+      default: null
     },
     upvote: {
       type: Number,
@@ -89,33 +94,34 @@ export default {
   },
   data() {
     return {
-      liked: false,
+      liked: false, //TODO: get from api
       frontUpvote: this.$props.upvote,
       hideComments: true, //TODO: "true" initially
       frontComments: this.$props.comments
     }
   },
-  computed: {
-    downFile() {
-      return `${baseApiUrl}/download-file/${this.$props.postID}`
-    }
-  },
   methods: {
+    feDownFile() {
+      if (this.$props.file === null) {
+        return
+      }
+      downFile(this.$props.file.file_address)
+      .then(response => console.log(response))
+      .catch(err => console.log(err))
+    },
+
     votePost() {
-      if (this.$data.liked === true) {
-        this.$data.frontUpvote --
-      } else {
+      const addUpvote = this.$data.liked === false
+      if (addUpvote) {
         this.$data.frontUpvote ++
+      } else {
+        this.$data.frontUpvote --
       }
       this.$data.liked = !this.$data.liked;
 
       //TODO: need to know body request
-      upVote({
-        //data
-      }, {
-        //config
-      })
-      .then(() => console.log('Upvoted'))
+      upVote(addUpvote, this.$props.postID)
+      .then(response => console.log(response.data['success']))
       .catch(err => console.log(err))
     },
 
