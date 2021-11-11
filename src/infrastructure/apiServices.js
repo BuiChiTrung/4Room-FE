@@ -20,17 +20,19 @@ function getAPost(postID) {
     return axios.get(`${baseApiUrl}/posts/${postID}`, authApiConfig)
 }
 
-//TODO: add url
 function upVote(addUpvote, postID) {
     return (
-        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
+        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, null, authApiConfig)
         : axios.delete(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
     )
 }
 
-//TODO: add url
-function fetchPost(data, config) {
-    return axios.get(`${baseApiUrl}`, data, config)
+function fetchPost(page) {
+    return axios.get(`${baseApiUrl}/newsfeed?page=${page}`, authApiConfig)
+}
+
+function downFile(data) {
+    return axios.get(`${baseApiUrl}/download/files/${data}`, noAuthApiConfig)
 }
 
 //TODO: add url
@@ -59,5 +61,6 @@ export {
     fetchPost,
     submitComment,
     updateProfile,
-    getAPost
+    getAPost,
+    downFile
 }

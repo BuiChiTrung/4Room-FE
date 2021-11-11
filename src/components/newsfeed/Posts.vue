@@ -3,24 +3,27 @@
     <SinglePost
         v-for="(item, index) in postLists" :key="index"
         :postID="item.post_id"
-        :author="item.owner_id"
+        :ownerID="item.owner_id"
+        :nameInForum="item.name_in_forum"
         :content="item.content"
-        :filename="item.filename"
+        :file="item.file"
         :upvote="item.upvote"
         :comments="item.comments"
     />
-<!--  <infinite-loading spinner="spiral"></infinite-loading>-->
+    <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+
 </div>
 </template>
 
 <script>
-// import InfiniteLoading from 'vue-infinite-loading'
+import InfiniteLoading from 'vue-infinite-loading'
 import SinglePost from "./SinglePost";
+import {fetchPost} from "@/infrastructure/apiServices";
 
 export default {
   name: "Posts",
   components: {
-    // InfiniteLoading,
+    InfiniteLoading,
     SinglePost
   },
   props: {
@@ -32,60 +35,24 @@ export default {
   data() {
     return {
       // TODO: use InfiniteLoading instead of mock-data
-      postLists: [
-        {
-          "post_id": 1,
-          "owner_id": "vuquangle",
-          "content": "hope this can help",
-          "filename": "networking.pdf",
-          "upvote": 0,
-          "comments": [
-            {
-              "user_id": "Bob",
-              "content": "oke!"
-            },
-            {
-              "user_id": "Alice",
-              "content": "it's suck!"
-            }
-          ]
-        },
-        {
-          "post_id": 2,
-          "owner_id": "vuquangle",
-          "content": "hope this can help",
-          "filename": "web.pdf",
-          "upvote": 2,
-          "comments": [
-            {
-              "user_id": "Bob",
-              "content": "oke!"
-            },
-            {
-              "user_id": "Alice",
-              "content": "it's suck!"
-            }
-          ]
-        },
-        {
-          "post_id": 3,
-          "owner_id": "vuquangle",
-          "content": "hope this can help",
-          "filename": "x.pdf",
-          "upvote": 10,
-          "comments": [
-            {
-              "user_id": "Bob",
-              "content": "oke!"
-            },
-            {
-              "user_id": "Alice",
-              "content": "it's suck!"
-            }
-          ]
+      postLists: [],
+      page: 1
+    }
+  },
+  methods: {
+    infiniteHandler($state) {
+      fetchPost(this.$data.page)
+      .then(response => {
+        const posts = response.data['data']
+        if (posts.length) {
+          this.postLists.push(...posts)
+          $state.loaded()
+          this.$data.page ++
+        } else {
+          $state.complete()
         }
-      ],
-      // firstPostId: 1
+      })
+      .catch(err => console.log(err))
     }
   }
 }

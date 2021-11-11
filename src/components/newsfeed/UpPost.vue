@@ -53,7 +53,7 @@ export default {
     },
 
     submitPost() {
-      if (this.file === null) {
+      if (this.file === null && this.caption === '') {
         return
       }
 
