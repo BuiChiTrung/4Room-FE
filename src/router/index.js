@@ -5,17 +5,25 @@ import RoomPage from "@/views/room/RoomPage";
 import ProfilePage from "@/views/profile/ProfilePage";
 import RegisterPage from "@/views/auth/RegisterPage";
 import PomodoroClock from "@/views/room/PomodoroClock";
+import {jwtValidate} from "../infrastructure/apiServices";
 
 const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: LoginPage
+    component: LoginPage,
+    meta: {unProtectedRoute: true}
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterPage,
+    meta: {unProtectedRoute: true}
   },
   {
     path: '/',
     name: 'Home',
-    component: HomePage,
+    component: HomePage
   },
   {
     path: '/room/:name',
@@ -28,9 +36,9 @@ const routes = [
     component: ProfilePage
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: RegisterPage
+    path: '/profile/:id',
+    name: 'User Profile',
+    component: ProfilePage
   },
   {
     path: '/pomodoro',
@@ -45,9 +53,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = (localStorage.getItem('jwt') !== null) && (localStorage.getItem('jwt') !== 'undefined')
-  if (to.name !== 'Login' && !isAuthenticated) next({name: 'Login'})
-  else next()
+    if (to.meta['unProtectedRoute']) {
+        next();
+    } else {
+        jwtValidate()
+            .then(() => next())
+            .catch(() => next('/login'))
+    }
 })
 
 export default router

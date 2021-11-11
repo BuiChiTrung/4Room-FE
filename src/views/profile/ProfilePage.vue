@@ -7,13 +7,15 @@
       <img alt="avatar" src="@/assets/images/icons/avatar.png">
       <div v-if="showEditForm" id="profile-static">
         <div>
-          <span>Following: 1000</span>
-          <span>Followed by: 50</span>
+          <span>Following: {{userInfo['following']}}</span>
+          <span v-if="!profileOwner && !followed" @click="followUser" title="Follow" class="material-icons">favorite_border</span>
+          <span v-if="!profileOwner && followed" @click="unFollowUser" title="Unfollow" class="material-icons">favorite</span>
+          <span>Follower: {{userInfo['follower']}}</span>
         </div>
         <div>{{userInfo.name_in_forum}}</div>
         <div>{{userInfo.bio}}</div>
         <hr>
-        <button class="btn btn-info" @click="toggleEditForm">Edit Profile</button>
+        <button v-show="profileOwner" class="btn btn-info" @click="toggleEditForm">Edit Profile</button>
 
         <div id="contact">
           <a :href="userInfo.linkedin_link"><i class="fab fa-linkedin"></i></a>
@@ -72,11 +74,9 @@
       </form>
     </div>
 
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-6">
+      <div id="current-posts">
+        <div class="justify-content-center">
             <Posts :typePosts="'Profile'" />
-          </div>
         </div>
       </div>
   </main>
@@ -85,22 +85,41 @@
 <script>
 import NavBar from "@/components/layout/NavBar";
 import SideBar from "@/components/layout/SideBar";
-import {updateProfile} from "@/infrastructure/apiServices";
-
 import Posts from "@/components/newsfeed/Posts";
+import {getUserInfo, getProfile, updateProfile, follow, unFollow} from "../../infrastructure/apiServices";
 
 export default {
   name: "ProfilePage",
   components: {SideBar, NavBar, Posts},
+
   data() {
+    console.log(localStorage.getItem('user_info'));
     return {
       showEditForm: true,
-      userInfo: JSON.parse(localStorage.getItem('user_info'))
+      userInfo: '',
+      profileOwner: true,
+      followed: false
     }
   },
 
   created() {
-
+      const userId = this.$route.params.id;
+      if (userId) {
+        this.profileOwner = false
+        getUserInfo(userId)
+          .then(response => {
+            this.userInfo = response.data['data'];
+            this.followed = response.data['followed'];
+          })
+          .catch(err => console.log(err));
+      }
+      else {
+        getProfile()
+          .then(response => {
+            this.userInfo = response.data['data'];
+          })
+          .catch(err => console.log(err));
+      }
   },
 
   methods: {
@@ -111,15 +130,35 @@ export default {
       event.preventDefault();
       updateProfile(this.userInfo)
       .then(response => {
-        localStorage.setItem('user_info', JSON.stringify(response.data['user_info']));
-        this.userInfo = response.data['user_info'];
+        this.userInfo = response.data['data'];
         this.showEditForm = !this.showEditForm;
       })
       .catch(() => {
         alert('Fail to update profile. Please try again.');
       })
+    },
+    followUser(event) {
+      event.preventDefault();
+      let self = this;
+
+      follow(this.userInfo['id'])
+          .then(() => {
+            self.followed = true;
+            self.userInfo['follower']++;
+          })
+          .catch((err) => console.log(err))
+    },
+    unFollowUser(event) {
+      event.preventDefault();
+      let self = this;
+      unFollow(this.userInfo['id'])
+          .then(() => {
+            self.followed = false;
+            self.userInfo['follower']--;
+          })
+          .catch((err) => console.log(err))
     }
-  }
+  },
 }
 </script>
 
@@ -132,18 +171,12 @@ main {
   flex-wrap: wrap;
 }
 
-//@media (min-width: 1000px) {
-//  #profile {
-//    width: 50rem;
-//  }
-//}
-
 #profile {
-  width: 50rem;
+  width: 60rem;
   font-size: 2rem;
   font-weight: bold;
   padding: 5rem 0;
-  min-height: 100vh;
+  min-height: 95vh;
   background-image: linear-gradient(45deg, rgba(45, 52, 54, 0.7),rgba(248, 255, 255,0.8)), url('../../assets/images/profile_background.jpg');
   background-size: cover;
   img {
@@ -175,9 +208,13 @@ main {
       display: flex;
       justify-content: space-between;
       color: #2a2929;
+      .material-icons {
+        font-size: 3rem;
+        color: pink;
+      }
     }
     div:nth-child(2){
-      font-size: 4rem;
+      font-size: 3.5rem;
       font-weight: bold;
     }
   }
@@ -208,9 +245,23 @@ main {
     }
   }
 }
+
+@media (max-width: 1200px) {
+  #profile {
+    width: 40rem;
+  }
+}
+
 @media (max-width: 800px) {
   #profile {
     width: 100%;
+  }
+}
+
+#current-posts {
+  flex-grow: 1;
+  div {
+    padding: 0 2rem;
   }
 }
 

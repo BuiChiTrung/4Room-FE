@@ -4,7 +4,35 @@ import axios from 'axios';
 import { baseApiUrl } from '@/env'
 
 function login(data) {
-    return axios.post( baseApiUrl + '/login', data, noAuthApiConfig);
+    return axios.post(`${baseApiUrl}/login`, data, noAuthApiConfig);
+}
+
+function register(data) {
+    return axios.post(`${baseApiUrl}/register`, data, noAuthApiConfig);
+}
+
+function logout() {
+    return axios.get(`${baseApiUrl}/logout`, authApiConfig);
+}
+
+function jwtValidate() {
+    return axios.get(`${baseApiUrl}/jwt-validate`, authApiConfig);
+}
+
+function getProfile() {
+    return axios.get(`${baseApiUrl}/profile`, authApiConfig);
+}
+
+function updateProfile(data) {
+    return axios.post(`${baseApiUrl}/profile`, data, authApiConfig);
+}
+
+function searchUserByName(data) {
+    return axios.post(`${baseApiUrl}/users/search`, data, authApiConfig);
+}
+
+function getUserInfo(id) {
+    return axios.get(`${baseApiUrl}/users/${id}`, authApiConfig);
 }
 
 function upPost(data) {
@@ -40,16 +68,16 @@ function submitComment(data, config) {
     return axios.post(`${baseApiUrl}`, data, config)
 }
 
-function register(data) {
-    return axios.post(baseApiUrl + '/register', data, noAuthApiConfig);
+function follow(userId) {
+    return axios.post(`${baseApiUrl}/follow-user/${userId}`, {}, authApiConfig);
 }
 
-function logout() {
-    return axios.get(baseApiUrl + '/logout', authApiConfig);
+function unFollow(userId) {
+    return axios.delete(`${baseApiUrl}/follow-user/${userId}`, authApiConfig);
 }
 
-function updateProfile(data) {
-    return axios.post(baseApiUrl + '/profile', data, authApiConfig);
+function suggestFollow() {
+    return axios.get(`${baseApiUrl}/follow/suggestion`, authApiConfig);
 }
 
 export {
@@ -60,7 +88,14 @@ export {
     upVote,
     fetchPost,
     submitComment,
-    updateProfile,
     getAPost,
-    downFile
+    downFile,
+    updateProfile,
+    searchUserByName,
+    getUserInfo,
+    follow,
+    unFollow,
+    getProfile,
+    suggestFollow,
+    jwtValidate
 }
