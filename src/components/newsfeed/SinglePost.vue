@@ -22,11 +22,12 @@
           </figure>
           <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ file === null ? '' : file.file_name }}</h4>
       </div>
+      <hr>
     </div>
   </div>
 
   <div class="row">
-    <hr>
+    <hr v-show="file === null">
     <div class="d-flex mb-3">
       <figure style="cursor: pointer;" @click="votePost()">
         <img src="@/assets/images/like.png" alt="like" style="height: 2em" >
