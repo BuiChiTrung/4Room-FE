@@ -8,7 +8,7 @@
         :content="item.content"
         :file="item.file"
         :upvote="item.upvote"
-        :comments="item.comments"
+        :comment="item.comment"
     />
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
 

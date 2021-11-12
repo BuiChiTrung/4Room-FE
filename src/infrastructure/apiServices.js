@@ -63,9 +63,8 @@ function downFile(data) {
     return axios.get(`${baseApiUrl}/download/files/${data}`, noAuthApiConfig)
 }
 
-//TODO: add url
-function submitComment(data, config) {
-    return axios.post(`${baseApiUrl}`, data, config)
+function submitComment(data, postID) {
+    return axios.post(`${baseApiUrl}/posts/${postID}/comments/create`, data, authApiConfig)
 }
 
 function follow(userId) {
