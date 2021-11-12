@@ -21,7 +21,7 @@ export default {
     suggestFollow()
       .then(({data}) => {
         self.usersInfo = data['data'];
-        console.log(self.usersInfo[0]);
+        // console.log(self.usersInfo[0]);
       })
       .catch(err => console.log(err));
   }
