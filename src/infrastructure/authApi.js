@@ -1,5 +1,5 @@
 export default {
-    'headers': {
+    headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('jwt')
     }
 }

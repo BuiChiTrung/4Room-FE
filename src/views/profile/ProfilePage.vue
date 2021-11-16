@@ -134,6 +134,7 @@ export default {
       profileApi.updateProfile(this.userInfo)
       .then(response => {
         this.userInfo = response.data['data'];
+        localStorage.setItem('user_info', JSON.stringify(response.data['data']));
         this.showEditForm = !this.showEditForm;
       })
       .catch(() => {

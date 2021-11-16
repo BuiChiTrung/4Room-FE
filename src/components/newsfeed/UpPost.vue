@@ -53,22 +53,16 @@ export default {
     },
 
     submitPost() {
-      if (this.file === null) {
+      if (this.file === null && this.caption === '') {
         return
       }
 
       let formData = new FormData()
-      formData.append('caption', this.caption)
+      formData.append('content', this.caption)
       formData.append('file', this.file)
 
-      upPost(formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then(() => {
-        console.log('Submit Post OK')
-      })
+      upPost(formData)
+      .then(response => console.log(response.data['success']))
       .catch((err) => {
         console.log(err)
       })

@@ -46,18 +46,32 @@ export const followApi = {
     }
 }
 
-function upPost(data, config) {
-    return axios.post(`${baseApiUrl}/submit-post`, data, config)
+function upPost(data) {
+    return axios.post(`${baseApiUrl}/posts/create`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        }
+    })
 }
 
-//TODO: add url
-function upVote(data, config) {
-    return axios.post(`${baseApiUrl}`, data, config)
+function getAPost(postID) {
+    return axios.get(`${baseApiUrl}/posts/${postID}`, authApiConfig)
 }
 
-//TODO: add url
-function fetchPost(data, config) {
-    return axios.get(`${baseApiUrl}`, data, config)
+function upVote(addUpvote, postID) {
+    return (
+        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, null, authApiConfig)
+        : axios.delete(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
+    )
+}
+
+function fetchPost(page) {
+    return axios.get(`${baseApiUrl}/newsfeed?page=${page}`, authApiConfig)
+}
+
+function downFile(data) {
+    return axios.get(`${baseApiUrl}/download/files/${data}`, noAuthApiConfig)
 }
 
 //TODO: add url
@@ -70,4 +84,6 @@ export {
     upVote,
     fetchPost,
     submitComment,
+    getAPost,
+    downFile,
 }
