@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import {logout} from "@/infrastructure/apiServices";
-import {searchUserByName} from "../../infrastructure/apiServices";
+import {authApi} from "@/infrastructure/apiServices";
+import {profileApi} from "../../infrastructure/apiServices";
 import UserList from "../element/UserList";
 
 export default {
@@ -50,7 +50,7 @@ export default {
 
   methods: {
     async logout() {
-      let response = await logout();
+      let response = await authApi.logout();
       console.log(response.data, response.status);
       if (response.status === 200) {
         localStorage.removeItem('jwt');
@@ -63,7 +63,7 @@ export default {
     nameInForum() {
       let self = this;
       if (this.nameInForum !== '')
-        searchUserByName({'name_in_forum': this.nameInForum})
+        profileApi.searchUserByName({'name_in_forum': this.nameInForum})
             .then(response => {
               console.log(response);
               self.usersInfo = response.data['data'];

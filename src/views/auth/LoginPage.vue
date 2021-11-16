@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {login} from "@/infrastructure/apiServices";
+import {authApi} from "@/infrastructure/apiServices";
 
 export default {
   name: "Login",
@@ -67,15 +67,10 @@ export default {
       }
     }
   },
-  // beforeCreate() {
-  //   api.authenticate().then(response => {
-  //     location.assign('/')
-  //   })
-  // },
   methods: {
     login(event) {
       event.preventDefault();
-      login(this.loginForm)
+      authApi.login(this.loginForm)
       .then(response => {
           localStorage.setItem('jwt', response.data['jwt']);
           location.assign('/');

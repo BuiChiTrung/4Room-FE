@@ -77,6 +77,8 @@
       <div id="current-posts">
         <div class="justify-content-center">
             <Posts :typePosts="'Profile'" />
+            <Posts :typePosts="'Profile'" />
+            <Posts :typePosts="'Profile'" />
         </div>
       </div>
   </main>
@@ -86,10 +88,11 @@
 import NavBar from "@/components/layout/NavBar";
 import SideBar from "@/components/layout/SideBar";
 import Posts from "@/components/newsfeed/Posts";
-import {getUserInfo, getProfile, updateProfile, follow, unFollow} from "../../infrastructure/apiServices";
+import {profileApi, followApi} from "../../infrastructure/apiServices";
 
 export default {
   name: "ProfilePage",
+  // eslint-disable-next-line vue/no-unused-components
   components: {SideBar, NavBar, Posts},
 
   data() {
@@ -106,7 +109,7 @@ export default {
       const userId = this.$route.params.id;
       if (userId) {
         this.profileOwner = false
-        getUserInfo(userId)
+        profileApi.getUserInfo(userId)
           .then(response => {
             this.userInfo = response.data['data'];
             this.followed = response.data['followed'];
@@ -114,7 +117,7 @@ export default {
           .catch(err => console.log(err));
       }
       else {
-        getProfile()
+        profileApi.getProfile()
           .then(response => {
             this.userInfo = response.data['data'];
           })
@@ -128,7 +131,7 @@ export default {
     },
     updateProfile(event) {
       event.preventDefault();
-      updateProfile(this.userInfo)
+      profileApi.updateProfile(this.userInfo)
       .then(response => {
         this.userInfo = response.data['data'];
         this.showEditForm = !this.showEditForm;
@@ -141,7 +144,7 @@ export default {
       event.preventDefault();
       let self = this;
 
-      follow(this.userInfo['id'])
+      followApi.follow(this.userInfo['id'])
           .then(() => {
             self.followed = true;
             self.userInfo['follower']++;
@@ -151,7 +154,7 @@ export default {
     unFollowUser(event) {
       event.preventDefault();
       let self = this;
-      unFollow(this.userInfo['id'])
+      followApi.unFollow(this.userInfo['id'])
           .then(() => {
             self.followed = false;
             self.userInfo['follower']--;
@@ -172,6 +175,7 @@ main {
 }
 
 #profile {
+  //@include flex-center-1;
   width: 60rem;
   font-size: 2rem;
   font-weight: bold;
@@ -180,7 +184,7 @@ main {
   background-image: linear-gradient(45deg, rgba(45, 52, 54, 0.7),rgba(248, 255, 255,0.8)), url('../../assets/images/profile_background.jpg');
   background-size: cover;
   img {
-    width: 30rem;
+    width: 50%;
     display: block; margin: auto;
   }
   i {
@@ -260,9 +264,16 @@ main {
 
 #current-posts {
   flex-grow: 1;
+  //width: 600px;
+  //width: auto;
+  //max-width: 700px;
+  display: inline !important;
   div {
     padding: 0 2rem;
   }
+  //.row {
+  //  width: 500px;
+  //}
 }
 
 </style>

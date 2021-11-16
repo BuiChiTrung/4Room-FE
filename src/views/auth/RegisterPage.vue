@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import {register} from "@/infrastructure/apiServices";
+import {authApi} from "@/infrastructure/apiServices";
 
 export default {
   name: "RegisterPage",
@@ -47,7 +47,7 @@ export default {
   methods: {
     register(event) {
       event.preventDefault();
-      register(this.registerForm)
+      authApi.register(this.registerForm)
           .then(() => {
             // localStorage.setItem('jwt', response.data['jwt']);
             location.assign('/login');
