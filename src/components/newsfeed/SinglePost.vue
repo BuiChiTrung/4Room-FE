@@ -2,10 +2,12 @@
 <div class="container single-post">
   <div class="row" style="margin-top: 1.5em;">
     <div class="d-flex mb-3">
-      <a href="#" style="margin-right: 0.5em">
+      <a :href="`/profile/${ownerID}`" style="margin-right: 0.5em">
         <img class="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
       </a>
+      <a :href="`/profile/${ownerID}`">
       <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em; margin-left: 0.3em">{{ nameInForum }}</h4>
+      </a>
     </div>
   </div>
 
@@ -37,13 +39,13 @@
       </figure>
 
       <h5 class="ms-auto">{{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}</h5>
-      <h5 style="margin-left: 0.5em">{{frontComments.length}} comments</h5>
+      <h5 style="margin-left: 0.5em">{{frontComments.length}} comment{{frontComments.length > 1 ? 's' : ''}}</h5>
     </div>
     <hr>
   </div>
 
   <div class="row" v-show="!hideComments">
-    <Comments :comments="comments" @submit-comment="submitComment"/>
+    <Comments :comment="frontComments" @submit-comment="submitComment"/>
   </div>
 </div>
 </template>
@@ -84,7 +86,7 @@ export default {
       type: Number,
       require: true
     },
-    comments: {
+    comment: {
       type: Array,
       require: true,
       default: () => {
@@ -97,7 +99,8 @@ export default {
       liked: false, //TODO: get from api
       frontUpvote: this.$props.upvote,
       hideComments: true, //TODO: "true" initially
-      frontComments: this.$props.comments
+      frontComments: this.$props.comment,
+      user_info: JSON.parse(localStorage.getItem('user_info'))
     }
   },
   methods: {
@@ -127,17 +130,15 @@ export default {
 
     submitComment(reply) {
       this.$data.frontComments.push({
-        'user_id': 'vuquangle',//TODO: localStorage.getItem('user_id')
-        'content': reply
+        user_id: this.$data.user_info['id'],
+        name_in_forum: this.$data.user_info['name_in_forum'],
+        content: reply
       })
 
-      //TODO: need to know body request
-      submitComment({
-        // data
-      }, {
-        //config
-      })
-      .then(() => console.log('Comment submitted'))
+      let data = new FormData()
+      data.append('content', reply)
+      submitComment(data, this.$props.postID)
+      .then(response => console.log(response))
       .catch(err => console.log(err))
     }
   }

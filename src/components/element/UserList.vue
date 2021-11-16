@@ -1,9 +1,12 @@
 <template>
   <div id="user-list">
-    <router-link :to="`/profile/${userInfo['id']}`" v-for="userInfo in usersInfo" :key="userInfo['id']">
-      <img src="@/assets/images/icons/avatar.png" alt="img">
-      <span>{{ userInfo['name_in_forum'] }}</span>
-    </router-link>
+    <div v-for="userInfo in usersInfo" :key="userInfo['id']">
+      <router-link :to="`/profile/${userInfo['id']}`">
+        <img src="@/assets/images/icons/avatar.png" alt="img">
+        <span>{{ userInfo['name_in_forum'] }}</span>
+      </router-link>
+      <hr>
+    </div>
   </div>
 </template>
 

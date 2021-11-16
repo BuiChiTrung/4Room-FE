@@ -8,8 +8,8 @@
       <div v-if="showEditForm" id="profile-static">
         <div>
           <span>Following: {{userInfo['following']}}</span>
-          <span v-if="!profileOwner && !followed" @click="followUser" title="Follow" class="material-icons">favorite_border</span>
-          <span v-if="!profileOwner && followed" @click="unFollowUser" title="Unfollow" class="material-icons">favorite</span>
+          <span v-if="!profileOwner && !followed" @click="followUser" title="Follow" class="material-icons" style="cursor: pointer;">favorite_border</span>
+          <span v-if="!profileOwner && followed" @click="unFollowUser" title="Unfollow" class="material-icons" style="cursor: pointer;">favorite</span>
           <span>Follower: {{userInfo['follower']}}</span>
         </div>
         <div>{{userInfo.name_in_forum}}</div>

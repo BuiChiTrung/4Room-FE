@@ -1,10 +1,12 @@
 <template>
 <div class="d-flex mb-3 single-comment">
-  <a href="#" style="margin-right: 0.5em">
+  <a :href="`/profile/${userID}`" style="margin-right: 0.5em">
     <img class="comment-avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
   </a>
   <h5 class="text-start text-break" style="margin-top: 0.3em;">
-    <span class="fw-bold">@{{ user_id }}</span>
+    <a :href="`/profile/${userID}`" style="text-decoration: none; color: black">
+    <span class="text-start text-break fw-bold">{{ nameInForum }}</span>
+    </a>
     {{content}}
   </h5>
 </div>
@@ -14,7 +16,11 @@
 export default {
   name: "SingleComment",
   props: {
-    user_id: {
+    userID: {
+      type: Number,
+      require: true
+    },
+    nameInForum: {
       type: String,
       require: true
     },

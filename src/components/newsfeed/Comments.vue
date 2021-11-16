@@ -1,7 +1,7 @@
 <template>
 <div class="container">
-  <div class="row" v-for="(item, index) in comments" :key="index">
-    <SingleComment :user_id="item.user_id" :content="item.content"/>
+  <div class="row" v-for="(item, index) in comment" :key="index">
+    <SingleComment :nameInForum="item.name_in_forum" :userID="item.user_id" :content="item.content"/>
   </div>
 
   <div class="row">
@@ -29,7 +29,7 @@ export default {
   name: "Comments",
   components: {SingleComment},
   props: {
-    comments: {
+    comment: {
       type: Array,
       require: false,
       default: () => {
@@ -39,12 +39,8 @@ export default {
   },
   data() {
     return {
-      currentUser: '',
       reply: ''
     }
-  },
-  mounted() {
-    this.$data.currentUser = 'vuquangle'//TODO: localStorage.getItem('user_id')
   },
   methods: {
     submitComment() {
