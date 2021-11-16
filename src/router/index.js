@@ -6,6 +6,8 @@ import ProfilePage from "@/views/profile/ProfilePage";
 import RegisterPage from "@/views/auth/RegisterPage";
 import PomodoroClock from "@/views/room/PomodoroClock";
 import {authApi} from "../infrastructure/apiServices";
+import ResetPassword from "../views/auth/ResetPassword";
+import ResetPasswordRequest from "../views/auth/ResetPasswordRequest";
 
 const routes = [
   {
@@ -18,6 +20,18 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: RegisterPage,
+    meta: {unProtectedRoute: true}
+  },
+  {
+    path: '/reset-password-request',
+    name: 'ResetPasswordRequest',
+    component: ResetPasswordRequest,
+    meta: {unProtectedRoute: true}
+  },
+  {
+    path: '/reset-password/:token',
+    name: 'ResetPassword',
+    component: ResetPassword,
     meta: {unProtectedRoute: true}
   },
   {

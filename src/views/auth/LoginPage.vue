@@ -37,9 +37,9 @@
 						<span class="txt1">
 							Forgot
 						</span>
-            <a class="txt2" href="#">
+            <router-link class="txt2" to="/reset-password-request">
               Password?
-            </a>
+            </router-link>
           </div>
 
           <div class="text-center p-t-136">

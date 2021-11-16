@@ -34,4 +34,8 @@ body {
   }
 }
 
+hr {
+  opacity: 1;
+}
+
 </style>

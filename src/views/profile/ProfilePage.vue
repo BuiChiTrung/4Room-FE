@@ -77,8 +77,6 @@
       <div id="current-posts">
         <div class="justify-content-center">
             <Posts :typePosts="'Profile'" />
-            <Posts :typePosts="'Profile'" />
-            <Posts :typePosts="'Profile'" />
         </div>
       </div>
   </main>
