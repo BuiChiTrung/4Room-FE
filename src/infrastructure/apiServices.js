@@ -3,36 +3,53 @@ import authApiConfig from "@/infrastructure/authApi";
 import axios from 'axios';
 import { baseApiUrl } from '@/env'
 
-function login(data) {
-    return axios.post(`${baseApiUrl}/login`, data, noAuthApiConfig);
+
+export const authApi = {
+    login(data) {
+        return axios.post(`${baseApiUrl}/login`, data, noAuthApiConfig);
+    },
+    register(data) {
+        return axios.post(`${baseApiUrl}/register`, data, noAuthApiConfig);
+    },
+    resetPasswordRequest(data) {
+        return axios.post(`${baseApiUrl}/reset-password-request`, data, noAuthApiConfig);
+    },
+    resetPassword(data) {
+        return axios.post(`${baseApiUrl}/reset-password`, data, noAuthApiConfig);
+    },
+    logout() {
+        return axios.get(`${baseApiUrl}/logout`, authApiConfig);
+    },
+    jwtValidate() {
+        return axios.get(`${baseApiUrl}/jwt-validate`, authApiConfig);
+    }
 }
 
-function register(data) {
-    return axios.post(`${baseApiUrl}/register`, data, noAuthApiConfig);
+export const profileApi = {
+    getProfile() {
+        return axios.get(`${baseApiUrl}/profile`, authApiConfig);
+    },
+    updateProfile(data) {
+        return axios.post(`${baseApiUrl}/profile`, data, authApiConfig);
+    },
+    searchUserByName(data) {
+        return axios.post(`${baseApiUrl}/users/search`, data, authApiConfig);
+    },
+    getUserInfo(id) {
+        return axios.get(`${baseApiUrl}/users/${id}`, authApiConfig);
+    }
 }
 
-function logout() {
-    return axios.get(`${baseApiUrl}/logout`, authApiConfig);
-}
-
-function jwtValidate() {
-    return axios.get(`${baseApiUrl}/jwt-validate`, authApiConfig);
-}
-
-function getProfile() {
-    return axios.get(`${baseApiUrl}/profile`, authApiConfig);
-}
-
-function updateProfile(data) {
-    return axios.post(`${baseApiUrl}/profile`, data, authApiConfig);
-}
-
-function searchUserByName(data) {
-    return axios.post(`${baseApiUrl}/users/search`, data, authApiConfig);
-}
-
-function getUserInfo(id) {
-    return axios.get(`${baseApiUrl}/users/${id}`, authApiConfig);
+export const followApi = {
+    follow(userId) {
+        return axios.post(`${baseApiUrl}/follow-user/${userId}`, {}, authApiConfig);
+    },
+    unFollow(userId) {
+        return axios.delete(`${baseApiUrl}/follow-user/${userId}`, authApiConfig);
+    },
+    suggestFollow() {
+        return axios.get(`${baseApiUrl}/follow/suggestion`, authApiConfig);
+    }
 }
 
 function upPost(data) {
@@ -67,34 +84,11 @@ function submitComment(data, postID) {
     return axios.post(`${baseApiUrl}/posts/${postID}/comments/create`, data, authApiConfig)
 }
 
-function follow(userId) {
-    return axios.post(`${baseApiUrl}/follow-user/${userId}`, {}, authApiConfig);
-}
-
-function unFollow(userId) {
-    return axios.delete(`${baseApiUrl}/follow-user/${userId}`, authApiConfig);
-}
-
-function suggestFollow() {
-    return axios.get(`${baseApiUrl}/follow/suggestion`, authApiConfig);
-}
-
 export {
-    login,
-    logout,
-    register,
     upPost,
     upVote,
     fetchPost,
     submitComment,
     getAPost,
     downFile,
-    updateProfile,
-    searchUserByName,
-    getUserInfo,
-    follow,
-    unFollow,
-    getProfile,
-    suggestFollow,
-    jwtValidate
 }

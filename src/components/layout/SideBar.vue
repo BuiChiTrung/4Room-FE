@@ -58,6 +58,8 @@ export default {
 
 #sidebar-wrapper {
   width: $sidebar-width;
+  height: 20px;
+  //min-height: 90vh;
   aside {
     position: fixed;
     text-align: center;

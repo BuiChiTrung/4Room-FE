@@ -37,9 +37,9 @@
 						<span class="txt1">
 							Forgot
 						</span>
-            <a class="txt2" href="#">
+            <router-link class="txt2" to="/reset-password-request">
               Password?
-            </a>
+            </router-link>
           </div>
 
           <div class="text-center p-t-136">
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {login} from "@/infrastructure/apiServices";
+import {authApi} from "@/infrastructure/apiServices";
 
 export default {
   name: "Login",
@@ -67,15 +67,10 @@ export default {
       }
     }
   },
-  // beforeCreate() {
-  //   api.authenticate().then(response => {
-  //     location.assign('/')
-  //   })
-  // },
   methods: {
     login(event) {
       event.preventDefault();
-      login(this.loginForm)
+      authApi.login(this.loginForm)
       .then(response => {
           localStorage.setItem('jwt', response.data['jwt']);
           localStorage.setItem('user_info', JSON.stringify(response.data['data']));
