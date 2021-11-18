@@ -49,6 +49,24 @@ export const followApi = {
     },
     suggestFollow() {
         return axios.get(`${baseApiUrl}/follow/suggestion`, authApiConfig);
+    },
+    getFollowers(userId) {
+        return axios.get(`${baseApiUrl}/users/${userId}/followers`, authApiConfig)
+    },
+    getFollowing(userId) {
+        return axios.get(`${baseApiUrl}/users/${userId}/following`, authApiConfig)
+    }
+}
+
+export const notificationApi = {
+    getNotifications(page = 1) {
+        return axios.get(`${baseApiUrl}/notifications?page=${page}`, authApiConfig);
+    },
+    countUnread() {
+        return axios.get(`${baseApiUrl}/notifications/count-unread`, authApiConfig);
+    },
+    markAsRead() {
+        return axios.post(`${baseApiUrl}/notifications/mark-as-read`, {}, authApiConfig);
     }
 }
 

@@ -17,11 +17,9 @@ export default {
     }
   },
   created() {
-    const self = this;
     followApi.suggestFollow()
       .then(({data}) => {
-        self.usersInfo = data['data'];
-        // console.log(self.usersInfo[0]);
+        this.usersInfo = data['data'];
       })
       .catch(err => console.log(err));
   }
