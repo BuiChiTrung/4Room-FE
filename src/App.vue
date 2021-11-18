@@ -3,6 +3,7 @@
 </template>
 
 <style lang="scss">
+@import 'src/assets/sass/style.scss';
 html {
   font-size: 10px;
 }
@@ -36,6 +37,29 @@ body {
 
 hr {
   opacity: 1;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  //box-shadow: inset 0 0 2px grey;
+  border-radius: 1px;
+  background: white;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: grey;
 }
 
 </style>

@@ -52,6 +52,18 @@ export const followApi = {
     }
 }
 
+export const notificationApi = {
+    getNotifications(page = 1) {
+        return axios.get(`${baseApiUrl}/notifications?page=${page}`, authApiConfig);
+    },
+    countUnread() {
+        return axios.get(`${baseApiUrl}/notifications/count-unread`, authApiConfig);
+    },
+    markAsRead() {
+        return axios.post(`${baseApiUrl}/notifications/mark-as-read`, {}, authApiConfig);
+    }
+}
+
 function upPost(data) {
     return axios.post(`${baseApiUrl}/posts/create`, data, {
         headers: {

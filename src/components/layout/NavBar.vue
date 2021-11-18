@@ -13,10 +13,10 @@
           <input class="search-bar" placeholder="Search" type="text"  v-model="nameInForum">
           <UserList :usersInfo="usersInfo" style="position: absolute;top: 2.5rem"/>
         </div>
-
       </div>
 
-      <i id="notifications" class="fas fa-bell"></i>
+      <Notification/>
+
       <div class="dropdown dropstart">
         <a data-toggle="dropdown" href="#"  data-bs-toggle="dropdown"  aria-expanded="false">
           <img id="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
@@ -35,10 +35,11 @@
 import {authApi} from "@/infrastructure/apiServices";
 import {profileApi} from "../../infrastructure/apiServices";
 import UserList from "../element/UserList";
+import Notification from "./Notification";
 
 export default {
   name: "NavBar",
-  components: {UserList},
+  components: {Notification, UserList},
   props: ['bgColor'],
 
   data() {
@@ -147,14 +148,13 @@ nav {
     //position: absolute;
   }
 
-  #notifications {
-    width: 5rem;
-  }
+
   img {
     height: 4rem;
   }
   .dropdown-menu {
     transform: translate(-2rem, 4rem) !important;
+    padding: 0;
     li {
       width: 15rem;
       font-size: 1.5rem;
