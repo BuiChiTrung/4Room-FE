@@ -4,7 +4,7 @@
       <i class="fas fa-bell" @click="getNotifications" :class="{'new-notification': newNotification}"></i>
     </a>
 
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <ul v-if="notifications" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <router-link :to="notification['link']" v-for="notification in notifications" :key="notification['id']">
         <span v-if="notification['upvote_id']" class="material-icons" style="color: #0984e3">thumb_up</span>
         <span v-if="notification['follow_id']" class="material-icons" style="color: pink">favorite</span>

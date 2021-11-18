@@ -49,6 +49,12 @@ export const followApi = {
     },
     suggestFollow() {
         return axios.get(`${baseApiUrl}/follow/suggestion`, authApiConfig);
+    },
+    getFollowers(userId) {
+        return axios.get(`${baseApiUrl}/users/${userId}/followers`, authApiConfig)
+    },
+    getFollowing(userId) {
+        return axios.get(`${baseApiUrl}/users/${userId}/following`, authApiConfig)
     }
 }
 
