@@ -5,7 +5,9 @@ import RoomPage from "@/views/room/RoomPage";
 import ProfilePage from "@/views/profile/ProfilePage";
 import RegisterPage from "@/views/auth/RegisterPage";
 import PomodoroClock from "@/views/room/PomodoroClock";
-import {jwtValidate} from "../infrastructure/apiServices";
+import {authApi} from "../infrastructure/apiServices";
+import ResetPassword from "../views/auth/ResetPassword";
+import ResetPasswordRequest from "../views/auth/ResetPasswordRequest";
 
 const routes = [
   {
@@ -18,6 +20,18 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: RegisterPage,
+    meta: {unProtectedRoute: true}
+  },
+  {
+    path: '/reset-password-request',
+    name: 'ResetPasswordRequest',
+    component: ResetPasswordRequest,
+    meta: {unProtectedRoute: true}
+  },
+  {
+    path: '/reset-password/:token',
+    name: 'ResetPassword',
+    component: ResetPassword,
     meta: {unProtectedRoute: true}
   },
   {
@@ -56,7 +70,7 @@ router.beforeEach((to, from, next) => {
     if (to.meta['unProtectedRoute']) {
         next();
     } else {
-        jwtValidate()
+        authApi.jwtValidate()
             .then(() => next())
             .catch(() => next('/login'))
     }

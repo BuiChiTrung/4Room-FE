@@ -26,15 +26,8 @@ export default {
     InfiniteLoading,
     SinglePost
   },
-  props: {
-    typePosts: { //TODO: use this type to determine postLists to fetch
-      type: String,
-      require: true
-    }
-  },
   data() {
     return {
-      // TODO: use InfiniteLoading instead of mock-data
       postLists: [],
       page: 1
     }

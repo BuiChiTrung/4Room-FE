@@ -7,7 +7,7 @@
 
 <script>
 import UserList from "../element/UserList";
-import {suggestFollow} from "../../infrastructure/apiServices";
+import {followApi} from "../../infrastructure/apiServices";
 export default {
   name: "Follow",
   components: {UserList},
@@ -17,11 +17,9 @@ export default {
     }
   },
   created() {
-    const self = this;
-    suggestFollow()
+    followApi.suggestFollow()
       .then(({data}) => {
-        self.usersInfo = data['data'];
-        // console.log(self.usersInfo[0]);
+        this.usersInfo = data['data'];
       })
       .catch(err => console.log(err));
   }
