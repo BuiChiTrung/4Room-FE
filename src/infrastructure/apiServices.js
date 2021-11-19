@@ -95,11 +95,15 @@ function fetchPost(page) {
 }
 
 function downFile(data) {
-    return axios.get(`${baseApiUrl}/download/files/${data}`, noAuthApiConfig)
+    return `${baseApiUrl}/download/files/${data}`
 }
 
 function submitComment(data, postID) {
     return axios.post(`${baseApiUrl}/posts/${postID}/comments/create`, data, authApiConfig)
+}
+
+function isUpvoted(postID) {
+    return axios.get(`${baseApiUrl}/is-upvote/post/${postID}`, authApiConfig)
 }
 
 export {
@@ -109,4 +113,5 @@ export {
     submitComment,
     getAPost,
     downFile,
+    isUpvoted
 }

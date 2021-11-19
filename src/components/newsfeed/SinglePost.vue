@@ -16,7 +16,7 @@
   </div>
 
   <div class="row" v-show="file !== null">
-    <div @click="feDownFile()" style="cursor: pointer;">
+    <a :href="feDownFile()" style="cursor: pointer;" :download="file === null ? '' : file.file_name">
       <hr>
       <div class="d-flex file-area">
           <figure>
@@ -25,7 +25,7 @@
           <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ file === null ? '' : file.file_name }}</h4>
       </div>
       <hr>
-    </div>
+    </a>
   </div>
 
   <div class="row">
@@ -53,6 +53,7 @@
 <script>
 import { upVote, submitComment } from "@/infrastructure/apiServices";
 import Comments from "./Comments";
+import {isUpvoted} from "@/infrastructure/apiServices";
 import {downFile} from "@/infrastructure/apiServices";
 
 export default {
@@ -96,21 +97,26 @@ export default {
   },
   data() {
     return {
-      liked: false, //TODO: get from api
+      liked: null,
       frontUpvote: this.$props.upvote,
-      hideComments: true, //TODO: "true" initially
+      hideComments: true,
       frontComments: this.$props.comment,
       user_info: JSON.parse(localStorage.getItem('user_info'))
     }
+  },
+  mounted() {
+    isUpvoted(this.$props.postID)
+    .then(({ data }) => {
+      this.$data.liked = data["is_upvoted"]
+    })
+    .catch(err => console.log(err))
   },
   methods: {
     feDownFile() {
       if (this.$props.file === null) {
         return
       }
-      downFile(this.$props.file.file_address)
-      .then(response => console.log(response))
-      .catch(err => console.log(err))
+      return downFile(this.$props.file.file_address)
     },
 
     votePost() {
