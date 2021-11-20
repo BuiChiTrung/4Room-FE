@@ -22,7 +22,7 @@
       </div>
       <div class="ms-auto">
         <figure @click="submitPost()" style="cursor: pointer;">
-          <img src="@/assets/images/share.png" alt="file-upload" style="height: 2.8em" >
+          <img src="@/assets/images/share/share.png" alt="file-upload" style="height: 2.8em" >
         </figure>
       </div>
     </div>
@@ -88,6 +88,7 @@ export default {
   border-radius: 12px;
   padding-top: 2.5em;
   background-color: white;
+  box-shadow: 0.1em 0.1em 3px rgba(0, 0, 0, 0.2);
 }
 
 .text-write-caption {

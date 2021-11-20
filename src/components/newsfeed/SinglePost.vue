@@ -6,52 +6,67 @@
         <img class="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
       </a>
       <a :href="`/profile/${ownerID}`">
-      <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em; margin-left: 0.3em">{{ nameInForum }}</h4>
+        <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em; margin-left: 0.3em">{{ nameInForum }}</h4>
       </a>
+      <div v-if="ownPost" class="dropdown ms-auto" style="cursor: pointer;">
+        <a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img class="dropdown-toggle" src="@/assets/images/dots.png"  style="height: 2em;" alt="">
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li class="dropdown-item" @click="editMode = true; hideComments = true;">Edit</li>
+          <li class="dropdown-item" @click="deletePost">Delete</li>
+        </ul>
+      </div>
     </div>
   </div>
 
-  <div class="row caption-area">
-    <h4 class="text-start text-break text-caption"> {{ content }}</h4>
+  <div v-show="!editMode" class="row caption-area">
+    <h4 class="text-start text-break text-caption"> {{ frontContent }}</h4>
+  </div>
+  <div v-show="editMode" style="margin-bottom: 1em;">
+    <textarea class="form-control text-write-caption" v-model="frontContent"/>
   </div>
 
-  <div class="row" v-show="file !== null">
+  <div class="row file-area" v-show="file !== null">
     <a :href="feDownFile()" style="cursor: pointer;" :download="file === null ? '' : file.file_name">
-      <hr>
-      <div class="d-flex file-area">
+      <div class="d-flex">
           <figure>
               <img class="fa-lg" src="@/assets/images/file.png" alt="file" style="height: 2.8em" >
           </figure>
           <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ file === null ? '' : file.file_name }}</h4>
       </div>
-      <hr>
     </a>
   </div>
 
-  <div class="row">
-    <hr v-show="file === null">
+  <div class="row like-upvote" v-show="!editMode">
     <div class="d-flex mb-3">
       <figure style="cursor: pointer;" @click="votePost()">
-        <img src="@/assets/images/like.png" alt="like" style="height: 2em" >
+        <img src="@/assets/images/like/like.png" alt="like" style="height: 2em;">
       </figure>
       <figure style="cursor: pointer; margin-left: 1em" @click="hideComments=!hideComments">
-        <img src="@/assets/images/comment.png" alt="comment" style="height: 2em" >
+        <img src="@/assets/images/comment.png" alt="comment" style="height: 2em;" >
       </figure>
 
       <h5 class="ms-auto">{{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}</h5>
       <h5 style="margin-left: 0.5em">{{frontComments.length}} comment{{frontComments.length > 1 ? 's' : ''}}</h5>
     </div>
-    <hr>
+  </div>
+  <div class="row edit-done" v-show="editMode">
+    <div class="d-flex mb-3">
+      <figure class="ms-auto" style="cursor:pointer;" @click="updatePost()">
+        <img src="@/assets/images/check/check.png" alt="check" style="height: 2em;">
+      </figure>
+    </div>
   </div>
 
-  <div class="row" v-show="!hideComments">
-    <Comments :comment="frontComments" @submit-comment="submitComment"/>
+  <div class="row cmt-area" v-show="!hideComments">
+    <Comments :comment="frontComments" @submit-comment="submitComment" @delete-comment="deleteComment"/>
   </div>
 </div>
 </template>
 
 <script>
-import { upVote, submitComment } from "@/infrastructure/apiServices";
+import { upVote, submitComment, updatePostContent, deleteAComment } from "@/infrastructure/apiServices";
 import Comments from "./Comments";
 import {isUpvoted} from "@/infrastructure/apiServices";
 import {downFile} from "@/infrastructure/apiServices";
@@ -93,6 +108,10 @@ export default {
       default: () => {
         return []
       }
+    },
+    indexInPostLists: {
+      type: Number,
+      require: true
     }
   },
   data() {
@@ -101,7 +120,14 @@ export default {
       frontUpvote: this.$props.upvote,
       hideComments: true,
       frontComments: this.$props.comment,
-      user_info: JSON.parse(localStorage.getItem('user_info'))
+      user_info: JSON.parse(localStorage.getItem('user_info')),
+      editMode: false,
+      frontContent: this.$props.content
+    }
+  },
+  computed: {
+    ownPost() {
+      return this.$props.ownerID === this.$data.user_info['id']
     }
   },
   mounted() {
@@ -146,6 +172,28 @@ export default {
       submitComment(data, this.$props.postID)
       .then(response => console.log(response))
       .catch(err => console.log(err))
+    },
+
+    updatePost() {
+      updatePostContent(this.$props.postID, {"content": this.$data.frontContent})
+      .then(response => {
+        console.log(response)
+        this.$data.editMode = false
+      })
+      .catch(err => console.log(err))
+    },
+
+    deletePost() {
+      this.$emit('delete-post', this.$props.indexInPostLists)
+    },
+
+    deleteComment(indexInCmtList) {
+      deleteAComment(this.$props.postID, this.$data.frontComments[indexInCmtList]["comment_id"])
+      .then(response => {
+        console.log(response)
+        this.$data.frontComments.splice(indexInCmtList, 1)
+      })
+      .catch(err => console.log(err))
     }
   }
 }
@@ -164,6 +212,7 @@ export default {
   background-color: white;
   border: 1px solid #D0D4D9;
   border-radius: 12px;
+  box-shadow: 0.1em 0.1em 3px rgba(0, 0, 0, 0.2);
 }
 
 .avatar {
@@ -179,7 +228,43 @@ export default {
 }
 
 .file-area {
-  margin-bottom: 0.75em;
+  padding-top: 1.1em;
+  border-top: 1px solid #D0D4D9;
+}
+
+.like-upvote {
+  border-top: 1px solid #D0D4D9;
+  padding-top: 1em;
+  margin-bottom: -1em;
+}
+
+.edit-done {
+  border-top: 1px solid #D0D4D9;
+  padding-top: 1em;
+}
+
+.cmt-area {
+  border-top: 1px solid #D0D4D9;
+}
+
+textarea {
+  height: 100%;
+  resize: none;
+}
+
+textarea::-webkit-scrollbar {
+  width: 9px;
+  background-color: #ffffff;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #b5c3da;
+}
+
+.text-write-caption {
+  font-size: 12.9px;
+  line-height: 1.2;
 }
 
 </style>

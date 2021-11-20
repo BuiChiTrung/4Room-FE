@@ -70,24 +70,8 @@ export const notificationApi = {
     }
 }
 
-function upPost(data) {
-    return axios.post(`${baseApiUrl}/posts/create`, data, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-        }
-    })
-}
-
 function getAPost(postID) {
     return axios.get(`${baseApiUrl}/posts/${postID}`, authApiConfig)
-}
-
-function upVote(addUpvote, postID) {
-    return (
-        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, null, authApiConfig)
-        : axios.delete(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
-    )
 }
 
 function fetchPost(page) {
@@ -98,8 +82,36 @@ function downFile(data) {
     return `${baseApiUrl}/download/files/${data}`
 }
 
+function upPost(data) {
+    return axios.post(`${baseApiUrl}/posts/create`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        }
+    })
+}
+
+function updatePostContent(postID, data) {
+    return axios.post(`${baseApiUrl}/posts/${postID}/edit`, data, authApiConfig)
+}
+
+function deleteAPost(postID) {
+    return axios.delete(`${baseApiUrl}/posts/${postID}`, authApiConfig)
+}
+
 function submitComment(data, postID) {
     return axios.post(`${baseApiUrl}/posts/${postID}/comments/create`, data, authApiConfig)
+}
+
+function deleteAComment(postID, cmtID) {
+    return axios.delete(`${baseApiUrl}/posts/${postID}/comments/${cmtID}/delete`, authApiConfig)
+}
+
+function upVote(addUpvote, postID) {
+    return (
+        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, null, authApiConfig)
+            : axios.delete(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
+    )
 }
 
 function isUpvoted(postID) {
@@ -113,5 +125,8 @@ export {
     submitComment,
     getAPost,
     downFile,
-    isUpvoted
+    isUpvoted,
+    updatePostContent,
+    deleteAPost,
+    deleteAComment
 }

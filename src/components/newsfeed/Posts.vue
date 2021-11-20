@@ -9,6 +9,8 @@
         :file="item.file"
         :upvote="item.upvote"
         :comment="item.comment"
+        :indexInPostLists="index"
+        @delete-post="deletePost"
     />
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
 
@@ -18,7 +20,7 @@
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
 import SinglePost from "./SinglePost";
-import {fetchPost} from "@/infrastructure/apiServices";
+import {fetchPost, deleteAPost} from "@/infrastructure/apiServices";
 
 export default {
   name: "Posts",
@@ -44,6 +46,15 @@ export default {
         } else {
           $state.complete()
         }
+      })
+      .catch(err => console.log(err))
+    },
+
+    deletePost(indexInPostLists) {
+      deleteAPost(this.$data.postLists[indexInPostLists]["post_id"])
+      .then(response => {
+        console.log(response)
+        this.$data.postLists.splice(indexInPostLists, 1)
       })
       .catch(err => console.log(err))
     }

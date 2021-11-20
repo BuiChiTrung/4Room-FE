@@ -1,11 +1,16 @@
 <template>
 <div class="container">
   <div class="row" v-for="(item, index) in comment" :key="index">
-    <SingleComment :nameInForum="item.name_in_forum" :userID="item.user_id" :content="item.content"/>
+    <SingleComment
+        :nameInForum="item.name_in_forum"
+        :userID="item.user_id"
+        :content="item.content"
+        :indexInCmtList="index"
+        @delete-comment="deleteComment"
+    />
   </div>
 
   <div class="row">
-    <hr>
     <div class="d-flex mb-3 reply">
       <a href="#" style="margin-right: 0.5em">
         <img class="comment-avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
@@ -48,6 +53,10 @@ export default {
         this.$emit('submit-comment', this.reply)
         this.reply = ''
       }
+    },
+
+    deleteComment(indexInCmtList) {
+      this.$emit('delete-comment', indexInCmtList)
     }
   }
 }
