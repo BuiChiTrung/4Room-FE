@@ -9,6 +9,7 @@ import {authApi} from "../infrastructure/apiServices";
 import ResetPassword from "../views/auth/ResetPassword";
 import ResetPasswordRequest from "../views/auth/ResetPasswordRequest";
 import ChatArea from "../views/room/ChatArea";
+import ViewSinglePost from "../views/post/ViewSinglePost";
 
 const routes = [
   {
