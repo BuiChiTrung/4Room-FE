@@ -1,8 +1,10 @@
 <template>
   <div id="notifications" class="dropdown dropstart">
     <a  href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="fas fa-bell" @click="getNotifications" :class="{'new-notification': newNotification}"></i>
+      <i class="fas fa-bell" @click="getNotifications"></i>
     </a>
+
+    <div id="new-notification" v-if="newNotification">{{ newNotification }}</div>
 
     <ul v-if="notifications" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <router-link :to="notification['link']" v-for="notification in notifications" :key="notification['id']">
@@ -32,11 +34,18 @@ export default {
     return {
       notifications: [],
       newNotification: 0,
-      page: 2
+      page: 1
     }
   },
 
   created() {
+    // const self = this;
+    const channel = window.pusher.subscribe('private-notification_user.' + JSON.parse(localStorage.getItem('user_info'))['id']);
+    channel.bind('NotificationUpdate', () => {
+      this.newNotification++;
+      console.log(this.newNotification);
+    });
+
     notificationApi.countUnread()
       .then(({data}) => {
           console.log(data);
@@ -53,6 +62,7 @@ export default {
 
     infiniteHandler($state) {
       notificationApi.getNotifications(this.page).then(({ data }) => {
+        console.log(data.data);
         if (data.data.length) {
           this.page += 1;
           this.notifications.push(...data['data'].map(this.parseNotification));
@@ -92,12 +102,25 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/sass/style';
 #notifications {
+  width: 4rem;
+  position: relative;
   i {
     font-size: 2.5rem;
   }
+  i:hover {
+    color: rgba(0, 0, 0, 0.44);
+  }
 
-  .new-notification {
-    color: #ff4757;
+  #new-notification {
+    width: 1.5rem;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #ff4757;
+    color: white;
+    padding: 0 0.2rem;
+    border-radius: 50%;
   }
 
   .dropdown-menu {
