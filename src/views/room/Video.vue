@@ -2,16 +2,16 @@
   <video autoplay :muted="mutedSound" loop>
     <source :src="videoSrc" type="video/mp4">
   </video>
-  <i v-if="mutedSound" class="fas fa-volume-mute" @click="toggleSound"></i>
-  <i v-else @click="toggleSound" class="fas fa-volume-up"></i>
+
 </template>
 
 <script>
 export default {
   name: "Video",
+  props: ['mutedSound'],
   data() {
     return {
-      mutedSound: true,
+      // mutedSound: true,
       videoSrc: require(`@/assets/videos/${this.$route.params.name}.mp4`)
     }
   },
@@ -21,11 +21,6 @@ export default {
       this.currentTime = Math.floor(Date.now() / 1000) % Math.floor(this.duration);
     };
   },
-  methods: {
-    toggleSound() {
-      this.mutedSound = !this.mutedSound;
-    }
-  }
 }
 </script>
 
@@ -35,6 +30,7 @@ video {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  z-index: -1;
 }
 
 @media (max-aspect-ratio: 16/9) {
@@ -48,14 +44,7 @@ video {
   video {
     width: 100%;
     height: auto;
-  }
-}
 
-i {
-  color: white;
-  font-size: 3rem;
-  position: fixed;
-  bottom: 1rem;
-  right: 4rem;
+  }
 }
 </style>

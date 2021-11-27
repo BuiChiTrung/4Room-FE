@@ -1,5 +1,5 @@
 <template>
-  <div id="pomodoro" v-if="displayPomodoroClock">
+  <div id="pomodoro">
     <div id="clock">
       <div id="timer">
         <div id="title">Ready?</div>
@@ -29,24 +29,17 @@
       </div>
     </div>
   </div>
-  <i @click="togglePomodoroClock" id="clock-icon" class="far fa-clock"></i>
+
 </template>
 
 <script>
 import $ from 'jquery';
 export default {
   name: "PomodoroClock",
-  data() {
-    return {
-      displayPomodoroClock: false
-    }
+  created() {
+    this.setUpClock();
   },
   methods: {
-    togglePomodoroClock() {
-      this.displayPomodoroClock = !this.displayPomodoroClock;
-      if (this.displayPomodoroClock)
-        this.setUpClock();
-    },
     setUpClock() {
       $(() => {
 
@@ -220,20 +213,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#clock-icon {
-  color: white;
-  font-size: 3rem;
-  position: fixed;
-  bottom: 1rem;
-  right: 10rem;
-}
 #pomodoro {
   width: 25rem;
   border-radius: 2rem;
   transform: scale(0.7);
   position: fixed;
-  bottom: 2.1rem;
-  right: 0;
+  bottom: 7rem;
+  right: 2rem;
   background: white;
   padding: 1rem;
 #clock {
@@ -245,7 +231,6 @@ export default {
     display: flex;
     flex-direction: column;
   #title {
-    //color: #2d3436;
     color: #2d3436;
     font-size: 28px;
     line-height: 28px;
