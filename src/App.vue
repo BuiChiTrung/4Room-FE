@@ -2,6 +2,9 @@
   <router-view :key='$route.fullPath' />
 </template>
 
+<script>
+</script>
+
 <style lang="scss">
 @import 'src/assets/sass/style.scss';
 html {

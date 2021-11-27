@@ -113,7 +113,7 @@ nav {
   }
 
   #avatar {
-    margin: 0 2rem;
+    margin: 0 1.5rem;
   }
 
   #search-space {

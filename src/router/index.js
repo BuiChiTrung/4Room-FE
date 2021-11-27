@@ -8,7 +8,7 @@ import PomodoroClock from "@/views/room/PomodoroClock";
 import {authApi} from "../infrastructure/apiServices";
 import ResetPassword from "../views/auth/ResetPassword";
 import ResetPasswordRequest from "../views/auth/ResetPasswordRequest";
-import ViewSinglePost from "../views/post/ViewSinglePost";
+import ChatArea from "../views/room/ChatArea";
 
 const routes = [
   {
@@ -64,6 +64,10 @@ const routes = [
     path: '/pomodoro',
     name: 'Pomodoro',
     component: PomodoroClock
+  },
+  {
+    path: '/chat', name: 'ChatArea',
+    component: ChatArea
   }
 ]
 
