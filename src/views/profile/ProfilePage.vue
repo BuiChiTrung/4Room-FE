@@ -2,20 +2,25 @@
   <NavBar bgColor="white"/>
   <SideBar bgColor="white"/>
 
-  <main>
-    <div id="profile">
-      <img alt="avatar" src="@/assets/images/icons/avatar.png">
-
-      <FollowArea :profileOwner="profileOwner"/>
-      <StaticProfile v-if="showEditForm" :profileOwner="profileOwner"/>
-      <EditProfileForm v-else/>
-    </div>
-
-      <div id="current-posts">
-<!--        <div class="justify-content-center">-->
-<!--            <Posts :typePosts="'Profile'" />-->
-<!--        </div>-->
+  <main class="container w-100 vh-100">
+    <div class="row justify-content-center">
+      <div class="col-lg-4">
+        <div id="profile">
+            <img alt="avatar" src="@/assets/images/icons/avatar.png">
+            <FollowArea :profileOwner="profileOwner"/>
+            <StaticProfile v-if="showEditForm" :profileOwner="profileOwner"/>
+            <EditProfileForm v-else/>
+        </div>
       </div>
+
+      <div class="col-lg-8 container newsfeed">
+        <div class="row justify-content-center" style="margin-top: 2em">
+          <div class="col-10">
+            <Posts :typePosts="{name: 'ProfilePage', userID}"></Posts>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -35,23 +40,25 @@ export default {
 
   data() {
     return {
-      profileOwner: true
+      profileOwner: true,
+      userID: null
     }
   },
   computed: mapState(['showEditForm']),
 
   created() {
+    const currentUser = JSON.parse(localStorage.getItem('user_info'))['id']
     if (this.$route.params.id) {
-      console.log(JSON.parse(localStorage.getItem('user_info'))['id'], this.$route.params.id);
-      if (this.$route.params.id == JSON.parse(localStorage.getItem('user_info'))['id']) {
-        this.$router.push('/profile');
+      if (this.$route.params.id == currentUser) {
+        this.$router.push('/profile')
       } else {
         this.profileOwner = false
+        this.$data.userID = this.$route.params.id
       }
+    } else {
+      this.$data.userID = currentUser
     }
-
-
-  },
+  }
 }
 </script>
 
@@ -65,15 +72,17 @@ main {
 }
 
 #profile {
-  width: 60rem;
+  //width: 60rem;
   font-size: 2rem;
   font-weight: bold;
   padding: 5rem 0;
-  min-height: 95vh;
+  min-height: 50vh;
   background-image: linear-gradient(45deg, rgba(45, 52, 54, 0.7),rgba(248, 255, 255,0.8)), url('../../assets/images/profile_background.jpg');
   background-size: cover;
+  position: sticky;
+  top: 3.1em;
   img {
-    width: 50%;
+    width: 30%;
     display: block; margin: auto;
   }
   i {
@@ -81,24 +90,5 @@ main {
   }
 }
 
-@media (max-width: 1200px) {
-  #profile {
-    width: 40rem;
-  }
-}
-
-@media (max-width: 800px) {
-  #profile {
-    width: 100%;
-  }
-}
-
-#current-posts {
-  flex-grow: 1;
-  display: inline !important;
-  div {
-    padding: 0 2rem;
-  }
-}
 
 </style>

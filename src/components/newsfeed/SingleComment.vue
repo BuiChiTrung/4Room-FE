@@ -10,8 +10,9 @@
     {{content}}
   </h5>
   <div class="ms-auto" v-if="ownComment" style="display: inline;">
-    <figure class="delete-comment" style="cursor: pointer;" @click="deleteComment">
-      <img src="@/assets/images/remove/remove.png" alt="" style="height: 1.8em" >
+    <figure class="delete-comment" style="cursor: pointer;" @click="deleteComment" @mousemove="turnOn('lightUpDel')" @mouseleave="turnOff('lightUpDel')">
+      <span v-if="!lightUpDel" class="material-icons-outlined" style="color: #f3425f;">remove_circle_outline</span>
+      <span v-if="lightUpDel" class="material-icons-outlined" style="color: #f3425f;">remove_circle</span>
     </figure>
   </div>
 </div>
@@ -41,7 +42,8 @@ export default {
   data() {
     return {
       editMode: false,
-      user_info: JSON.parse(localStorage.getItem('user_info')) // current user
+      user_info: JSON.parse(localStorage.getItem('user_info')), // current user
+      lightUpDel: false
     }
   },
   computed: {
@@ -52,6 +54,14 @@ export default {
   methods: {
     deleteComment() {
       this.$emit('delete-comment', this.$props.indexInCmtList)
+    },
+
+    turnOn(prop) {
+      this.$data[prop] = true
+    },
+
+    turnOff(prop) {
+      this.$data[prop] = false
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
-<div>
-  <p>People you may want to follow</p>
+<div style="position: fixed; background-color: #f0f2f5;">
+  <h6>People you may want to follow</h6>
   <UserList :usersInfo="usersInfo"/>
 </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   created() {
     followApi.suggestFollow()
       .then(({data}) => {
-        this.usersInfo = data['data'];
+        this.usersInfo = data['data'].slice(2);
       })
       .catch(err => console.log(err));
   }

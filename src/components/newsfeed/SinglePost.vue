@@ -41,10 +41,11 @@
   <div class="row like-upvote" v-show="!editMode">
     <div class="d-flex mb-3">
       <figure style="cursor: pointer;" @click="votePost()">
-        <img src="@/assets/images/like/like.png" alt="like" style="height: 2em;">
+        <i v-if="!liked" class="far fa-thumbs-up fa-2x" style="color: rgb(32, 120, 244);"></i>
+        <i v-if="liked" class="fas fa-thumbs-up fa-2x" style="color: rgb(32, 120, 244);"></i>
       </figure>
       <figure style="cursor: pointer; margin-left: 1em" @click="hideComments=!hideComments">
-        <img src="@/assets/images/comment.png" alt="comment" style="height: 2em;" >
+        <i class="far fa-comment-dots fa-2x"></i>
       </figure>
 
       <h5 class="ms-auto">{{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}</h5>
@@ -53,8 +54,9 @@
   </div>
   <div class="row edit-done" v-show="editMode">
     <div class="d-flex mb-3">
-      <figure class="ms-auto" style="cursor:pointer;" @click="updatePost()">
-        <img src="@/assets/images/check/check.png" alt="check" style="height: 2em;">
+      <figure class="ms-auto" style="cursor:pointer;" @click="updatePost()" @mouseover="turnOn('lightUpDone')" @mouseleave="turnOff('lightUpDone')">
+        <i v-if="lightUpDone" class="fas fa-check-circle fa-2x" style="color: rgb(32, 120, 244);"></i>
+        <i v-if="!lightUpDone" class="far fa-check-circle fa-2x" style="color: rgb(32, 120, 244);"></i>
       </figure>
     </div>
   </div>
@@ -122,7 +124,8 @@ export default {
       frontComments: this.$props.comment,
       user_info: JSON.parse(localStorage.getItem('user_info')),
       editMode: false,
-      frontContent: this.$props.content
+      frontContent: this.$props.content,
+      lightUpDone: false
     }
   },
   computed: {
@@ -165,6 +168,7 @@ export default {
         user_id: this.$data.user_info['id'],
         name_in_forum: this.$data.user_info['name_in_forum'],
         content: reply
+        //TODO: need to know commentID in response message to delete right after submitting
       })
 
       let data = new FormData()
@@ -194,6 +198,14 @@ export default {
         this.$data.frontComments.splice(indexInCmtList, 1)
       })
       .catch(err => console.log(err))
+    },
+
+    turnOn(prop) {
+      this.$data[prop] = true
+    },
+
+    turnOff(prop) {
+      this.$data[prop] = false
     }
   }
 }

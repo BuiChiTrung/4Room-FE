@@ -13,20 +13,25 @@
         @delete-post="deletePost"
     />
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-
 </div>
 </template>
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
 import SinglePost from "./SinglePost";
-import {fetchPost, deleteAPost} from "@/infrastructure/apiServices";
+import {fetchPost, fetchUserPost, deleteAPost} from "@/infrastructure/apiServices";
 
 export default {
   name: "Posts",
   components: {
     InfiniteLoading,
     SinglePost
+  },
+  props: {
+    typePosts: {
+      type: Object,
+      require: true
+    }
   },
   data() {
     return {
@@ -36,7 +41,8 @@ export default {
   },
   methods: {
     infiniteHandler($state) {
-      fetchPost(this.$data.page)
+      const fetch = (this.$props.typePosts['name'] === 'HomePage' ? fetchPost : fetchUserPost)
+      fetch(this.$data.page, this.$props.typePosts.userID)
       .then(response => {
         const posts = response.data['data']
         if (posts.length) {

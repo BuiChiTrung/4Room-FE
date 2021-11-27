@@ -78,6 +78,10 @@ function fetchPost(page) {
     return axios.get(`${baseApiUrl}/newsfeed?page=${page}`, authApiConfig)
 }
 
+function fetchUserPost(page, userID) {
+    return axios.get(`${baseApiUrl}/users/${userID}/posts?page=${page}`, authApiConfig)
+}
+
 function downFile(data) {
     return `${baseApiUrl}/download/files/${data}`
 }
@@ -122,6 +126,7 @@ export {
     upPost,
     upVote,
     fetchPost,
+    fetchUserPost,
     submitComment,
     getAPost,
     downFile,
