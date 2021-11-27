@@ -9,6 +9,7 @@ import {authApi} from "../infrastructure/apiServices";
 import ResetPassword from "../views/auth/ResetPassword";
 import ResetPasswordRequest from "../views/auth/ResetPasswordRequest";
 import ChatArea from "../views/room/ChatArea";
+import ViewSinglePost from "../views/post/ViewSinglePost";
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomePage
+  },
+  {
+    path: '/post/:postid',
+    name: 'ViewSinglePost',
+    component: ViewSinglePost
   },
   {
     path: '/room/:name',

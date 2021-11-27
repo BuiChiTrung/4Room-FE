@@ -9,16 +9,17 @@
         :file="item.file"
         :upvote="item.upvote"
         :comment="item.comment"
+        :indexInPostLists="index"
+        @delete-post="deletePost"
     />
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-
 </div>
 </template>
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
 import SinglePost from "./SinglePost";
-import {fetchPost} from "@/infrastructure/apiServices";
+import {fetchPost, fetchUserPost, deleteAPost} from "@/infrastructure/apiServices";
 
 export default {
   name: "Posts",
@@ -27,21 +28,21 @@ export default {
     SinglePost
   },
   props: {
-    typePosts: { //TODO: use this type to determine postLists to fetch
-      type: String,
+    typePosts: {
+      type: Object,
       require: true
     }
   },
   data() {
     return {
-      // TODO: use InfiniteLoading instead of mock-data
       postLists: [],
       page: 1
     }
   },
   methods: {
     infiniteHandler($state) {
-      fetchPost(this.$data.page)
+      const fetch = (this.$props.typePosts['name'] === 'HomePage' ? fetchPost : fetchUserPost)
+      fetch(this.$data.page, this.$props.typePosts.userID)
       .then(response => {
         const posts = response.data['data']
         if (posts.length) {
@@ -51,6 +52,15 @@ export default {
         } else {
           $state.complete()
         }
+      })
+      .catch(err => console.log(err))
+    },
+
+    deletePost(indexInPostLists) {
+      deleteAPost(this.$data.postLists[indexInPostLists]["post_id"])
+      .then(response => {
+        console.log(response)
+        this.$data.postLists.splice(indexInPostLists, 1)
       })
       .catch(err => console.log(err))
     }

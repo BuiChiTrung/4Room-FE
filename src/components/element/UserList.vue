@@ -1,11 +1,10 @@
 <template>
-  <div id="user-list">
-    <div v-for="userInfo in usersInfo" :key="userInfo['id']">
-      <router-link :to="`/profile/${userInfo['id']}`">
+  <div id="user-list" style="background: #f0f2f5;">
+    <div v-for="user in usersInfo" :key="user['id']">
+      <router-link :to="`/profile/${user['id']}`">
         <img src="@/assets/images/icons/avatar.png" alt="img">
-        <span>{{ userInfo['name_in_forum'] }}</span>
+        <span class="h5">{{ user['name_in_forum'] }}</span>
       </router-link>
-      <hr>
     </div>
   </div>
 </template>
@@ -13,7 +12,16 @@
 <script>
 export default {
   name: "UserList",
-  props: ['usersInfo'],
+  props: {
+    usersInfo: {
+      type: Array,
+      require: true,
+      default: () => []
+    }
+  },
+  mounted() {
+    console.log(this.$props.usersInfo)
+  }
 }
 </script>
 

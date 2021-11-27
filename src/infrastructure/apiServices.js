@@ -70,6 +70,22 @@ export const notificationApi = {
     }
 }
 
+function getAPost(postID) {
+    return axios.get(`${baseApiUrl}/posts/${postID}`, authApiConfig)
+}
+
+function fetchPost(page) {
+    return axios.get(`${baseApiUrl}/newsfeed?page=${page}`, authApiConfig)
+}
+
+function fetchUserPost(page, userID) {
+    return axios.get(`${baseApiUrl}/users/${userID}/posts?page=${page}`, authApiConfig)
+}
+
+function downFile(data) {
+    return `${baseApiUrl}/download/files/${data}`
+}
+
 function upPost(data) {
     return axios.post(`${baseApiUrl}/posts/create`, data, {
         headers: {
@@ -79,34 +95,48 @@ function upPost(data) {
     })
 }
 
-function getAPost(postID) {
-    return axios.get(`${baseApiUrl}/posts/${postID}`, authApiConfig)
+function updatePostContent(postID, data) {
+    return axios.post(`${baseApiUrl}/posts/${postID}/edit`, data, authApiConfig)
 }
 
-function upVote(addUpvote, postID) {
-    return (
-        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, null, authApiConfig)
-        : axios.delete(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
-    )
-}
-
-function fetchPost(page) {
-    return axios.get(`${baseApiUrl}/newsfeed?page=${page}`, authApiConfig)
-}
-
-function downFile(data) {
-    return axios.get(`${baseApiUrl}/download/files/${data}`, noAuthApiConfig)
+function deleteAPost(postID) {
+    return axios.delete(`${baseApiUrl}/posts/${postID}`, authApiConfig)
 }
 
 function submitComment(data, postID) {
     return axios.post(`${baseApiUrl}/posts/${postID}/comments/create`, data, authApiConfig)
 }
 
+function deleteAComment(postID, cmtID) {
+    return axios.delete(`${baseApiUrl}/posts/${postID}/comments/${cmtID}/delete`, authApiConfig)
+}
+
+function upVote(addUpvote, postID) {
+    return (
+        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, null, authApiConfig)
+            : axios.delete(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
+    )
+}
+
+function getUsersUpvote(postID) {
+    return axios.get(`${baseApiUrl}/posts/${postID}/upvote`, authApiConfig)
+}
+
+function isUpvoted(postID) {
+    return axios.get(`${baseApiUrl}/is-upvote/post/${postID}`, authApiConfig)
+}
+
 export {
     upPost,
     upVote,
     fetchPost,
+    fetchUserPost,
+    getUsersUpvote,
     submitComment,
     getAPost,
     downFile,
+    isUpvoted,
+    updatePostContent,
+    deleteAPost,
+    deleteAComment
 }

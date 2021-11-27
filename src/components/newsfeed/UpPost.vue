@@ -14,7 +14,8 @@
       <div>
         <input type="file" id="file" class="input-file" @change="handleFileUpload($event)"/>
         <label for="file" class="up-icon" style="cursor: pointer;">
-          <img src="@/assets/images/file-upload.png" alt="file-upload" style="height: 2.8em">
+          <span v-show="this.file === null" class="material-icons-outlined" style="color: rgb(32, 120, 244);">cloud_upload</span>
+          <span v-show="this.file !== null" class="material-icons" style="color: rgb(32, 120, 244);">cloud_upload</span>
         </label>
       </div>
       <div style="padding-left: 1em; padding-top: 0.8em">
@@ -22,7 +23,8 @@
       </div>
       <div class="ms-auto">
         <figure @click="submitPost()" style="cursor: pointer;">
-          <img src="@/assets/images/share.png" alt="file-upload" style="height: 2.8em" >
+          <i v-show="this.file === null && this.caption === ''" class="far fa-paper-plane fa-2x" style="color: rgb(32, 120, 244);"></i>
+          <i v-show="!(this.file === null && this.caption === '')" class="fas fa-paper-plane fa-2x" style="color: rgb(32, 120, 244);"></i>
         </figure>
       </div>
     </div>
@@ -88,6 +90,7 @@ export default {
   border-radius: 12px;
   padding-top: 2.5em;
   background-color: white;
+  box-shadow: 0.1em 0.1em 3px rgba(0, 0, 0, 0.2);
 }
 
 .text-write-caption {

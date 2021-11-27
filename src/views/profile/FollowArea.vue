@@ -1,15 +1,15 @@
 <template>
   <div id="follow-area">
-    <span data-bs-toggle="modal" data-bs-target="#follow-modal" @click="getFollowing">Following: {{userInfo['following']}}</span>
+    <span data-bs-toggle="modal" data-bs-target="#follow-modal" @click="getFollowing" style="cursor: pointer;">Following: {{userInfo['following']}}</span>
     <span v-if="!profileOwner && !followStatus" @click="followUser" title="Follow" class="material-icons" style="cursor: pointer;">favorite_border</span>
     <span v-if="!profileOwner && followStatus" @click="unFollowUser" title="Unfollow" class="material-icons" style="cursor: pointer;">favorite</span>
-    <span data-bs-toggle="modal" data-bs-target="#follow-modal" @click="getFollowers">Follower: {{userInfo['follower']}}</span>
+    <span data-bs-toggle="modal" data-bs-target="#follow-modal" @click="getFollowers" style="cursor: pointer;">Follower: {{userInfo['follower']}}</span>
 
     <div class="modal fade" id="follow-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
+            <h5 class="modal-title fw-bold" id="exampleModalLabel">{{ modalTitle }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
