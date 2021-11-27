@@ -2,7 +2,7 @@
   <NavBar bgColor="white"/>
   <SideBar bgColor="white"/>
 
-  <main class="container w-100 vh-100">
+  <main class="container w-100">
     <div class="row justify-content-center">
       <div class="col-lg-4">
         <div id="profile">
@@ -79,8 +79,8 @@ main {
   min-height: 50vh;
   background-image: linear-gradient(45deg, rgba(45, 52, 54, 0.7),rgba(248, 255, 255,0.8)), url('../../assets/images/profile_background.jpg');
   background-size: cover;
-  position: sticky;
-  top: 3.1em;
+  //position: sticky;
+  //top: 3.1em;
   img {
     width: 30%;
     display: block; margin: auto;

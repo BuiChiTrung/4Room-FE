@@ -118,6 +118,10 @@ function upVote(addUpvote, postID) {
     )
 }
 
+function getUsersUpvote(postID) {
+    return axios.get(`${baseApiUrl}/posts/${postID}/upvote`, authApiConfig)
+}
+
 function isUpvoted(postID) {
     return axios.get(`${baseApiUrl}/is-upvote/post/${postID}`, authApiConfig)
 }
@@ -127,6 +131,7 @@ export {
     upVote,
     fetchPost,
     fetchUserPost,
+    getUsersUpvote,
     submitComment,
     getAPost,
     downFile,

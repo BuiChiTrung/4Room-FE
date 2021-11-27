@@ -48,7 +48,9 @@
         <i class="far fa-comment-dots fa-2x"></i>
       </figure>
 
-      <h5 class="ms-auto">{{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}</h5>
+      <h5 data-bs-toggle="modal" data-bs-target="#upvote-modal" class="ms-auto" style="cursor: pointer;" @click="getUserUpvotePost">
+        {{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}
+      </h5>
       <h5 style="margin-left: 0.5em">{{frontComments.length}} comment{{frontComments.length > 1 ? 's' : ''}}</h5>
     </div>
   </div>
@@ -64,19 +66,34 @@
   <div class="row cmt-area" v-show="!hideComments">
     <Comments :comment="frontComments" @submit-comment="submitComment" @delete-comment="deleteComment"/>
   </div>
+
+  <div class="modal fade" id="upvote-modal" tabindex="-1" aria-labelledby="upvoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="upvoteModalLabel">Likes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <UserList :usersInfo="upvoteList"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 </template>
 
 <script>
-import { upVote, submitComment, updatePostContent, deleteAComment } from "@/infrastructure/apiServices";
+import { upVote, submitComment, updatePostContent, deleteAComment, isUpvoted, getUsersUpvote, downFile } from "@/infrastructure/apiServices";
 import Comments from "./Comments";
-import {isUpvoted} from "@/infrastructure/apiServices";
-import {downFile} from "@/infrastructure/apiServices";
+import UserList from "@/components/element/UserList";
 
 export default {
   name: "SinglePost",
   components: {
-    Comments
+    Comments,
+    UserList
   },
   props: {
     postID: {
@@ -125,7 +142,8 @@ export default {
       user_info: JSON.parse(localStorage.getItem('user_info')),
       editMode: false,
       frontContent: this.$props.content,
-      lightUpDone: false
+      lightUpDone: false,
+      upvoteList: []
     }
   },
   computed: {
@@ -196,6 +214,16 @@ export default {
       .then(response => {
         console.log(response)
         this.$data.frontComments.splice(indexInCmtList, 1)
+      })
+      .catch(err => console.log(err))
+    },
+
+    getUserUpvotePost() {
+      console.log(this.$props.postID)
+      getUsersUpvote(this.$props.postID)
+      .then(({data}) => {
+        this.$data.upvoteList = data['data']
+        console.log(this.$data.upvoteList)
       })
       .catch(err => console.log(err))
     },
@@ -277,6 +305,20 @@ textarea::-webkit-scrollbar-thumb {
 .text-write-caption {
   font-size: 12.9px;
   line-height: 1.2;
+}
+
+#upvote-modal {
+  .modal-dialog {
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .modal-body {
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
 }
 
 </style>

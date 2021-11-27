@@ -2,7 +2,7 @@
   <NavBar bgColor="white"/>
   <SideBar bgColor="white"/>
 
-  <main class="container w-100 vh-100 p-3">
+  <main class="container w-100 p-3">
     <div class="row justify-content-center">
       <div class="col-8 container newsfeed">
         <div class="row justify-content-center">
