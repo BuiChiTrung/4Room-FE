@@ -47,7 +47,7 @@ const routes = [
     component: ViewSinglePost
   },
   {
-    path: '/room/:name',
+    path: '/room/:id',
     name: 'Room',
     component: RoomPage
   },

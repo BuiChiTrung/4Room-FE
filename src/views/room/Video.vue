@@ -8,11 +8,10 @@
 <script>
 export default {
   name: "Video",
-  props: ['mutedSound'],
+  props: ['mutedSound', 'roomName'],
   data() {
     return {
-      // mutedSound: true,
-      videoSrc: require(`@/assets/videos/${this.$route.params.name}.mp4`)
+      videoSrc: require(`@/assets/videos/${this.roomName}.mp4`)
     }
   },
   mounted() {
