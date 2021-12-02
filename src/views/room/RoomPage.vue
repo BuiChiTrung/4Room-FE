@@ -1,16 +1,15 @@
 <template>
-  <Video :mutedSound="mutedSound"/>
+  <Video :mutedSound="mutedSound" :roomName="roomName"/>
   <PomodoroClock v-if="displayPomodoroClock"/>
   <NavBar/>
   <SideBar/>
-  <ChatArea v-if="displayChatArea"/>
+  <ChatArea v-if="displayChatArea" :roomName="roomName"/>
   <div id="control-buttons">
     <i @click="togglePomodoroClock" id="clock-icon" class="far fa-clock"></i>
     <i v-if="mutedSound" class="fas fa-volume-mute" @click="toggleSound"></i>
     <i v-else @click="toggleSound" class="fas fa-volume-up"></i>
     <i @click="toggleChatArea" class="fas fa-comments"></i>
   </div>
-
 </template>
 
 <script>
@@ -19,6 +18,8 @@ import SideBar from "@/components/layout/SideBar";
 import Video from "@/views/room/Video";
 import PomodoroClock from "@/views/room/PomodoroClock";
 import ChatArea from "./ChatArea";
+import {roomApi} from "../../infrastructure/apiServices";
+
 export default {
   name: "RoomPage",
   components: {ChatArea, PomodoroClock, Video, SideBar, NavBar},
@@ -26,9 +27,20 @@ export default {
     return {
       mutedSound: true,
       displayPomodoroClock: false,
-      displayChatArea: false
+      displayChatArea: false,
+      roomName: ''
     }
   },
+
+
+  created() {
+    roomApi.getRoomInfo(this.$route.params.id)
+      .then(({data}) => {
+          this.roomName = data.data['name']
+      })
+      .catch(err => console.log(err));
+  },
+
   methods: {
     toggleSound() {
       this.mutedSound = !this.mutedSound;

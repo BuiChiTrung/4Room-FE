@@ -70,6 +70,21 @@ export const notificationApi = {
     }
 }
 
+export const messageApi = {
+    getMessagesInRoom(name, page) {
+        return axios.get(`${baseApiUrl}/messages/${name}?page=${page}`, authApiConfig);
+    },
+    sendMessage(data, roomName) {
+        return axios.post(`${baseApiUrl}/messages/create/${roomName}`, data, authApiConfig);
+    }
+}
+
+export const roomApi = {
+    getRoomInfo(roomId) {
+        return axios.get(`${baseApiUrl}/rooms/${roomId}`, authApiConfig);
+    }
+}
+
 function getAPost(postID) {
     return axios.get(`${baseApiUrl}/posts/${postID}`, authApiConfig)
 }

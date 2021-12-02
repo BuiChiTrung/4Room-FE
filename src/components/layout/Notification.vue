@@ -39,7 +39,6 @@ export default {
   },
 
   created() {
-    // const self = this;
     const channel = window.pusher.subscribe('private-notification_user.' + JSON.parse(localStorage.getItem('user_info'))['id']);
     channel.bind('NotificationUpdate', () => {
       this.newNotification++;
@@ -81,16 +80,15 @@ export default {
 
     parseNotification(notification) {
       let formattedNotification = {...notification};
-      formattedNotification.link = `/profile/${notification['record']['user_id']}`
       if (notification['follow_id'] !== null) {
         formattedNotification.message = 'started following you.'
-
+        formattedNotification.link = `/profile/${notification['record']['user_id']}`
       } else if (notification['upvote_id'] !== null) {
         formattedNotification.message = ' upvoted on your post.'
-        // TODO: formattedNotification link
+        formattedNotification.link = `/post/${notification['record']['post_id']}`
       } else {
         formattedNotification.message = ' commented on your post.'
-        // TODO: formattedNotification link
+        formattedNotification.link = `/post/${notification['record']['post_id']}`
       }
       return formattedNotification
     },

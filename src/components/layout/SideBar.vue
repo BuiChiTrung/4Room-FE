@@ -1,49 +1,24 @@
 <template>
   <div id="sidebar-wrapper">
     <aside :style="{background: bgColor}">
-      <router-link class="room" to="/room/piano">
-        <img class="room-img" src="@/assets/images/rooms/piano.jpeg" alt="room-img">
-        <div class="room-name">Piano</div>
-      </router-link>
-      <router-link class="room" to="/room/lofi">
-        <img class="room-img" src="@/assets/images/rooms/lofi.jpg" alt="room-img">
-        <div class="room-name">Lofi</div>
-      </router-link>
-      <router-link class="room" to="/room/library">
-        <img class="room-img" src="@/assets/images/rooms/library.jpg" alt="room-img">
-        <div class="room-name">Library</div>
-      </router-link>
-      <router-link class="room" to="/room/study-with-me">
-        <img class="room-img" src="@/assets/images/rooms/live_study.jpeg" alt="room-img">
-        <div class="room-name">Live Study</div>
-      </router-link>
-      <router-link class="room" to="/room/rain">
-        <img class="room-img" src="@/assets/images/rooms/rain.jpeg" alt="room-img">
-        <div class="room-name">Rain</div>
-      </router-link>
-      <router-link class="room" to="/room/beach">
-        <img class="room-img" src="@/assets/images/rooms/beach.jpeg" alt="room-img">
-        <div class="room-name">Beach</div>
-      </router-link>
-      <router-link class="room" to="/room/natural">
-        <img class="room-img" src="@/assets/images/rooms/natural.jpg" alt="room-img">
-        <div class="room-name">Natural</div>
-      </router-link>
-      <router-link class="room" to="/room/city">
-        <img class="room-img" src="@/assets/images/rooms/city.jpg" alt="room-img">
-        <div class="room-name">City</div>
-      </router-link>
-      <router-link class="room" to="/room/fantasy">
-        <img class="room-img" src="@/assets/images/rooms/fantasy.jpg" alt="room-img">
-        <div class="room-name">Fantasy</div>
-      </router-link>
+      <RoomButton roomId="1" roomName="beach"/>
+      <RoomButton roomId="2" roomName="city"/>
+      <RoomButton roomId="3" roomName="fantasy"/>
+      <RoomButton roomId="4" roomName="library"/>
+      <RoomButton roomId="5" roomName="lofi"/>
+      <RoomButton roomId="6" roomName="natural"/>
+      <RoomButton roomId="7" roomName="piano"/>
+      <RoomButton roomId="8" roomName="rain"/>
+      <RoomButton roomId="9" roomName="live-study"/>
     </aside>
   </div>
 </template>
 
 <script>
+import RoomButton from "./RoomButton";
 export default {
   name: "SideBar",
+  components: {RoomButton},
   props: ['bgColor']
 }
 </script>

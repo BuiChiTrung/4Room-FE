@@ -15,7 +15,7 @@
             <input class="input100" v-model="loginForm.email" type="email" name="email" id="email" placeholder="Email" required>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
-							<i class="fa fa-phone" aria-hidden="true"></i>
+							<i class="far fa-envelope"></i>
 						</span>
           </div>
 
@@ -77,7 +77,7 @@ export default {
           location.assign('/');
       })
       .catch(err => {
-          alert(err.response.data.message);
+          alert(err);
       })
     }
   }

@@ -35,7 +35,6 @@ import FollowArea from "./FollowArea";
 
 export default {
   name: "ProfilePage",
-  // eslint-disable-next-line vue/no-unused-components
   components: {FollowArea, EditProfileForm, StaticProfile, SideBar, NavBar, Posts},
 
   data() {

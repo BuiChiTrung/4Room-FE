@@ -5,7 +5,7 @@ const store = createStore({
         return {
             userInfo: {},
             showEditForm: true,
-            followStatus: false
+            followStatus: false,
         }
     },
     mutations: {
@@ -13,11 +13,11 @@ const store = createStore({
             state.userInfo = newUserInfo;
         },
         toggleEditForm(state) {
-            state.showEditForm = !state.showEditForm
+            state.showEditForm = !state.showEditForm;
         },
         updateFollowStatus(state, newFollowStatus) {
-            state.followStatus = newFollowStatus
-        }
+            state.followStatus = newFollowStatus;
+        },
     }
 })
 

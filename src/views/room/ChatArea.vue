@@ -1,12 +1,14 @@
 <template>
   <main id="chat-area">
     <div id="chat-area-name">
-      <div># {{ this.$route.params.name }} chat room</div>
+      <div># {{ roomName }} chat room</div>
     </div>
 
     <div id="messages">
-      <div class="message" v-for="message in messages" :key="message['id']">
-        <img src="@/assets/images/icons/avatar.png" alt="image">
+      <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
+
+      <div class="message" v-for="message in messages" :key="message['id']" :class="{'message-logged-in-user': isLoggedInUserMessage(message['user_id'])}">
+        <img class="author-avatar" src="@/assets/images/icons/avatar.png" alt="image">
         <div class="author-content">
           <div class="author">{{ message['name_in_forum'] }}</div>
           <div class="content" v-for="content in message['contents']" :key="content['id']">
@@ -16,81 +18,103 @@
       </div>
     </div>
 
-    <form>
-      <input  type="text" name="new_message" placeholder="Type in your message">
-      <i id="btn-send" class="fas fa-paper-plane"></i>
+    <form @submit="sendMessage">
+      <input  type="text" name="new_message" placeholder="Type in your message" v-model="newMessage['content']" autocomplete="off">
+      <i id="btn-send" class="fas fa-paper-plane" @click="sendMessage"></i>
     </form>
   </main>
 </template>
 
 <script>
+import {messageApi} from "../../infrastructure/apiServices";
+import InfiniteLoading from "vue-infinite-loading";
+
 export default {
   name: 'ChatArea',
+  components: {InfiniteLoading},
+  props: ['roomName'],
+
   data() {
     return {
-      messages: [
-        {
-          'user_id': 31,
-          'name_in_forum': 'Straw',
-          'contents': [
-            {'id': 1, 'content': 'Arcane: Jinx, Vi, Jayce, Ekko'},
-            {'id': 2, 'content': 'Hell Bound'},
-            {'id': 3, 'content': 'Kimetsu no Yaiba'},
-          ]
-        },
-        {
-          'user_id': 2,
-          'name_in_forum': 'Lý Huy Lanh',
-          'contents': [
-            {'id': 1, 'content': 'Arcane: Jinx, Vi, Jayce, Ekko'},
-          ]
-        },
-        {
-          'user_id': 31,
-          'name_in_forum': 'Straw',
-          'contents': [
-            {'id': 1, 'content': 'Arcane: Jinx, Vi, Jayce, Ekko'},
-            {'id': 2, 'content': 'Hell Bound'},
-            {'id': 3, 'content': 'Kimetsu no Yaiba'},
-          ]
-        },
-        {
-          'user_id': 31,
-          'name_in_forum': 'Straw',
-          'contents': [
-            {'id': 1, 'content': 'Arcane: Jinx, Vi, Jayce, Ekko'},
-            {'id': 2, 'content': 'Hell Bound'},
-            {'id': 3, 'content': 'Kimetsu no Yaiba'},
-          ]
-        },
-        {
-          'user_id': 31,
-          'name_in_forum': 'Straw',
-          'contents': [
-            {'id': 1, 'content': 'Arcane: Jinx, Vi, Jayce, Ekko'},
-            {'id': 2, 'content': 'Hell Bound'},
-            {'id': 3, 'content': 'Kimetsu no Yaiba'},
-          ]
-        },
-        {
-          'user_id': 31,
-          'name_in_forum': 'Straw',
-          'contents': [
-            {'id': 1, 'content': 'Arcane: Jinx, Vi, Jayce, Ekko'},
-            {'id': 2, 'content': 'Hell Bound'},
-            {'id': 3, 'content': 'Kimetsu no Yaiba'},
-          ]
-        },
-        {
-          'user_id': 31,
-          'name_in_forum': 'Straw',
-          'contents': [
-            {'id': 1, 'content': 'Arcane: Jinx, Vi, Jayce, Ekko'},
-            {'id': 2, 'content': 'Hell Bound'},
-            {'id': 3, 'content': 'Kimetsu no Yaiba'},
-          ]
-        },
-      ]
+      messages: [],
+      newMessage: {
+        'content': null
+      },
+      page: 1
+    }
+  },
+
+  created() {
+    const channel = window.pusher.subscribe(`private-message_room.${this.$route.params.id}`);
+    channel.bind('MessageUpdateEvent', (data) => {
+      const totalMessages = this.messages.length;
+      if (data['user_id'] === this.messages[totalMessages - 1]['user_id']) {
+        this.messages[totalMessages - 1]['contents'].push({'id': data['message_id'], 'content': data['content']})
+      }
+      else
+        this.messages.push({
+          'user_id': data['user_id'],
+          'name_in_forum': data['name_in_forum'],
+          'contents': [{'id': data['message_id'], 'content': data['content']}]
+        })
+
+      setTimeout(() => {
+        let objDiv = document.getElementById("messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      })
+    })
+  },
+
+  methods: {
+    infiniteHandler($state) {
+      messageApi.getMessagesInRoom(this.$route.params.id, this.page)
+      .then(({ data }) => {
+        if (data.data.length) {
+          this.page += 1;
+          this.messages.unshift(...this.mergeMessageOfSamePerson(data.data).reverse());
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      });
+    },
+
+    isLoggedInUserMessage(userId) {
+      console.log(userId, parseInt(JSON.parse(localStorage.getItem('user_info'))['id']));
+      return userId === parseInt(JSON.parse(localStorage.getItem('user_info'))['id'])
+    },
+
+    mergeMessageOfSamePerson(messages) {
+      let mergedMessages = [];
+      for (let i = 0; i < messages.length;) {
+        let messagesOfSamePerson = {
+          'user_id': messages[i]['user_id'],
+          'name_in_forum': messages[i]['name_in_forum'],
+          'contents': []
+        };
+
+        let j = i;
+        while(j < messages.length && messages[j]['user_id'] === messages[i]['user_id']) {
+          messagesOfSamePerson['contents'].push({
+            'id': messages[j]['user_id'],
+            'content': messages[j]['content']
+          });
+          ++j;
+        }
+
+        messagesOfSamePerson['contents'] = messagesOfSamePerson['contents'].reverse();
+        mergedMessages.push(messagesOfSamePerson);
+        i = j;
+      }
+      return mergedMessages;
+    },
+
+    sendMessage(e) {
+      e.preventDefault();
+      messageApi.sendMessage(this.newMessage, this.$route.params.id)
+      .then(() => {})
+      .catch(err => console.log(err));
+      this.newMessage['content'] = '';
     }
   }
 }
@@ -103,10 +127,11 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 0 7rem 1rem 2rem;
+
   border-radius: 2rem;
   background: white;
-  flex-grow: 1;
+  width: calc(100vw - #{$sidebar-width} - 6rem);
+  height: calc(100vh - #{$navbar-height} - 2rem);
   padding: 5rem 3rem 3rem;
 
   #chat-area-name {
@@ -120,10 +145,8 @@ export default {
   }
 
   #messages {
-    //display: flex;
-    //flex-direction: column-reverse;
-    //justify-content: start;
-    max-height: 73vh;
+    margin: 2rem 0;
+    flex-grow: 1;
     overflow-y: scroll;
 
     .message {
@@ -131,24 +154,43 @@ export default {
       align-items: flex-end;
       margin-bottom: 1rem;
 
-      .author-content {
-        .author {
-          color: #636e72;
-          margin-left: 1.5rem;
-        }
-        .content {
-          width: fit-content;
-          font-size: 1.2rem;
-          background: whitesmoke;
-          padding: 0.5rem 1.5rem;
-          border-radius: 1.5rem;
-          margin-bottom: 0.3rem;
-        }
-      }
-
-      img {
+      .author-avatar {
         width: 4rem;
         margin-right: 2rem;
+      }
+
+      .author {
+        color: #636e72;
+        margin-left: 1.5rem;
+      }
+
+      .content {
+        width: fit-content;
+        font-size: 1.2rem;
+        background: whitesmoke;
+        padding: 0.5rem 1.5rem;
+        border-radius: 1.5rem;
+        margin-bottom: 0.3rem;
+      }
+    }
+
+    .message-logged-in-user {
+      //flex-direction: column;
+      justify-content: flex-end;
+
+      .author-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding-right: 2rem;
+      }
+
+      .content {
+        background: $main_color1;
+        color: white;
+      }
+      .author-avatar, .author {
+        display: none;
       }
     }
   }

@@ -35,6 +35,7 @@ import Follow from "../../components/newsfeed/Follow";
 
 export default {
   name: "HomePage",
+
   components: {
     NavBar,
     SideBar,
@@ -46,11 +47,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-/* dev */
-//main, main * {
-//  border: 1px solid black;
-//}
 
 main {
   margin-top: 2em;
