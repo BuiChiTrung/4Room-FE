@@ -12,7 +12,7 @@
             <h5 class="modal-title fw-bold" id="exampleModalLabel">{{ modalTitle }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" data-bs-dismiss="modal">
             <UserList :usersInfo="followList"/>
           </div>
         </div>

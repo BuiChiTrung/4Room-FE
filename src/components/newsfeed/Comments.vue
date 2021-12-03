@@ -4,6 +4,7 @@
     <SingleComment
         :nameInForum="item.name_in_forum"
         :userID="item.user_id"
+        :avatarID="item.avatar_id"
         :content="item.content"
         :indexInCmtList="index"
         @delete-comment="deleteComment"
@@ -13,7 +14,7 @@
   <div class="row">
     <div class="d-flex mb-3 reply">
       <a href="#" style="margin-right: 0.5em">
-        <img class="comment-avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+        <img class="comment-avatar" :src="avtURL()" alt="avatar">
       </a>
       <input
           type="text"
@@ -30,6 +31,7 @@
 
 <script>
 import SingleComment from "./SingleComment";
+import {avatarURL} from "@/infrastructure/apiServices";
 export default {
   name: "Comments",
   components: {SingleComment},
@@ -57,6 +59,11 @@ export default {
 
     deleteComment(indexInCmtList) {
       this.$emit('delete-comment', indexInCmtList)
+    },
+
+    avtURL() {
+      const avtID = JSON.parse(localStorage.getItem('user_info'))['avatar_id']
+      return avatarURL(avtID)
     }
   }
 }

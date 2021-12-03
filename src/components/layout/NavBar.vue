@@ -19,7 +19,7 @@
 
       <div class="dropdown dropstart">
         <a data-toggle="dropdown" href="#"  data-bs-toggle="dropdown"  aria-expanded="false">
-          <img id="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+          <img id="avatar" :src="avtURL()" alt="avatar">
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -36,6 +36,7 @@ import {authApi} from "@/infrastructure/apiServices";
 import {profileApi} from "../../infrastructure/apiServices";
 import UserList from "../element/UserList";
 import Notification from "./Notification";
+import {avatarURL} from "../../infrastructure/apiServices";
 
 export default {
   name: "NavBar",
@@ -58,6 +59,11 @@ export default {
         location.assign('/login');
       }
     },
+
+    avtURL() {
+      const avtID = JSON.parse(localStorage.getItem('user_info'))['avatar_id']
+      return avatarURL(avtID)
+    }
   },
 
   watch: {
@@ -85,6 +91,7 @@ export default {
 #navbar-wrapper {
   width: 100%;
   height: $navbar-height;
+  z-index: 5;
 }
 nav {
   position: fixed;
