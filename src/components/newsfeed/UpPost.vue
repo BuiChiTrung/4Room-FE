@@ -3,7 +3,7 @@
   <div class="row row-with-caption">
     <div class="d-flex mb-3">
       <a href="#" style="margin-right: 1em">
-        <img class="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+        <img class="avatar" :src="avtURL()" alt="avatar">
       </a>
       <textarea class="form-control text-write-caption" v-model="caption" name="caption" placeholder="what's on your mind?"></textarea>
     </div>
@@ -34,6 +34,7 @@
 
 <script>
 import { upPost } from "@/infrastructure/apiServices";
+import {avatarURL} from "../../infrastructure/apiServices";
 
 export default {
   name: "UpPost",
@@ -71,6 +72,11 @@ export default {
       .finally(() => {
         this._reload()
       })
+    },
+
+    avtURL() {
+      const avtID = JSON.parse(localStorage.getItem('user_info'))['avatar_id']
+      return avatarURL(avtID)
     }
   }
 }

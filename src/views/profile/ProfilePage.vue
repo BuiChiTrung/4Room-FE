@@ -3,10 +3,10 @@
   <SideBar bgColor="white"/>
 
   <main class="container w-100">
-    <div class="row justify-content-center">
+    <div class="row w-100 justify-content-center">
       <div class="col-lg-4">
         <div id="profile">
-            <img alt="avatar" src="@/assets/images/icons/avatar.png">
+            <img alt="avatar" :src="avtURL()">
             <FollowArea :profileOwner="profileOwner"/>
             <StaticProfile v-if="showEditForm" :profileOwner="profileOwner"/>
             <EditProfileForm v-else/>
@@ -32,6 +32,7 @@ import {mapState} from 'vuex';
 import StaticProfile from "./StaticProfile";
 import EditProfileForm from "./EditProfileForm";
 import FollowArea from "./FollowArea";
+import {avatarURL, profileApi} from "../../infrastructure/apiServices";
 
 export default {
   name: "ProfilePage",
@@ -40,7 +41,8 @@ export default {
   data() {
     return {
       profileOwner: true,
-      userID: null
+      userID: null,
+      avatarID: null
     }
   },
   computed: mapState(['showEditForm']),
@@ -57,6 +59,16 @@ export default {
     } else {
       this.$data.userID = currentUser
     }
+    profileApi.getUserInfo(this.$data.userID)
+    .then(({data}) => {
+      this.$data.avatarID = data['data']['avatar_id']
+    })
+    .catch (err => console.log(err))
+  },
+  methods: {
+    avtURL() {
+      return avatarURL(this.$data.avatarID)
+    }
   }
 }
 </script>
@@ -71,15 +83,12 @@ main {
 }
 
 #profile {
-  //width: 60rem;
   font-size: 2rem;
   font-weight: bold;
   padding: 5rem 0;
   min-height: 50vh;
   background-image: linear-gradient(45deg, rgba(45, 52, 54, 0.7),rgba(248, 255, 255,0.8)), url('../../assets/images/profile_background.jpg');
   background-size: cover;
-  //position: sticky;
-  //top: 3.1em;
   img {
     width: 30%;
     display: block; margin: auto;
@@ -88,6 +97,4 @@ main {
     color: $main_color;
   }
 }
-
-
 </style>

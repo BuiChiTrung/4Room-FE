@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex mb-3 single-comment">
   <a :href="`/profile/${userID}`" style="margin-right: 0.5em">
-    <img class="comment-avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+    <img class="comment-avatar" :src="avtURL()" alt="avatar">
   </a>
   <h5 v-if="!editMode" class="text-start text-break" style="margin-top: 0.3em;">
     <a :href="`/profile/${userID}`" style="text-decoration: none; color: black">
@@ -19,10 +19,16 @@
 </template>
 
 <script>
+import {avatarURL} from "@/infrastructure/apiServices";
+
 export default {
   name: "SingleComment",
   props: {
     userID: {
+      type: Number,
+      require: true
+    },
+    avatarID: {
       type: Number,
       require: true
     },
@@ -62,6 +68,10 @@ export default {
 
     turnOff(prop) {
       this.$data[prop] = false
+    },
+
+    avtURL() {
+      return avatarURL(this.$props.avatarID)
     }
   }
 }

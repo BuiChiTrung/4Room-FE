@@ -5,3 +5,4 @@ export const baseBroadcastUrl = 'http://localhost:8000';
 // production
 // export const baseApiUrl = 'http://4room.com.vn/api';
 // export const baseBroadcastUrl = 'http://4room.com.vn';
+export const baseStorageAPI = 'http://localhost:8000/storage'

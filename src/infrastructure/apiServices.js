@@ -1,7 +1,7 @@
 import noAuthApiConfig from "@/infrastructure/noAuthApi";
 import authApiConfig from "@/infrastructure/authApi";
 import axios from 'axios';
-import { baseApiUrl } from '@/env'
+import { baseApiUrl, baseStorageAPI } from '@/env'
 
 
 export const authApi = {
@@ -141,6 +141,10 @@ function isUpvoted(postID) {
     return axios.get(`${baseApiUrl}/is-upvote/post/${postID}`, authApiConfig)
 }
 
+function avatarURL(avatarID) {
+    return `${baseStorageAPI}/avatar/${avatarID}.png`
+}
+
 export {
     upPost,
     upVote,
@@ -153,5 +157,6 @@ export {
     isUpvoted,
     updatePostContent,
     deleteAPost,
-    deleteAComment
+    deleteAComment,
+    avatarURL
 }

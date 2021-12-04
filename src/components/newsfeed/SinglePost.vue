@@ -3,7 +3,7 @@
   <div class="row" style="margin-top: 1.5em;">
     <div class="d-flex mb-3">
       <a :href="`/profile/${ownerID}`" style="margin-right: 0.5em">
-        <img class="avatar" src="@/assets/images/icons/avatar.png" alt="avatar">
+        <img class="avatar" src="http://localhost:8000/storage/avatar/1.png" alt="avatar">
       </a>
       <a :href="`/profile/${ownerID}`">
         <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em; margin-left: 0.3em">{{ nameInForum }}</h4>
@@ -74,7 +74,7 @@
           <h5 class="modal-title fw-bold" id="upvoteModalLabel">Likes</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" data-bs-dismiss="modal">
           <UserList :usersInfo="upvoteList"/>
         </div>
       </div>
@@ -133,6 +133,9 @@ export default {
       require: true
     }
   },
+  created() {
+
+  },
   data() {
     return {
       liked: null,
@@ -175,24 +178,24 @@ export default {
       }
       this.$data.liked = !this.$data.liked;
 
-      //TODO: need to know body request
       upVote(addUpvote, this.$props.postID)
       .then(response => console.log(response.data['success']))
       .catch(err => console.log(err))
     },
 
     submitComment(reply) {
-      this.$data.frontComments.push({
-        user_id: this.$data.user_info['id'],
-        name_in_forum: this.$data.user_info['name_in_forum'],
-        content: reply
-        //TODO: need to know commentID in response message to delete right after submitting
-      })
-
       let data = new FormData()
       data.append('content', reply)
       submitComment(data, this.$props.postID)
-      .then(response => console.log(response))
+      .then(({data}) => {
+        this.$data.frontComments.push({
+          user_id: this.$data.user_info['id'],
+          comment_id: data['data']['comment_id'],
+          name_in_forum: this.$data.user_info['name_in_forum'],
+          content: reply
+        })
+        console.log(data)
+      })
       .catch(err => console.log(err))
     },
 

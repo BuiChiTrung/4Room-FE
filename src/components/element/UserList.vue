@@ -1,15 +1,19 @@
 <template>
-  <div id="user-list" style="background: #f0f2f5;">
+  <div id="user-list">
     <div v-for="user in usersInfo" :key="user['id']">
-      <router-link :to="`/profile/${user['id']}`">
-        <img src="@/assets/images/icons/avatar.png" alt="img">
-        <span class="h5">{{ user['name_in_forum'] }}</span>
-      </router-link>
+      <div @click="changeRoute(`/profile/${user['id']}`)" style="cursor: pointer;">
+        <a>
+          <img :src="avtURL(user['avatar_id'])" alt="img">
+          <span class="h5">{{ user['name_in_forum'] }}</span>
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import {avatarURL} from "@/infrastructure/apiServices";
+
 export default {
   name: "UserList",
   props: {
@@ -21,6 +25,14 @@ export default {
   },
   mounted() {
     console.log(this.$props.usersInfo)
+  },
+  methods: {
+    changeRoute(route) {
+      this.$router.push(route)
+    },
+    avtURL(avtID) {
+      return avatarURL(avtID)
+    }
   }
 }
 </script>
@@ -29,8 +41,7 @@ export default {
   @import 'src/assets/sass/style.scss';
   #user-list {
     width: 100%;
-    background: white;
-    z-index: 1000;
+    background: #f0f2f5;
     a {
       display: block;
       @include flex-center;
