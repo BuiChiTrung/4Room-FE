@@ -3,7 +3,7 @@
   <div class="row" style="margin-top: 1.5em;">
     <div class="d-flex mb-3">
       <a :href="`/profile/${ownerID}`" style="margin-right: 0.5em">
-        <img class="avatar" src="http://localhost:8000/storage/avatar/1.png" alt="avatar">
+        <img class="avatar" :src="`${storageUrl}/avatar/1.png`" alt="avatar">
       </a>
       <a :href="`/profile/${ownerID}`">
         <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em; margin-left: 0.3em">{{ nameInForum }}</h4>
@@ -88,6 +88,7 @@
 import { upVote, submitComment, updatePostContent, deleteAComment, isUpvoted, getUsersUpvote, downFile } from "@/infrastructure/apiServices";
 import Comments from "./Comments";
 import UserList from "@/components/element/UserList";
+import {baseStorageAPI} from "../../env";
 
 export default {
   name: "SinglePost",
@@ -146,7 +147,8 @@ export default {
       editMode: false,
       frontContent: this.$props.content,
       lightUpDone: false,
-      upvoteList: []
+      upvoteList: [],
+      storageUrl: baseStorageAPI
     }
   },
   computed: {

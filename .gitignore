@@ -2,6 +2,7 @@
 node_modules
 /dist
 src/assets/videos
+src/env
 
 
 # local env files
