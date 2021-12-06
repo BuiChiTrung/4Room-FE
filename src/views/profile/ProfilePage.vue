@@ -4,7 +4,7 @@
 
   <main class="container w-100">
     <div class="row w-100 justify-content-center">
-      <div class="col-lg-4">
+      <div class="col-lg-4 col-md-5">
         <div id="profile">
             <img alt="avatar" :src="avtURL()">
             <FollowArea :profileOwner="profileOwner"/>
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <div class="col-lg-8 container newsfeed">
+      <div class="col-lg-8 col-md-7 container newsfeed">
         <div class="row justify-content-center" style="margin-top: 2em">
           <div class="col-10">
             <Posts :typePosts="{name: 'ProfilePage', userID}"></Posts>
@@ -67,6 +67,7 @@ export default {
   },
   methods: {
     avtURL() {
+      // this.avatarID = 1
       return avatarURL(this.$data.avatarID)
     }
   }
@@ -77,7 +78,7 @@ export default {
 @import 'src/assets/sass/style.scss';
 
 main {
-  flex-grow: 1;
+  max-width: calc(100vw - #{$sidebar-width} - 2rem);
   display: flex;
   flex-wrap: wrap;
 }
@@ -85,13 +86,16 @@ main {
 #profile {
   font-size: 2rem;
   font-weight: bold;
-  padding: 5rem 0;
+  padding: 5rem 4rem;
   min-height: 50vh;
+  margin-top: 3.5rem;
+  border-radius: 2rem;
   background-image: linear-gradient(45deg, rgba(45, 52, 54, 0.7),rgba(248, 255, 255,0.8)), url('../../assets/images/profile_background.jpg');
   background-size: cover;
   img {
-    width: 30%;
-    display: block; margin: auto;
+    width: 40%;
+    display: block;
+    margin: auto;
   }
   i {
     color: $main_color;

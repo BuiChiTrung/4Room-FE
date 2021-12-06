@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .room {
   display: block;
   margin-top: 1rem;
@@ -25,6 +25,12 @@ export default {
   color: black;
   text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 0.5px 0.5px #fff, -0.5px -0.5px 0 #fff, 0.5px -0.5px 0 #fff, -0.5px 0.5px 0 #fff;
   font-weight: bold;
+}
+
+.room:hover {
+  .room-img {
+    border-radius: 50%;
+  }
 }
 
 .room-img {

@@ -4,7 +4,7 @@
       <div @click="changeRoute(`/profile/${user['id']}`)" style="cursor: pointer;">
         <a class="user">
           <img class="avatar" :src="avtURL(user['avatar_id'])" alt="img">
-          <span class="name-in-forum h5">{{ user['name_in_forum'] }}</span>
+          <span class="name-in-forum">{{ user['name_in_forum'] }}</span>
         </a>
       </div>
     </div>
@@ -23,9 +23,6 @@ export default {
       default: () => []
     }
   },
-  mounted() {
-    console.log(this.$props.usersInfo)
-  },
   methods: {
     changeRoute(route) {
       this.$router.push(route)
@@ -43,7 +40,7 @@ export default {
   #user-list {
     width: 100%;
     background: #f0f2f5;
-    //clip-path: polygon(44% 8%, 49% 0, 54% 8%, 100% 8%, 100% 100%, 0 100%, 0 8%);
+    border-radius: 2rem;
 
     .user {
       display: block;
@@ -56,6 +53,7 @@ export default {
       }
       .name-in-forum {
         font-weight: bold;
+        font-size: 1.5rem;
       }
       //.name-in-forum:hover {
       //  text-decoration: underline;
@@ -63,7 +61,7 @@ export default {
     }
 
     .user:hover {
-      background: whitesmoke;
+      background: #dedfe2;
     }
   }
   @media (max-width: 600px) {

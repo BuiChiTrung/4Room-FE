@@ -27,16 +27,16 @@ export const authApi = {
 
 export const profileApi = {
     getProfile() {
-        return axios.get(`${baseApiUrl}/users/profile`, authApiConfig);
+        return axios.get(`${baseApiUrl}/profile`, authApiConfig);
     },
     updateProfile(data) {
-        return axios.post(`${baseApiUrl}/users/profile`, data, authApiConfig);
+        return axios.post(`${baseApiUrl}/profile`, data, authApiConfig);
     },
     searchUserByName(data) {
         return axios.post(`${baseApiUrl}/users/search`, data, authApiConfig);
     },
     getUserInfo(id) {
-        return axios.get(`${baseApiUrl}/users/${id}/profile`, authApiConfig);
+        return axios.get(`${baseApiUrl}/users/${id}`, authApiConfig);
     }
 }
 

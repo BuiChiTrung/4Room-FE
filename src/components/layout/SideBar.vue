@@ -1,6 +1,6 @@
 <template>
   <div id="sidebar-wrapper">
-    <aside :style="{background: bgColor}">
+    <aside :style="{background: bgColor}" v-if="showSidebar">
       <RoomButton roomId="1" roomName="beach"/>
       <RoomButton roomId="2" roomName="city"/>
       <RoomButton roomId="3" roomName="fantasy"/>
@@ -16,10 +16,12 @@
 
 <script>
 import RoomButton from "./RoomButton";
+import {mapState} from "vuex";
 export default {
   name: "SideBar",
   components: {RoomButton},
-  props: ['bgColor']
+  props: ['bgColor'],
+  computed: mapState(['showSidebar'])
 }
 </script>
 

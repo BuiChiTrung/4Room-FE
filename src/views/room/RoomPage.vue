@@ -78,5 +78,10 @@ export default {
     font-size: 3rem;
     margin: 1rem 0;
   }
+
+  i:hover {
+    color: #ced6e0;
+    cursor: pointer;
+  }
 }
 </style>
