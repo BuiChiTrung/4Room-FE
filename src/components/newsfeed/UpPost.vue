@@ -5,7 +5,7 @@
       <a href="#" style="margin-right: 1em">
         <img class="avatar" :src="avtURL()" alt="avatar">
       </a>
-      <textarea class="form-control text-write-caption" v-model="caption" name="caption" placeholder="what's on your mind?"></textarea>
+      <textarea class="form-control text-write-caption" v-model="caption" name="caption" placeholder="What's on your mind?"></textarea>
     </div>
   </div>
 
@@ -125,6 +125,10 @@ export default {
 
 .up-icon {
   margin-bottom: -3em;
+}
+
+i:hover, .material-icons-outlined:hover {
+  color: rgb(6, 36, 80) !important;
 }
 
 .avatar {

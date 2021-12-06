@@ -260,6 +260,10 @@ export default {
   box-shadow: 0.1em 0.1em 3px rgba(0, 0, 0, 0.2);
 }
 
+.text-start.text-break.fw-bold:hover {
+  text-decoration: underline !important;
+}
+
 .avatar {
   height: 4.5em;
 }

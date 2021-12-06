@@ -2,9 +2,9 @@
   <div id="user-list">
     <div v-for="user in usersInfo" :key="user['id']">
       <div @click="changeRoute(`/profile/${user['id']}`)" style="cursor: pointer;">
-        <a>
-          <img :src="avtURL(user['avatar_id'])" alt="img">
-          <span class="h5">{{ user['name_in_forum'] }}</span>
+        <a class="user">
+          <img class="avatar" :src="avtURL(user['avatar_id'])" alt="img">
+          <span class="name-in-forum">{{ user['name_in_forum'] }}</span>
         </a>
       </div>
     </div>
@@ -23,14 +23,12 @@ export default {
       default: () => []
     }
   },
-  mounted() {
-    console.log(this.$props.usersInfo)
-  },
   methods: {
     changeRoute(route) {
       this.$router.push(route)
     },
     avtURL(avtID) {
+      avtID = 1;
       return avatarURL(avtID)
     }
   }
@@ -42,17 +40,28 @@ export default {
   #user-list {
     width: 100%;
     background: #f0f2f5;
-    a {
+    border-radius: 2rem;
+
+    .user {
       display: block;
       @include flex-center;
       padding: 1rem;
-      img {
+      border-radius: 2rem;
+      .avatar {
         width: 4.5rem;
         margin-right: 1rem;
       }
-      span {
+      .name-in-forum {
         font-weight: bold;
+        font-size: 1.5rem;
       }
+      //.name-in-forum:hover {
+      //  text-decoration: underline;
+      //}
+    }
+
+    .user:hover {
+      background: #dedfe2;
     }
   }
   @media (max-width: 600px) {

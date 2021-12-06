@@ -6,6 +6,7 @@ const store = createStore({
             userInfo: {},
             showEditForm: true,
             followStatus: false,
+            showSidebar: true
         }
     },
     mutations: {
@@ -18,6 +19,9 @@ const store = createStore({
         updateFollowStatus(state, newFollowStatus) {
             state.followStatus = newFollowStatus;
         },
+        toggleSidebar(state) {
+            state.showSidebar = !state.showSidebar;
+        }
     }
 })
 

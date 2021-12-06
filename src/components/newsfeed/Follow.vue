@@ -1,6 +1,6 @@
 <template>
-<div style="position: fixed; background-color: #f0f2f5;">
-  <h6>People you may want to follow</h6>
+<div id="follow-suggestion">
+  <h4>People you may want to follow</h4>
   <UserList :usersInfo="usersInfo"/>
 </div>
 </template>
@@ -29,5 +29,14 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/sass/style";
 
+#follow-suggestion {
+  //position: fixed;
+  background-color: #f0f2f5;
+  width: 80%;
+
+  h4 {
+    //font-weight: bold;
+  }
+}
 
 </style>

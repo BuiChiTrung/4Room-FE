@@ -1,7 +1,7 @@
 <template>
   <div id="profile-static">
-    <div>{{userInfo.name_in_forum}}</div>
-    <div>{{userInfo.bio}}</div>
+    <div id="name-in-forum">{{userInfo.name_in_forum}}</div>
+    <div id="bio">{{userInfo.bio}}</div>
     <hr>
     <button v-show="profileOwner" class="btn btn-info" @click="toggleEditForm">Edit Profile</button>
 
@@ -48,7 +48,7 @@ export default {
 
 #profile-static {
   color: $main_color;
-  width: 30rem;
+  //width: 30rem;
   margin: 0 auto;
   button {
     width: 100%;
@@ -74,7 +74,7 @@ export default {
     }
   }
   div:nth-child(1){
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: bold;
   }
 }

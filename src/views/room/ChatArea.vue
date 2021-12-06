@@ -8,7 +8,7 @@
       <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
 
       <div class="message" v-for="message in messages" :key="message['id']" :class="{'message-logged-in-user': isLoggedInUserMessage(message['user_id'])}">
-        <img class="author-avatar" src="@/assets/images/icons/avatar.png" alt="image">
+        <a :href="`/profile/${message['user_id']}`"><img class="author-avatar" src="@/assets/images/icons/avatar.png" alt="image"></a>
         <div class="author-content">
           <div class="author">{{ message['name_in_forum'] }}</div>
           <div class="content" v-for="content in message['contents']" :key="content['id']">
@@ -80,7 +80,6 @@ export default {
     },
 
     isLoggedInUserMessage(userId) {
-      console.log(userId, parseInt(JSON.parse(localStorage.getItem('user_info'))['id']));
       return userId === parseInt(JSON.parse(localStorage.getItem('user_info'))['id'])
     },
 
@@ -122,11 +121,15 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/assets/sass/style';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;1,300&display=swap');
+
 #chat-area {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  font-family: 'Open Sans', sans-serif;
 
   border-radius: 2rem;
   background: white;

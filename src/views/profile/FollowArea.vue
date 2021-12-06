@@ -88,7 +88,7 @@ export default {
 @import 'src/assets/sass/style';
 
 #follow-area {
-  width: 30rem;
+  //width: 30rem;
   margin: 0 auto;
   font-size: 1.5rem;
   display: flex;
@@ -101,10 +101,6 @@ export default {
 }
 
 #follow-modal {
-  //@include flex-center-center;
-  //display: flex !important;
-  //align-items: center;
-  //justify-content: center;
   .modal-dialog {
     width: 50%;
     position: absolute;

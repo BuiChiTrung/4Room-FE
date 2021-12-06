@@ -1,7 +1,7 @@
 <template>
   <div id="navbar-wrapper">
     <nav :style="{ background: bgColor }">
-      <i id="menu" class="fas fa-bars" @click="toggleSideBar"></i>
+      <i id="menu" class="fas fa-bars" @click="toggleSidebar"></i>
       <a href="/" id="logo-title">
         <img id="logo" src="@/assets/images/icons/4room.png" alt="logo">
         <div id="title">4Room</div>
@@ -23,7 +23,7 @@
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><router-link class="dropdown-item" to="/profile">Profile</router-link></li>
+          <li><a class="dropdown-item" href="/profile">Profile</a></li>
           <li><div class="dropdown-item" @click="logout">Logout</div></li>
         </ul>
       </div>
@@ -37,6 +37,7 @@ import {profileApi} from "../../infrastructure/apiServices";
 import UserList from "../element/UserList";
 import Notification from "./Notification";
 import {avatarURL} from "../../infrastructure/apiServices";
+import {mapMutations} from "vuex";
 
 export default {
   name: "NavBar",
@@ -51,9 +52,10 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['toggleSidebar']),
+
     async logout() {
       let response = await authApi.logout();
-      console.log(response.data, response.status);
       if (response.status === 200) {
         localStorage.removeItem('jwt');
         location.assign('/login');
@@ -72,9 +74,7 @@ export default {
       if (this.nameInForum !== '')
         profileApi.searchUserByName({'name_in_forum': this.nameInForum})
             .then(response => {
-              console.log(response);
               self.usersInfo = response.data['data'];
-              console.log(self.usersInfo[0])
             })
             .catch(err => console.log(err))
       else
@@ -105,6 +105,9 @@ nav {
   #menu {
     margin: 0 2.25rem;
   }
+  #menu:hover {
+    cursor: pointer;
+  }
 
   #logo-title {
     display: flex;
@@ -126,6 +129,9 @@ nav {
   #search-space {
     width: 60%;
     margin: auto;
+    #search-box:focus {
+      background: red;
+    }
     #search-box {
       position: relative;
       margin: auto;
@@ -151,10 +157,9 @@ nav {
     }
   }
 
-  #result-space {
-    //position: absolute;
+  #user-list {
+    box-shadow: 0.1em 0.1em 3px rgba(0, 0, 0, 0.2);
   }
-
 
   img {
     height: 4rem;
