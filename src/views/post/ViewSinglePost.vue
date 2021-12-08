@@ -8,9 +8,9 @@
             <div class="col-10">
               <SinglePost
                   v-for="(item, index) in postLists" :key="index"
-                  :postID="item.post_id"
-                  :ownerID="item.owner_id"
-                  :nameInForum="item.name_in_forum"
+                  :postID="item.id"
+                  :ownerID="item.owner.id"
+                  :nameInForum="item.owner.name_in_forum"
                   :content="item.content"
                   :file="item.file"
                   :upvote="item.upvote"

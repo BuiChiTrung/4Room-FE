@@ -72,7 +72,7 @@ export default {
     nameInForum() {
       let self = this;
       if (this.nameInForum !== '')
-        profileApi.searchUserByName({'name_in_forum': this.nameInForum})
+        profileApi.searchUserByName(this.nameInForum)
             .then(response => {
               self.usersInfo = response.data['data'];
             })

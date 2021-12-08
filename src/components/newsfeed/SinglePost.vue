@@ -122,7 +122,7 @@ export default {
       type: Number,
       require: true
     },
-    comment: {
+    comments: {
       type: Array,
       require: true,
       default: () => {
@@ -142,7 +142,7 @@ export default {
       liked: null,
       frontUpvote: this.$props.upvote,
       hideComments: true,
-      frontComments: this.$props.comment,
+      frontComments: this.$props.comments,
       user_info: JSON.parse(localStorage.getItem('user_info')),
       editMode: false,
       frontContent: this.$props.content,
@@ -190,13 +190,7 @@ export default {
       data.append('content', reply)
       submitComment(data, this.$props.postID)
       .then(({data}) => {
-        this.$data.frontComments.push({
-          user_id: this.$data.user_info['id'],
-          comment_id: data['data']['comment_id'],
-          name_in_forum: this.$data.user_info['name_in_forum'],
-          content: reply
-        })
-        console.log(data)
+        this.$data.frontComments.push(data['data'])
       })
       .catch(err => console.log(err))
     },
@@ -215,7 +209,7 @@ export default {
     },
 
     deleteComment(indexInCmtList) {
-      deleteAComment(this.$props.postID, this.$data.frontComments[indexInCmtList]["comment_id"])
+      deleteAComment(this.$props.postID, this.$data.frontComments[indexInCmtList]["id"])
       .then(response => {
         console.log(response)
         this.$data.frontComments.splice(indexInCmtList, 1)
@@ -228,6 +222,7 @@ export default {
       getUsersUpvote(this.$props.postID)
       .then(({data}) => {
         this.$data.upvoteList = data['data']
+        this.$data.frontUpvote = this.$data.upvoteList.length
         console.log(this.$data.upvoteList)
       })
       .catch(err => console.log(err))

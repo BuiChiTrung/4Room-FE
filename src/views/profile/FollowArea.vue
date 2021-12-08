@@ -68,6 +68,7 @@ export default {
         .then(({data}) => {
           this.followList = data.data;
           this.modalTitle = 'Followers';
+          this.userInfo['follower'] = this.followList.length
         })
         .catch(err => console.log(err))
     },
@@ -77,6 +78,7 @@ export default {
           .then(({data}) => {
             this.followList = data.data;
             this.modalTitle = 'Following';
+            this.userInfo['following'] = this.followList.length
           })
           .catch(err => console.log(err))
     }

@@ -30,25 +30,25 @@ export const profileApi = {
         return axios.get(`${baseApiUrl}/profile`, authApiConfig);
     },
     updateProfile(data) {
-        return axios.post(`${baseApiUrl}/profile`, data, authApiConfig);
+        return axios.post(`${baseApiUrl}/users/profile`, data, authApiConfig);
     },
     searchUserByName(data) {
-        return axios.post(`${baseApiUrl}/users/search`, data, authApiConfig);
+        return axios.get(`${baseApiUrl}/users/search?name=${data}`, authApiConfig);
     },
     getUserInfo(id) {
-        return axios.get(`${baseApiUrl}/users/${id}`, authApiConfig);
+        return axios.get(`${baseApiUrl}/users/${id}/profile`, authApiConfig);
     }
 }
 
 export const followApi = {
     follow(userId) {
-        return axios.post(`${baseApiUrl}/follow-user/${userId}`, {}, authApiConfig);
+        return axios.post(`${baseApiUrl}/target-users/${userId}/follow`, {}, authApiConfig);
     },
     unFollow(userId) {
-        return axios.delete(`${baseApiUrl}/follow-user/${userId}`, authApiConfig);
+        return axios.delete(`${baseApiUrl}/target-users/${userId}/follow`, authApiConfig);
     },
     suggestFollow() {
-        return axios.get(`${baseApiUrl}/follow/suggestion`, authApiConfig);
+        return axios.get(`${baseApiUrl}/users/follow/suggestion`, authApiConfig);
     },
     getFollowers(userId) {
         return axios.get(`${baseApiUrl}/users/${userId}/followers`, authApiConfig)
@@ -63,19 +63,19 @@ export const notificationApi = {
         return axios.get(`${baseApiUrl}/notifications?page=${page}`, authApiConfig);
     },
     countUnread() {
-        return axios.get(`${baseApiUrl}/notifications/count-unread`, authApiConfig);
+        return axios.get(`${baseApiUrl}/notifications/count-unseen`, authApiConfig);
     },
     markAsRead() {
-        return axios.post(`${baseApiUrl}/notifications/mark-as-read`, {}, authApiConfig);
+        return axios.post(`${baseApiUrl}/notifications/mark-as-seen`, {}, authApiConfig);
     }
 }
 
 export const messageApi = {
     getMessagesInRoom(name, page) {
-        return axios.get(`${baseApiUrl}/messages/${name}?page=${page}`, authApiConfig);
+        return axios.get(`${baseApiUrl}/rooms/${name}/messages?page=${page}`, authApiConfig);
     },
     sendMessage(data, roomName) {
-        return axios.post(`${baseApiUrl}/messages/create/${roomName}`, data, authApiConfig);
+        return axios.post(`${baseApiUrl}/room/${roomName}/messages`, data, authApiConfig);
     }
 }
 
@@ -90,7 +90,7 @@ function getAPost(postID) {
 }
 
 function fetchPost(page) {
-    return axios.get(`${baseApiUrl}/newsfeed?page=${page}`, authApiConfig)
+    return axios.get(`${baseApiUrl}/users/newsfeed?page=${page}`, authApiConfig)
 }
 
 function fetchUserPost(page, userID) {
@@ -102,7 +102,7 @@ function downFile(data) {
 }
 
 function upPost(data) {
-    return axios.post(`${baseApiUrl}/posts/create`, data, {
+    return axios.post(`${baseApiUrl}/posts`, data, {
         headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${localStorage.getItem('jwt')}`
@@ -111,7 +111,7 @@ function upPost(data) {
 }
 
 function updatePostContent(postID, data) {
-    return axios.post(`${baseApiUrl}/posts/${postID}/edit`, data, authApiConfig)
+    return axios.post(`${baseApiUrl}/posts/${postID}`, data, authApiConfig)
 }
 
 function deleteAPost(postID) {
@@ -119,26 +119,26 @@ function deleteAPost(postID) {
 }
 
 function submitComment(data, postID) {
-    return axios.post(`${baseApiUrl}/posts/${postID}/comments/create`, data, authApiConfig)
+    return axios.post(`${baseApiUrl}/posts/${postID}/comments`, data, authApiConfig)
 }
 
 function deleteAComment(postID, cmtID) {
-    return axios.delete(`${baseApiUrl}/posts/${postID}/comments/${cmtID}/delete`, authApiConfig)
+    return axios.delete(`${baseApiUrl}/posts/${postID}/comments/${cmtID}`, authApiConfig)
 }
 
 function upVote(addUpvote, postID) {
     return (
-        addUpvote ? axios.post(`${baseApiUrl}/upvote-post/${postID}`, null, authApiConfig)
-            : axios.delete(`${baseApiUrl}/upvote-post/${postID}`, authApiConfig)
+        addUpvote ? axios.post(`${baseApiUrl}/posts/${postID}/upvote`, null, authApiConfig)
+            : axios.delete(`${baseApiUrl}/posts/${postID}/upvote`, authApiConfig)
     )
 }
 
 function getUsersUpvote(postID) {
-    return axios.get(`${baseApiUrl}/posts/${postID}/upvote`, authApiConfig)
+    return axios.get(`${baseApiUrl}/posts/${postID}/upvotes/users`, authApiConfig)
 }
 
 function isUpvoted(postID) {
-    return axios.get(`${baseApiUrl}/is-upvote/post/${postID}`, authApiConfig)
+    return axios.get(`${baseApiUrl}/posts/${postID}/upvote`, authApiConfig)
 }
 
 function avatarURL(avatarID) {

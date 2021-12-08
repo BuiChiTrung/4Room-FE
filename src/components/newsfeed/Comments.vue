@@ -2,9 +2,9 @@
 <div class="container">
   <div class="row" v-for="(item, index) in comment" :key="index">
     <SingleComment
-        :nameInForum="item.name_in_forum"
-        :userID="item.user_id"
-        :avatarID="item.avatar_id"
+        :nameInForum="item.owner.name_in_forum"
+        :userID="item.owner.id"
+        :avatarID="item.owner.avatar_id"
         :content="item.content"
         :indexInCmtList="index"
         @delete-comment="deleteComment"

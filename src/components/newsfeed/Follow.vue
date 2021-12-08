@@ -30,7 +30,7 @@ export default {
 @import "../../assets/sass/style";
 
 #follow-suggestion {
-  //position: fixed;
+  position: fixed;
   background-color: #f0f2f5;
   width: 80%;
 
