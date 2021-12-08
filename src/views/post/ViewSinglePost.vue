@@ -14,7 +14,7 @@
                   :content="item.content"
                   :file="item.file"
                   :upvote="item.upvote"
-                  :comment="item.comment"
+                  :comments="item.comments"
                   :indexInPostLists="index"
                   @delete-post="deletePost"
               />
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     deletePost(indexInPostLists) {
-      deleteAPost(this.$data.postLists[indexInPostLists]["post_id"])
+      deleteAPost(this.$data.postLists[indexInPostLists]["id"])
           .then(response => {
             console.log(response)
             this.$data.postLists.splice(indexInPostLists, 1)

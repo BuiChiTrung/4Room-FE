@@ -75,7 +75,7 @@ export const messageApi = {
         return axios.get(`${baseApiUrl}/rooms/${name}/messages?page=${page}`, authApiConfig);
     },
     sendMessage(data, roomName) {
-        return axios.post(`${baseApiUrl}/room/${roomName}/messages`, data, authApiConfig);
+        return axios.post(`${baseApiUrl}/rooms/${roomName}/messages`, data, authApiConfig);
     }
 }
 

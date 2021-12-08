@@ -8,7 +8,7 @@
       <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
 
       <div class="message" v-for="message in messages" :key="message['id']" :class="{'message-logged-in-user': isLoggedInUserMessage(message['user_id'])}">
-        <a :href="`/profile/${message['user_id']}`"><img class="author-avatar" src="@/assets/images/icons/avatar.png" alt="image"></a>
+        <a :href="`/profile/${message['user_id']}`"><img class="author-avatar" :src="avtURL(message['avatar_id'])" alt="image"></a>
         <div class="author-content">
           <div class="author">{{ message['name_in_forum'] }}</div>
           <div class="content" v-for="content in message['contents']" :key="content['id']">
@@ -26,8 +26,9 @@
 </template>
 
 <script>
-import {messageApi} from "../../infrastructure/apiServices";
+import {messageApi} from "@/infrastructure/apiServices";
 import InfiniteLoading from "vue-infinite-loading";
+import {avatarURL} from "@/infrastructure/apiServices";
 
 export default {
   name: 'ChatArea',
@@ -69,6 +70,7 @@ export default {
     infiniteHandler($state) {
       messageApi.getMessagesInRoom(this.$route.params.id, this.page)
       .then(({ data }) => {
+        console.log(data)
         if (data.data.length) {
           this.page += 1;
           this.messages.unshift(...this.mergeMessageOfSamePerson(data.data).reverse());
@@ -114,6 +116,10 @@ export default {
       .then(() => {})
       .catch(err => console.log(err));
       this.newMessage['content'] = '';
+    },
+
+    avtURL(avtID) {
+      return avatarURL(avtID)
     }
   }
 }

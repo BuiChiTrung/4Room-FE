@@ -28,12 +28,12 @@
   </div>
 
   <div class="row file-area" v-show="file !== null">
-    <a :href="feDownFile()" style="cursor: pointer;" :download="file === null ? '' : file.file_name">
+    <a :href="feDownFile()" style="cursor: pointer;" :download="file === null ? '' : file.name">
       <div class="d-flex">
           <figure>
               <img class="fa-lg" src="@/assets/images/file.png" alt="file" style="height: 2.8em" >
           </figure>
-          <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ file === null ? '' : file.file_name }}</h4>
+          <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ file === null ? '' : file.name }}</h4>
       </div>
     </a>
   </div>
@@ -151,6 +151,27 @@ export default {
       storageUrl: baseStorageAPI
     }
   },
+  watch: {
+    postID: function (new_postID) {
+      console.log(new_postID)
+      this.$data.liked = null
+      this.$data.frontUpvote = this.$props.upvote
+      this.$data.hideComments = true
+      this.$data.frontComments = this.$props.comments
+      this.$data.user_info = JSON.parse(localStorage.getItem('user_info'))
+      this.$data.editMode = false
+      this.$data.frontContent = this.$props.content
+      this.$data.lightUpDone = false
+      this.$data.upvoteList = []
+      this.$data.storageUrl = baseStorageAPI
+
+      isUpvoted(this.$props.postID)
+      .then(({ data }) => {
+        this.$data.liked = data["is_upvoted"]
+      })
+      .catch(err => console.log(err))
+    }
+  },
   computed: {
     ownPost() {
       return this.$props.ownerID === this.$data.user_info['id']
@@ -168,7 +189,7 @@ export default {
       if (this.$props.file === null) {
         return
       }
-      return downFile(this.$props.file.file_address)
+      return downFile(this.$props.file.address)
     },
 
     votePost() {
