@@ -30,13 +30,8 @@ export default {
 @import "../../assets/sass/style";
 
 #follow-suggestion {
-  position: fixed;
   background-color: #f0f2f5;
   width: 80%;
-
-  h4 {
-    //font-weight: bold;
-  }
 }
 
 </style>

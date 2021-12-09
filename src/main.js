@@ -10,7 +10,7 @@ Pusher.logToConsole = true;
 
 window.pusher = new Pusher('3ef48bd1a87852f6ef19', {
     cluster: 'ap1',
-    authEndpoint: `${baseBroadcastUrl}/broadcasting/auth`,
+    authEndpoint: `${baseBroadcastUrl}`,
     auth: { headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') } }
 });
 
