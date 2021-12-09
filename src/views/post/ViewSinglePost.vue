@@ -10,6 +10,7 @@
                   v-for="(item, index) in postLists" :key="index"
                   :postID="item.id"
                   :ownerID="item.owner.id"
+                  :avatarID="item.owner.avatar_id"
                   :nameInForum="item.owner.name_in_forum"
                   :content="item.content"
                   :file="item.file"
