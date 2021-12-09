@@ -3,7 +3,7 @@
   <div class="row" style="margin-top: 1.5em;">
     <div class="d-flex mb-3">
       <a :href="`/profile/${ownerID}`" style="margin-right: 0.5em">
-        <img class="avatar avt" :src="`${storageUrl}/avatar/1.png`" alt="avatar">
+        <img class="avatar avt" :src="avtURL()" alt="avatar">
       </a>
       <a :href="`/profile/${ownerID}`">
         <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em; margin-left: 0.3em">{{ nameInForum }}</h4>
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { upVote, submitComment, updatePostContent, deleteAComment, isUpvoted, getUsersUpvote, downFile } from "@/infrastructure/apiServices";
+import { upVote, avatarURL, submitComment, updatePostContent, deleteAComment, isUpvoted, getUsersUpvote, downFile } from "@/infrastructure/apiServices";
 import Comments from "./Comments";
 import UserList from "@/components/element/UserList";
 import {baseStorageAPI} from "../../env";
@@ -102,6 +102,10 @@ export default {
       require: true
     },
     ownerID: {
+      type: Number,
+      require: true
+    },
+    avatarID: {
       type: Number,
       require: true
     },
@@ -247,6 +251,10 @@ export default {
         console.log(this.$data.upvoteList)
       })
       .catch(err => console.log(err))
+    },
+
+    avtURL() {
+      return avatarURL(this.$props.avatarID)
     },
 
     turnOn(prop) {
