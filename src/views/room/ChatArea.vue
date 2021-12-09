@@ -66,7 +66,6 @@ export default {
           'avatar_id': data['avatar_id'],
           'contents': [{'id': data['message_id'], 'content': data['content']}]
         })
-
       setTimeout(() => {
         let objDiv = document.getElementById("messages");
         objDiv.scrollTop = objDiv.scrollHeight;
@@ -78,7 +77,6 @@ export default {
     infiniteHandler($state) {
       messageApi.getMessagesInRoom(this.$route.params.id, this.page)
       .then(({ data }) => {
-        // console.log(data)
         if (data.data.length) {
           this.page += 1;
           this.messages.unshift(...this.mergeMessageOfSamePerson(data.data).reverse());

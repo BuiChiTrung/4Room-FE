@@ -6,7 +6,7 @@
     <div class="row w-100 justify-content-center">
       <div class="col-lg-4 col-md-5">
         <div id="profile">
-            <img class="avt" alt="avatar" :src="avtURL()">
+            <img class="avt" alt="avatar" :src="avtURL">
             <FollowArea :profileOwner="profileOwner"/>
             <StaticProfile v-if="showEditForm" :profileOwner="profileOwner"/>
             <EditProfileForm v-else/>
@@ -32,7 +32,7 @@ import {mapState} from 'vuex';
 import StaticProfile from "./StaticProfile";
 import EditProfileForm from "./EditProfileForm";
 import FollowArea from "./FollowArea";
-import {avatarURL, profileApi} from "../../infrastructure/apiServices";
+import {avatarURL} from "../../infrastructure/apiServices";
 
 export default {
   name: "ProfilePage",
@@ -42,35 +42,27 @@ export default {
     return {
       profileOwner: true,
       userID: null,
-      avatarID: null
+      avatarID: null,
     }
   },
-  computed: mapState(['showEditForm']),
+  computed: {
+    ...mapState(['showEditForm', 'userInfo']),
+    avtURL: function (){
+      return avatarURL(this.userInfo['avatar_id'])
+    }
+  },
 
   created() {
-    const currentUser = JSON.parse(localStorage.getItem('user_info'))['id']
+    this.userID = JSON.parse(localStorage.getItem('user_info'))['id']
     if (this.$route.params.id) {
-      if (this.$route.params.id == currentUser) {
+      if (this.$route.params.id == this.userID) {
         this.$router.push('/profile')
       } else {
         this.profileOwner = false
-        this.$data.userID = this.$route.params.id
+        this.userID = this.$route.params.id
       }
-    } else {
-      this.$data.userID = currentUser
     }
-    profileApi.getUserInfo(this.$data.userID)
-    .then(({data}) => {
-      this.$data.avatarID = data['data']['avatar_id']
-    })
-    .catch (err => console.log(err))
   },
-  methods: {
-    avtURL() {
-      // this.avatarID = 1
-      return avatarURL(this.$data.avatarID)
-    }
-  }
 }
 </script>
 
