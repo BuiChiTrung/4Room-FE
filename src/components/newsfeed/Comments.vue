@@ -14,7 +14,7 @@
   <div class="row">
     <div class="d-flex mb-3 reply">
       <a href="#" style="margin-right: 0.5em">
-        <img class="comment-avatar" :src="avtURL()" alt="avatar">
+        <img class="comment-avatar avt" :src="avtURL()" alt="avatar">
       </a>
       <input
           type="text"
@@ -98,6 +98,10 @@ export default {
   outline: 0;
   background-color: transparent;
   box-shadow: none;
+}
+
+.avt {
+  border-radius: 50%;
 }
 
 </style>

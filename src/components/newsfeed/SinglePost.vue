@@ -3,7 +3,7 @@
   <div class="row" style="margin-top: 1.5em;">
     <div class="d-flex mb-3">
       <a :href="`/profile/${ownerID}`" style="margin-right: 0.5em">
-        <img class="avatar" :src="`${storageUrl}/avatar/1.png`" alt="avatar">
+        <img class="avatar avt" :src="`${storageUrl}/avatar/1.png`" alt="avatar">
       </a>
       <a :href="`/profile/${ownerID}`">
         <h4 class="text-start text-break fw-bold" style="margin-top: 0.3em; margin-left: 0.3em">{{ nameInForum }}</h4>
@@ -344,6 +344,10 @@ textarea::-webkit-scrollbar-thumb {
     max-height: 50vh;
     overflow-y: scroll;
   }
+}
+
+.avt {
+  border-radius: 50%;
 }
 
 </style>

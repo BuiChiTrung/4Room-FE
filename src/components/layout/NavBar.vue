@@ -19,7 +19,7 @@
 
       <div class="dropdown dropstart">
         <a data-toggle="dropdown" href="#"  data-bs-toggle="dropdown"  aria-expanded="false">
-          <img id="avatar" :src="avtURL()" alt="avatar">
+          <img class="avt" id="avatar" :src="avtURL()" alt="avatar">
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -173,4 +173,9 @@ nav {
     }
   }
 }
+
+.avt {
+  border-radius: 50%;
+}
+
 </style>

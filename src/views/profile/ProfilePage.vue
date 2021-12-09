@@ -6,7 +6,7 @@
     <div class="row w-100 justify-content-center">
       <div class="col-lg-4 col-md-5">
         <div id="profile">
-            <img alt="avatar" :src="avtURL()">
+            <img class="avt" alt="avatar" :src="avtURL()">
             <FollowArea :profileOwner="profileOwner"/>
             <StaticProfile v-if="showEditForm" :profileOwner="profileOwner"/>
             <EditProfileForm v-else/>
@@ -100,5 +100,9 @@ main {
   i {
     color: $main_color;
   }
+}
+
+.avt {
+  border-radius: 50%;
 }
 </style>

@@ -3,7 +3,7 @@
   <div class="row row-with-caption">
     <div class="d-flex mb-3">
       <a href="#" style="margin-right: 1em">
-        <img class="avatar" :src="avtURL()" alt="avatar">
+        <img class="avatar avt" :src="avtURL()" alt="avatar">
       </a>
       <textarea class="form-control text-write-caption" v-model="caption" name="caption" placeholder="What's on your mind?"></textarea>
     </div>
@@ -157,6 +157,10 @@ $breakpoint-tablet: 500px;
   #avatar {
     display: none;
   }
+}
+
+.avt {
+  border-radius: 50%;
 }
 
 </style>

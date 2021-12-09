@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex mb-3 single-comment">
   <a :href="`/profile/${userID}`" style="margin-right: 0.5em">
-    <img class="comment-avatar" :src="avtURL()" alt="avatar">
+    <img class="comment-avatar avt" :src="avtURL()" alt="avatar">
   </a>
   <h5 v-if="!editMode" class="text-start text-break" style="margin-top: 0.3em;">
     <a :href="`/profile/${userID}`" style="text-decoration: none; color: black">
@@ -100,4 +100,9 @@ export default {
 .single-comment:hover .delete-comment {
   visibility: visible;
 }
+
+.avt {
+  border-radius: 50%;
+}
+
 </style>

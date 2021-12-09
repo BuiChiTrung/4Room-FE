@@ -8,7 +8,7 @@
       <infinite-loading direction="top" @infinite="infiniteHandler"></infinite-loading>
 
       <div class="message" v-for="message in messages" :key="message['id']" :class="{'message-logged-in-user': isLoggedInUserMessage(message['user_id'])}">
-        <a :href="`/profile/${message['user_id']}`"><img class="author-avatar" :src="avtURL(message['avatar_id'])" alt="image"></a>
+        <a :href="`/profile/${message['user_id']}`"><img class="author-avatar avt" :src="avtURL(message['avatar_id'])" alt="image"></a>
         <div class="author-content">
           <div class="author">{{ message['name_in_forum'] }}</div>
           <div class="content" v-for="content in message['contents']" :key="content['id']">
@@ -47,7 +47,14 @@ export default {
 
   created() {
     const channel = window.pusher.subscribe(`private-message_room.${this.$route.params.id}`);
-    channel.bind('MessageUpdateEvent', (data) => {
+    channel.bind('MessageUpdateEvent', ({message: data}) => {
+      data = {
+        'message_id': data['id'],
+        'user_id': data['owner']['id'],
+        'avatar_id': data['owner']['avatar_id'],
+        'name_in_forum': data['owner']['name_in_forum'],
+        'content': data['content']
+      }
       const totalMessages = this.messages.length;
       if (data['user_id'] === this.messages[totalMessages - 1]['user_id']) {
         this.messages[totalMessages - 1]['contents'].push({'id': data['message_id'], 'content': data['content']})
@@ -56,6 +63,7 @@ export default {
         this.messages.push({
           'user_id': data['user_id'],
           'name_in_forum': data['name_in_forum'],
+          'avatar_id': data['avatar_id'],
           'contents': [{'id': data['message_id'], 'content': data['content']}]
         })
 
@@ -70,7 +78,7 @@ export default {
     infiniteHandler($state) {
       messageApi.getMessagesInRoom(this.$route.params.id, this.page)
       .then(({ data }) => {
-        console.log(data)
+        // console.log(data)
         if (data.data.length) {
           this.page += 1;
           this.messages.unshift(...this.mergeMessageOfSamePerson(data.data).reverse());
@@ -89,15 +97,16 @@ export default {
       let mergedMessages = [];
       for (let i = 0; i < messages.length;) {
         let messagesOfSamePerson = {
-          'user_id': messages[i]['user_id'],
-          'name_in_forum': messages[i]['name_in_forum'],
+          'user_id': messages[i]['owner']['id'],
+          'name_in_forum': messages[i]['owner']['name_in_forum'],
+          'avatar_id': messages[i]['owner']['avatar_id'],
           'contents': []
         };
 
         let j = i;
-        while(j < messages.length && messages[j]['user_id'] === messages[i]['user_id']) {
+        while(j < messages.length && messages[j]['owner']['id'] === messages[i]['owner']['id']) {
           messagesOfSamePerson['contents'].push({
-            'id': messages[j]['user_id'],
+            'id': messages[j]['owner']['id'],
             'content': messages[j]['content']
           });
           ++j;
@@ -128,6 +137,10 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/sass/style';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;1,300&display=swap');
+
+.avt {
+  border-radius: 50%;
+}
 
 #chat-area {
   position: relative;
