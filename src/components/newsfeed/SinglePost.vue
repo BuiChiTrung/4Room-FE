@@ -48,7 +48,7 @@
         <i class="far fa-comment-dots fa-2x"></i>
       </figure>
 
-      <h5 data-bs-toggle="modal" data-bs-target="#upvote-modal" class="ms-auto" style="cursor: pointer;" @click="getUserUpvotePost">
+      <h5 data-bs-toggle="modal" :data-bs-target="`#upvote-modal-${postID}`" class="ms-auto" style="cursor: pointer;" @click="getUserUpvotePost">
         {{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}
       </h5>
       <h5 style="margin-left: 0.5em">{{frontComments.length}} comment{{frontComments.length > 1 ? 's' : ''}}</h5>
@@ -67,7 +67,7 @@
     <Comments :comment="frontComments" @submit-comment="submitComment" @delete-comment="deleteComment"/>
   </div>
 
-  <div class="modal fade" id="upvote-modal" tabindex="-1" aria-labelledby="upvoteModalLabel" aria-hidden="true">
+  <div class="modal fade" :id="`upvote-modal-${postID}`" tabindex="-1" aria-labelledby="upvoteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -340,7 +340,7 @@ textarea::-webkit-scrollbar-thumb {
   line-height: 1.2;
 }
 
-#upvote-modal {
+.modal.fade {
   .modal-dialog {
     width: 50%;
     position: absolute;
