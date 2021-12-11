@@ -1,9 +1,9 @@
 <template>
   <div id="follow-area">
-    <span data-bs-toggle="modal" data-bs-target="#follow-modal" @click="getFollowing" style="cursor: pointer;">Following: {{userInfo['following']}}</span>
+    <span data-bs-toggle="modal" data-bs-target="#follow-modal" @click="getFollowing" style="cursor: pointer;"><i>Following:</i> <strong>{{userInfo['following']}}</strong></span>
     <span v-if="!profileOwner && !followStatus" @click="followUser" title="Follow" class="material-icons" style="cursor: pointer;">favorite_border</span>
     <span v-if="!profileOwner && followStatus" @click="unFollowUser" title="Unfollow" class="material-icons" style="cursor: pointer;">favorite</span>
-    <span data-bs-toggle="modal" data-bs-target="#follow-modal" @click="getFollowers" style="cursor: pointer;">Follower: {{userInfo['follower']}}</span>
+    <span data-bs-toggle="modal" data-bs-target="#follow-modal" @click="getFollowers" style="cursor: pointer;"><i>Follower:</i> <strong>{{userInfo['follower']}}</strong></span>
 
     <div class="modal fade" id="follow-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -90,7 +90,6 @@ export default {
 @import 'src/assets/sass/style';
 
 #follow-area {
-  //width: 30rem;
   margin: 0 auto;
   font-size: 1.5rem;
   display: flex;
@@ -99,6 +98,13 @@ export default {
   .material-icons {
     font-size: 3rem;
     color: pink;
+  }
+  i {
+    font-weight: 600;
+  }
+  strong {
+    font-weight: 1000;
+    font-size: 1.7rem;
   }
 }
 

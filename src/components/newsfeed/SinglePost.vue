@@ -33,7 +33,7 @@
           <figure>
               <img class="fa-lg" src="@/assets/images/file.png" alt="file" style="height: 2.8em" >
           </figure>
-          <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ file === null ? '' : file.name }}</h4>
+          <h4 style="margin-left: 0.3em; margin-top: 0.4em; word-break: break-all">{{ file === null ? '' : file.name }}</h4>
       </div>
     </a>
   </div>

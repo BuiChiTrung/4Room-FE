@@ -48,7 +48,6 @@ export default {
 
 #profile-static {
   color: $main_color;
-  //width: 30rem;
   margin: 0 auto;
   button {
     width: 100%;
