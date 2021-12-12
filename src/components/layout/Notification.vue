@@ -42,12 +42,10 @@ export default {
     const channel = window.pusher.subscribe('private-notification_user.' + JSON.parse(localStorage.getItem('user_info'))['id']);
     channel.bind('NotificationUpdate', () => {
       this.newNotification++;
-      console.log(this.newNotification);
     });
 
     notificationApi.countUnread()
       .then(({data}) => {
-          console.log(data);
           this.newNotification = data['unread_notifications'];
       })
       .catch(err => console.log(err));

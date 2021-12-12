@@ -95,25 +95,25 @@ main {
 }
 
 @media (max-width: 2000px){
-  #profile-static, #follow-area {
+  #profile-static, #follow-area, #edit-form {
     width: 30rem;
   }
 }
 
 @media (max-width: 1260px){
-  #profile-static, #follow-area {
+  #profile-static, #follow-area, #edit-form {
     width: 100%;
   }
 }
 
-@media (max-width: 768px){
-  #profile-static, #follow-area {
+@media (max-width: 767px){
+  #profile-static, #follow-area, #edit-form {
     width: 30rem;
   }
 }
 
 @media (max-width: 576px){
-  #profile-static, #follow-area {
+  #profile-static, #follow-area, #edit-form {
     width: 100%;
   }
 }

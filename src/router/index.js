@@ -11,6 +11,7 @@ import ResetPasswordRequest from "../views/auth/ResetPasswordRequest";
 import ChatArea from "../views/room/ChatArea";
 import ViewSinglePost from "../views/post/ViewSinglePost";
 import ChangePassword from "../views/auth/ChangePassword";
+import PostEditor from "../views/post/PostEditor";
 
 const routes = [
   {
@@ -52,6 +53,11 @@ const routes = [
     path: '/post/:postid',
     name: 'ViewSinglePost',
     component: ViewSinglePost
+  },
+  {
+    path: '/post/create',
+    name: 'PostEditor',
+    component: PostEditor
   },
   {
     path: '/room/:id',
