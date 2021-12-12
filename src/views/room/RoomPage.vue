@@ -34,7 +34,6 @@ export default {
 
 
   created() {
-    console.log(this.$route.path)
     roomApi.getRoomInfo(this.$route.params.id)
       .then(({data}) => {
           this.roomName = data.data['name']

@@ -15,7 +15,7 @@
         <input type="file" id="file" class="input-file" @change="handleFileUpload($event)"/>
         <label for="file" class="up-icon" style="cursor: pointer;">
           <span v-show="this.file === null" class="material-icons-outlined" style="color: rgb(32, 120, 244);">cloud_upload</span>
-          <span v-show="this.file !== null" class="material-icons" style="color: rgb(32, 120, 244);">cloud_upload</span>
+          <span v-show="this.file !== null" class="material-icons" style="color: rgb(32, 120, 244);">cloud_done</span>
         </label>
       </div>
       <div style="padding-left: 1em; padding-top: 0.8em">
@@ -127,7 +127,7 @@ export default {
   margin-bottom: -3em;
 }
 
-i:hover, .material-icons-outlined:hover {
+i:hover, .material-icons:hover {
   color: rgb(6, 36, 80) !important;
 }
 

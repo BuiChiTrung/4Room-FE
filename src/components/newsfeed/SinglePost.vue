@@ -243,7 +243,6 @@ export default {
     },
 
     getUserUpvotePost() {
-      console.log(this.$props.postID)
       getUsersUpvote(this.$props.postID)
       .then(({data}) => {
         this.$data.upvoteList = data['data']
