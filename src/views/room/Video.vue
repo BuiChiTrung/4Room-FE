@@ -1,17 +1,20 @@
 <template>
   <video autoplay :muted="mutedSound" loop>
-    <source :src="videoSrc" type="video/mp4">
+    <source v-if="roomName" :src="videoSrc" type="video/mp4">
   </video>
 
 </template>
 
 <script>
+import {baseStorageAPI} from "../../env";
+
 export default {
   name: "Video",
   props: ['mutedSound', 'roomName'],
-  data() {
-    return {
-      videoSrc: require(`@/assets/videos/${this.roomName}.mp4`)
+
+  computed: {
+    videoSrc() {
+      return `${baseStorageAPI}/videos/${this.roomName}.mp4`
     }
   },
   mounted() {

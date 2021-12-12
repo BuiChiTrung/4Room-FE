@@ -46,6 +46,7 @@ export default {
       authApi.register(this.registerForm)
           .then(() => {
             location.assign('/login');
+            alert('Successfully register an account');
           })
           .catch(err => {
             alert(err.response.data.message);

@@ -2,10 +2,10 @@
   <div id="navbar-wrapper">
     <nav :style="{ background: bgColor }">
       <i id="menu" class="fas fa-bars" @click="toggleSidebar"></i>
-      <a href="/" id="logo-title">
+      <router-link to="/" id="logo-title">
         <img id="logo" src="@/assets/images/icons/4room.png" alt="logo">
         <div id="title">4Room</div>
-      </a>
+      </router-link>
 
       <div id="search-space">
         <div id="search-box">
@@ -23,8 +23,9 @@
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><a class="dropdown-item" href="/profile">Profile</a></li>
-          <li><div class="dropdown-item" @click="logout">Logout</div></li>
+          <li><router-link class="dropdown-item" to="/profile"><i class="fas fa-user"></i>Profile</router-link></li>
+          <li><router-link class="dropdown-item" to="/change-password"><i class="fas fa-key"></i>Change Password</router-link></li>
+          <li><div class="dropdown-item" @click="logout"><i class="fas fa-sign-out-alt"></i>Logout</div></li>
         </ul>
       </div>
     </nav>
@@ -168,8 +169,13 @@ nav {
     transform: translate(-2rem, 4rem) !important;
     padding: 0;
     li {
-      width: 15rem;
+      width: 18rem;
       font-size: 1.5rem;
+      i {
+        font-size: 1.5rem;
+        color: $main_color1;
+        margin-right: 1rem;
+      }
     }
   }
 }

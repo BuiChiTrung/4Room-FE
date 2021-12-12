@@ -1,8 +1,8 @@
 <template>
-  <a class="room" :href="`/room/${roomId}`">
+  <router-link class="room" :to="`/room/${roomId}`">
     <img class="room-img" :src="roomImgLink" alt="room-img">
     <div class="room-name">{{ roomName }}</div>
-  </a>
+  </router-link>
 </template>
 
 <script>

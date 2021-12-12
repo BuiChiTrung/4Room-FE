@@ -11,6 +11,9 @@ export const authApi = {
     register(data) {
         return axios.post(`${baseApiUrl}/register`, data, noAuthApiConfig);
     },
+    changePassword(data) {
+        return axios.post(`${baseApiUrl}/change-password`, data, authApiConfig);
+    },
     resetPasswordRequest(data) {
         return axios.post(`${baseApiUrl}/reset-password-request`, data, noAuthApiConfig);
     },

@@ -9,6 +9,7 @@
 @import 'src/assets/sass/style.scss';
 html {
   font-size: 10px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 body {

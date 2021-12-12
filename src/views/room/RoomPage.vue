@@ -5,10 +5,10 @@
   <SideBar/>
   <ChatArea v-if="displayChatArea" :roomName="roomName"/>
   <div id="control-buttons">
-    <i @click="togglePomodoroClock" id="clock-icon" class="far fa-clock"></i>
-    <i v-if="mutedSound" class="fas fa-volume-mute" @click="toggleSound"></i>
-    <i v-else @click="toggleSound" class="fas fa-volume-up"></i>
-    <i @click="toggleChatArea" class="fas fa-comments"></i>
+    <i @click="togglePomodoroClock" id="clock-icon" title="Pomodoro Clock" class="far fa-clock"></i>
+    <i v-if="mutedSound" class="fas fa-volume-mute" title="On volume" @click="toggleSound"></i>
+    <i v-else @click="toggleSound" title="Off volume" class="fas fa-volume-up"></i>
+    <i @click="toggleChatArea" title="Chat room" class="fas fa-comments"></i>
   </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
 
 
   created() {
+    console.log(this.$route.path)
     roomApi.getRoomInfo(this.$route.params.id)
       .then(({data}) => {
           this.roomName = data.data['name']
