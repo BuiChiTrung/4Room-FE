@@ -28,7 +28,7 @@ export default {
       event.preventDefault();
       authApi.resetPasswordRequest({'email' : this.email})
           .then(({data}) => alert(data.message))
-          .catch(err => console.log(err));
+          .catch(err => alert(err.response.data.message));
     }
   }
 }

@@ -94,6 +94,30 @@ main {
   }
 }
 
+@media (max-width: 2000px){
+  #profile-static, #follow-area {
+    width: 30rem;
+  }
+}
+
+@media (max-width: 1260px){
+  #profile-static, #follow-area {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px){
+  #profile-static, #follow-area {
+    width: 30rem;
+  }
+}
+
+@media (max-width: 576px){
+  #profile-static, #follow-area {
+    width: 100%;
+  }
+}
+
 .avt {
   border-radius: 50%;
 }

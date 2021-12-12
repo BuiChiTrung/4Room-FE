@@ -33,7 +33,7 @@
           <figure>
               <img class="fa-lg" src="@/assets/images/file.png" alt="file" style="height: 2.8em" >
           </figure>
-          <h4 style="margin-left: 0.3em; margin-top: 0.4em">{{ file === null ? '' : file.name }}</h4>
+          <h4 style="margin-left: 0.3em; margin-top: 0.4em; word-break: break-all">{{ file === null ? '' : file.name }}</h4>
       </div>
     </a>
   </div>
@@ -48,7 +48,7 @@
         <i class="far fa-comment-dots fa-2x"></i>
       </figure>
 
-      <h5 data-bs-toggle="modal" data-bs-target="#upvote-modal" class="ms-auto" style="cursor: pointer;" @click="getUserUpvotePost">
+      <h5 data-bs-toggle="modal" :data-bs-target="`#upvote-modal-${postID}`" class="ms-auto" style="cursor: pointer;" @click="getUserUpvotePost">
         {{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}
       </h5>
       <h5 style="margin-left: 0.5em">{{frontComments.length}} comment{{frontComments.length > 1 ? 's' : ''}}</h5>
@@ -67,7 +67,7 @@
     <Comments :comment="frontComments" @submit-comment="submitComment" @delete-comment="deleteComment"/>
   </div>
 
-  <div class="modal fade" id="upvote-modal" tabindex="-1" aria-labelledby="upvoteModalLabel" aria-hidden="true">
+  <div class="modal fade" :id="`upvote-modal-${postID}`" tabindex="-1" aria-labelledby="upvoteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -340,7 +340,7 @@ textarea::-webkit-scrollbar-thumb {
   line-height: 1.2;
 }
 
-#upvote-modal {
+.modal.fade {
   .modal-dialog {
     width: 50%;
     position: absolute;

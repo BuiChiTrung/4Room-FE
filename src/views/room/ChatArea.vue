@@ -186,7 +186,7 @@ export default {
 
       .content {
         width: fit-content;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         background: whitesmoke;
         padding: 0.5rem 1.5rem;
         border-radius: 1.5rem;

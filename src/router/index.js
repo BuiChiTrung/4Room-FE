@@ -10,6 +10,7 @@ import ResetPassword from "../views/auth/ResetPassword";
 import ResetPasswordRequest from "../views/auth/ResetPasswordRequest";
 import ChatArea from "../views/room/ChatArea";
 import ViewSinglePost from "../views/post/ViewSinglePost";
+import ChangePassword from "../views/auth/ChangePassword";
 
 const routes = [
   {
@@ -22,6 +23,12 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: RegisterPage,
+    meta: {unProtectedRoute: true}
+  },
+  {
+    path: '/change-password',
+    name: 'ChangePassword',
+    component: ChangePassword,
     meta: {unProtectedRoute: true}
   },
   {
