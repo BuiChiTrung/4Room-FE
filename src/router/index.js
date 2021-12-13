@@ -38,7 +38,7 @@ const routes = [
     meta: {unProtectedRoute: true}
   },
   {
-    path: '/reset-password/:token',
+    path: '/reset-password',
     name: 'ResetPassword',
     component: ResetPassword,
     meta: {unProtectedRoute: true}
