@@ -53,6 +53,8 @@ export default {
 
   methods: {
     getNotifications() {
+      this.page = 1;
+      this.notifications = [];
       this.markAsRead();
       this.infiniteHandler();
     },
