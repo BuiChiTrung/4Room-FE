@@ -74,7 +74,7 @@ export default {
 
     markAsRead() {
       notificationApi.markAsRead()
-        .then(() => this.newNotification = false)
+        .then(() => this.newNotification = 0)
         .catch(err => console.log(err));
     },
 

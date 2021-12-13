@@ -59,6 +59,7 @@ export default {
       let response = await authApi.logout();
       if (response.status === 200) {
         localStorage.removeItem('jwt');
+        localStorage.removeItem('user_info');
         location.assign('/login');
       }
     },
