@@ -53,6 +53,8 @@ export default {
 
   methods: {
     getNotifications() {
+      this.page = 1;
+      this.notifications = [];
       this.markAsRead();
       this.infiniteHandler();
     },
@@ -72,7 +74,7 @@ export default {
 
     markAsRead() {
       notificationApi.markAsRead()
-        .then(() => this.newNotification = false)
+        .then(() => this.newNotification = 0)
         .catch(err => console.log(err));
     },
 

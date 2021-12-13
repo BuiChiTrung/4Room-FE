@@ -30,7 +30,6 @@ const routes = [
     path: '/change-password',
     name: 'ChangePassword',
     component: ChangePassword,
-    meta: {unProtectedRoute: true}
   },
   {
     path: '/reset-password-request',
