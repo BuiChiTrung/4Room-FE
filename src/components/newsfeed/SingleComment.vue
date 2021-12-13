@@ -84,7 +84,7 @@ export default {
 }
 
 .single-comment {
-  padding: 1em;
+  // padding: 1em;
   margin-bottom: 1em;
   align-items: center;
   color: #333;
