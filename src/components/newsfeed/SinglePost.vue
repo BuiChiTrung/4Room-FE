@@ -21,7 +21,7 @@
   </div>
 
   <div v-show="!editMode" class="row caption-area">
-    <h4 class="text-start text-break text-caption"> {{ frontContent }}</h4>
+    <h4 class="text-start text-break text-caption" style="white-space: pre-line;"> {{ frontContent }}</h4>
   </div>
   <div v-show="editMode" style="margin-bottom: 1em;">
     <textarea class="form-control text-write-caption" v-model="frontContent"/>
@@ -317,6 +317,7 @@ export default {
 
 .cmt-area {
   border-top: 1px solid #D0D4D9;
+  padding-top: 1em;
 }
 
 textarea {
