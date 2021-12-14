@@ -1,35 +1,52 @@
 <template>
   <div id="user-list">
-    <router-link class="user-info" v-for="user in usersInfo" :key="user['id']" :to="`/profile/${user['id']}`">
-        <div class="user">
+    <div class="user-info" v-for="user in usersInfo" :key="user['id']" >
+        <router-link :to="`/profile/${user['id']}`" class="user">
           <img class="avatar avt" :src="avtURL(user['avatar_id'])" alt="img">
           <span class="name-in-forum">{{ user['name_in_forum'] }}</span>
-        </div>
-<!--        <span @click="user['followed']" title="Follow" class="material-icons" style="cursor: pointer;">favorite_border</span>-->
-<!--        <span v-if="!profileOwner && followStatus" @click="unFollowUser" title="Unfollow" class="material-icons" style="cursor: pointer;">favorite</span>-->
-    </router-link>
+        </router-link>
+        <span v-if="followDirectly" @click="followOrUnfollowUser($event, user['id'])" title="Follow" class="material-icons" style="cursor: pointer; color: #e2a5b0">favorite_border</span>
+    </div>
   </div>
 </template>
 
 <script>
 import {avatarURL} from "@/infrastructure/apiServices";
+// eslint-disable-next-line no-unused-vars
+import {followApi} from "../../infrastructure/apiServices";
 
 export default {
   name: "UserList",
+
   props: {
     usersInfo: {
       type: Array,
       require: true,
       default: () => []
+    },
+    followDirectly: {
+      type: Boolean,
+      require: false
     }
   },
+
   methods: {
     changeRoute(route) {
       this.$router.push(route)
     },
     avtURL(avtID) {
       return avatarURL(avtID)
-    }
+    },
+    followOrUnfollowUser(e, userId) {
+      e.preventDefault();
+      if (e.target.innerHTML === 'favorite_border') {
+        e.target.innerHTML = 'favorite';
+        followApi.follow(userId).catch(err => console.log(err))
+      } else {
+        e.target.innerHTML = 'favorite_border'
+        followApi.unFollow(userId).catch(err => console.log(err))
+      }
+    },
   }
 }
 </script>
@@ -62,8 +79,6 @@ export default {
     .user {
       display: block;
       @include flex-center;
-
-
       .avatar {
         width: 4.5rem;
         margin-right: 1rem;
