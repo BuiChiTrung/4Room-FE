@@ -6,6 +6,7 @@
     <v-md-editor v-model="content"></v-md-editor>
     <button v-if="updateMode" id="btn-update" class="btn btn-primary" @click="updatePost">Update Post</button>
     <button v-else id="btn-save" class="btn btn-success" @click="createNewPost">Save Post</button>
+    <button class="btn btn-danger" @click="cancel">Cancel</button>
   </main>
 
 </template>
@@ -51,6 +52,11 @@ export default {
     createNewPost(e) {
       e.preventDefault();
 
+      if (!this.title || !this.content) {
+        alert('Post content and title are required');
+        return;
+      }
+
       let newPost = new FormData();
       newPost.append('content', this.content);
       newPost.append('title', this.title);
@@ -71,6 +77,10 @@ export default {
             this.$router.go();
         })
         .catch(err => alert(err.response.data.message))
+    },
+
+    cancel() {
+      this.$router.go(-1);
     }
   },
 }
@@ -99,6 +109,7 @@ main {
 
   button {
     font-size: 1.5rem;
+    margin-right: 1rem;
   }
 }
 </style>

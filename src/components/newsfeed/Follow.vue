@@ -1,7 +1,7 @@
 <template>
 <div id="follow-suggestion">
   <h4>People you may want to follow</h4>
-  <UserList :usersInfo="usersInfo"/>
+  <UserList :usersInfo="usersInfo" :followDirectly="true"/>
 </div>
 </template>
 
