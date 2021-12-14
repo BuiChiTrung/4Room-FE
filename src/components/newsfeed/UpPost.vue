@@ -14,7 +14,8 @@
       <div>
         <input type="file" id="file" class="input-file" @change="handleFileUpload($event)"/>
         <label for="file" class="up-icon" style="cursor: pointer;">
-          <span v-show="this.file === null" class="material-icons-outlined" style="color: rgb(32, 120, 244);">cloud_upload</span>
+          <router-link to="/post/edit" title="Post editor"><span class="material-icons-outlined" style="color: rgb(32, 120, 244); margin-right: 1rem">create</span></router-link>
+          <span v-show="this.file === null" class="material-icons-outlined" style="color: rgb(32, 120, 244);" title="Upload file">cloud_upload</span>
           <span v-show="this.file !== null" class="material-icons" style="color: rgb(32, 120, 244);">cloud_done</span>
         </label>
       </div>
@@ -61,7 +62,7 @@ export default {
       }
 
       let formData = new FormData()
-      formData.append('content', this.caption)
+      formData.append('title', this.caption)
       formData.append('file', this.file)
 
       upPost(formData)

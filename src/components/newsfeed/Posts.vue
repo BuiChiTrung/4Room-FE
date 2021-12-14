@@ -6,6 +6,7 @@
         :ownerID="item.owner.id"
         :avatarID="item.owner.avatar_id"
         :nameInForum="item.owner.name_in_forum"
+        :title="item.title"
         :content="item.content"
         :file="item.file"
         :upvote="item.upvote"
