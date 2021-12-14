@@ -19,7 +19,7 @@ export default {
   created() {
     followApi.suggestFollow()
       .then(({data}) => {
-        this.usersInfo = data['data'].slice(2);
+        this.usersInfo = data['data'];
       })
       .catch(err => console.log(err));
   }
