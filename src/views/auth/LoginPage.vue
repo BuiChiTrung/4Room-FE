@@ -77,7 +77,7 @@ export default {
           location.assign('/');
       })
       .catch(err => {
-          alert(err);
+          alert(err.response.data.message);
       })
     }
   }
