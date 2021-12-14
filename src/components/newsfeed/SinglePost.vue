@@ -13,7 +13,7 @@
           <img class="dropdown-toggle" src="@/assets/images/dots.png"  style="height: 2em;" alt="">
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li class="dropdown-item" @click="editMode = true; hideComments = true;">Edit</li>
+          <li class="dropdown-item" @click="editPost">Edit</li>
           <li class="dropdown-item" @click="deletePost">Delete</li>
         </ul>
       </div>
@@ -21,10 +21,26 @@
   </div>
 
   <div v-show="!editMode" class="row caption-area">
-    <h4 class="text-start text-break text-caption" style="white-space: pre-line;"> {{ frontContent }}</h4>
+    <h4 class="text-start text-break text-caption" style="white-space: pre-line;"> {{ frontTitle }}</h4>
+    <span v-if="content" class="btn-open-md" data-bs-toggle="modal" :data-bs-target="`#markdownPost-${postID}`">
+      View post
+    </span>
+
+    <div v-if="content" class="modal fade markdown" :id="`markdownPost-${postID}`" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <v-md-preview :text="content"></v-md-preview>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div v-show="editMode" style="margin-bottom: 1em;">
-    <textarea class="form-control text-write-caption" v-model="frontContent"/>
+    <textarea class="form-control text-write-caption" v-model="frontTitle"/>
   </div>
 
   <div class="row file-area" v-show="file !== null">
@@ -67,7 +83,7 @@
     <Comments :comment="frontComments" @submit-comment="submitComment" @delete-comment="deleteComment"/>
   </div>
 
-  <div class="modal fade" :id="`upvote-modal-${postID}`" tabindex="-1" aria-labelledby="upvoteModalLabel" aria-hidden="true">
+  <div class="modal fade upvote" :id="`upvote-modal-${postID}`" tabindex="-1" aria-labelledby="upvoteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -113,6 +129,11 @@ export default {
       type: String,
       require: true
     },
+    title: {
+      type: String,
+      require: false,
+      default: ''
+    },
     content: {
       type: String,
       require: false,
@@ -149,7 +170,7 @@ export default {
       frontComments: this.$props.comments,
       user_info: JSON.parse(localStorage.getItem('user_info')),
       editMode: false,
-      frontContent: this.$props.content,
+      frontTitle: this.$props.title,
       lightUpDone: false,
       upvoteList: [],
       storageUrl: baseStorageAPI
@@ -164,7 +185,7 @@ export default {
       this.$data.frontComments = this.$props.comments
       this.$data.user_info = JSON.parse(localStorage.getItem('user_info'))
       this.$data.editMode = false
-      this.$data.frontContent = this.$props.content
+      this.$data.frontTitle = this.$props.title
       this.$data.lightUpDone = false
       this.$data.upvoteList = []
       this.$data.storageUrl = baseStorageAPI
@@ -221,12 +242,19 @@ export default {
     },
 
     updatePost() {
-      updatePostContent(this.$props.postID, {"content": this.$data.frontContent})
+      updatePostContent(this.$props.postID, {"title": this.$data.frontTitle})
       .then(response => {
         console.log(response)
         this.$data.editMode = false
       })
       .catch(err => console.log(err))
+    },
+
+    editPost() {
+      this.editMode = true;
+      this.hideComments = true;
+      if (this.content)
+        this.$router.push(`/post/edit/${this.postID}`);
     },
 
     deletePost() {
@@ -342,20 +370,51 @@ textarea::-webkit-scrollbar-thumb {
 
 .modal.fade {
   .modal-dialog {
-    width: 50%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
   .modal-body {
-    max-height: 50vh;
     overflow-y: scroll;
+  }
+}
+
+.modal.fade.upvote {
+  .modal-dialog {
+    width: 50%;
+  }
+  .modal-body {
+    max-height: 50vh
+  }
+}
+
+.modal.fade.markdown {
+  .modal-dialog {
+    min-width: 90vw !important;
+  }
+  .modal-body {
+    max-height: 80vh
   }
 }
 
 .avt {
   border-radius: 50%;
+}
+
+.btn-open-md {
+  color: rgb(32, 120, 244);
+  font-size: 1.5rem;
+}
+
+.btn-open-md:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  font-size: 1.5rem;
+  padding: 0;
 }
 
 </style>
