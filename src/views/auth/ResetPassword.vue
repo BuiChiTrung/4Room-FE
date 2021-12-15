@@ -3,7 +3,7 @@
     <form @submit="resetPassword">
       <h1>Reset password</h1>
       <div class="form-floating">
-        <input class="form-control" type="password" id="password" name="password" placeholder="Password" v-model="resetPasswordForm.password" required>
+        <input class="form-control" type="password" id="password" name="password" placeholder="Password" v-model="password" required>
         <label for="password">New Password</label>
       </div>
       <button class="login100-form-btn">
@@ -20,24 +20,19 @@ export default {
   name: "ResetPassword",
   data() {
       return {
-        resetPasswordForm: {
-          'password': null,
-          'token': null
-        }
+        token: this.$route.query['token'],
+        password: null
       }
-  },
-  created() {
-        this.resetPasswordForm.token = this.$route.params['token'];
   },
   methods: {
     resetPassword(event) {
       event.preventDefault();
-      authApi.resetPassword(this.resetPasswordForm)
+      authApi.resetPassword(this.token, this.password)
         .then(({data}) => {
             this.$router.push('/login');
             alert(data.message)
         })
-        .catch(() => alert('Reset password failed'));
+        .catch(err => alert(err.response.data.message));
     }
   }
 }

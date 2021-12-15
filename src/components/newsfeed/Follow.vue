@@ -1,7 +1,7 @@
 <template>
 <div id="follow-suggestion">
   <h4>People you may want to follow</h4>
-  <UserList :usersInfo="usersInfo"/>
+  <UserList :usersInfo="usersInfo" :followDirectly="true"/>
 </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
   created() {
     followApi.suggestFollow()
       .then(({data}) => {
-        this.usersInfo = data['data'].slice(2);
+        this.usersInfo = data['data'];
       })
       .catch(err => console.log(err));
   }

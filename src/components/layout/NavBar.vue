@@ -72,11 +72,11 @@ export default {
 
   watch: {
     nameInForum() {
-      let self = this;
       if (this.nameInForum !== '')
         profileApi.searchUserByName(this.nameInForum)
             .then(response => {
-              self.usersInfo = response.data['data'];
+              this.usersInfo = response.data['data'];
+              console.log(this.usersInfo[0]);
             })
             .catch(err => console.log(err))
       else

@@ -38,7 +38,7 @@ const routes = [
     meta: {unProtectedRoute: true}
   },
   {
-    path: '/reset-password/:token',
+    path: '/reset-password',
     name: 'ResetPassword',
     component: ResetPassword,
     meta: {unProtectedRoute: true}
@@ -54,7 +54,12 @@ const routes = [
     component: ViewSinglePost
   },
   {
-    path: '/post/create',
+    path: '/post/edit/:id',
+    name: 'Post Update',
+    component: PostEditor
+  },
+  {
+    path: '/post/edit',
     name: 'PostEditor',
     component: PostEditor
   },

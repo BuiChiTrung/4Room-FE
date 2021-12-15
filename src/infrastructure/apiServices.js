@@ -17,8 +17,8 @@ export const authApi = {
     resetPasswordRequest(data) {
         return axios.post(`${baseApiUrl}/reset-password-request`, data, noAuthApiConfig);
     },
-    resetPassword(data) {
-        return axios.post(`${baseApiUrl}/reset-password`, data, noAuthApiConfig);
+    resetPassword(token, password) {
+        return axios.post(`${baseApiUrl}/reset-password/?token=${token}`, {password}, noAuthApiConfig);
     },
     logout() {
         return axios.get(`${baseApiUrl}/logout`, authApiConfig);

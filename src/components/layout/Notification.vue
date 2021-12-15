@@ -40,7 +40,9 @@ export default {
 
   created() {
     const channel = window.pusher.subscribe('private-notification_user.' + JSON.parse(localStorage.getItem('user_info'))['id']);
-    channel.bind('NotificationUpdate', () => {
+    channel.bind('NotificationUpdate', (data) => {
+      console.log(data);
+      this.notifications.unshift(this.parseNotification(data['notification']))
       this.newNotification++;
     });
 
@@ -79,6 +81,7 @@ export default {
     },
 
     parseNotification(notification) {
+      console.log(notification);
       let formattedNotification = {...notification};
       if (notification['follow_id'] !== null) {
         formattedNotification.message = 'started following you.'
