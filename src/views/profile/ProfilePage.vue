@@ -7,9 +7,9 @@
       <div class="col-lg-4 col-md-5">
         <div id="profile">
             <div>
-              <input type="file" id="change-avatar" ref="inputAvt" class="input-avatar" @change="handleUpLoadImage($event)"/>
-              <label for="change-avatar">
-                <img class="camera" src="@/assets/images/camera.png" style="transform: translate(115%, 465%); width: 9%; cursor: pointer;">
+              <input v-if="profileOwner" type="file" id="change-avatar" ref="inputAvt" class="input-avatar" @change="handleUpLoadImage($event)"/>
+              <label v-if="profileOwner" for="change-avatar">
+                <img v-if="profileOwner" class="camera" src="@/assets/images/camera.png" style="transform: translate(115%, 465%); width: 9%; cursor: pointer;">
               </label>
               <figure>
                 <img class="avt" alt="avatar" :src="avtURL">
@@ -106,7 +106,7 @@ export default {
       .then(({data}) => {
         console.log(data)
         localStorage.setItem('user_info', JSON.stringify(data['data']))
-        // location.reload()
+        location.reload()
       })
       .catch(err => {
         console.log(err)
