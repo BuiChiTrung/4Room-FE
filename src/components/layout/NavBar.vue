@@ -25,7 +25,7 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li><router-link class="dropdown-item" to="/profile"><i class="fas fa-user"></i>Profile</router-link></li>
           <li><router-link class="dropdown-item" to="/change-password"><i class="fas fa-key"></i>Change Password</router-link></li>
-          <li><div class="dropdown-item" @click="logout"><i class="fas fa-sign-out-alt"></i>Logout</div></li>
+          <li style="cursor: pointer;"><div class="dropdown-item" @click="logout"><i class="fas fa-sign-out-alt"></i>Logout</div></li>
         </ul>
       </div>
     </nav>

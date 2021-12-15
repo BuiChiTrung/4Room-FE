@@ -271,9 +271,9 @@ export default {
 @import "../../assets/sass/style";
 
 /* dev */
-//div, div > * {
-//  border: 1px black solid;
-//}
+// div, div > * {
+//   border: 1px black solid;
+// }
 
 .single-post {
   margin-top: 1.5em;
