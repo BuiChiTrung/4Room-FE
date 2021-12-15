@@ -44,7 +44,7 @@ import {mapState} from 'vuex';
 import StaticProfile from "./StaticProfile";
 import EditProfileForm from "./EditProfileForm";
 import FollowArea from "./FollowArea";
-import {avatarURL} from "../../infrastructure/apiServices";
+import {avatarURL, changeAvatar} from "../../infrastructure/apiServices";
 
 export default {
   name: "ProfilePage",
@@ -56,7 +56,8 @@ export default {
       userID: null,
       avatarID: null,
       avatarLocal: null,
-      changingMode: false
+      changingMode: false,
+      imgFile: null
     }
   },
   computed: {
@@ -86,14 +87,32 @@ export default {
         return
       }
       this.$data.changingMode = true
-      this.$data.avatarLocal = URL.createObjectURL($event.target.files[0]);
+      this.$data.avatarLocal = URL.createObjectURL($event.target.files[0])
+      this.$data.imgFile = $event.target.files[0]
     },
 
     cancelChange() {
       this.$data.changingMode = false
       this.$data.avatarLocal = null
       this.$refs.inputAvt.value = null
+      this.$data.imgFile = null
     },
+
+    changeAvt() {
+      let formData = new FormData()
+      formData.append('avatar', this.$data.imgFile)
+
+      changeAvatar(formData)
+      .then(({data}) => {
+        console.log(data)
+        localStorage.setItem('user_info', JSON.stringify(data['data']))
+        // location.reload()
+      })
+      .catch(err => {
+        console.log(err)
+        alert('Change avatar failed. Try again!')
+      })
+    }
   }
 }
 </script>
@@ -102,9 +121,9 @@ export default {
 @import 'src/assets/sass/style.scss';
 
 /* dev */
-div, div > * {
-  border: 1px black solid;
-}
+// div, div > * {
+//   border: 1px black solid;
+// }
 
 main {
   max-width: calc(100vw - #{$sidebar-width} - 2rem);

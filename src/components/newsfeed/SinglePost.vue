@@ -417,4 +417,8 @@ textarea::-webkit-scrollbar-thumb {
   padding: 0;
 }
 
+img {
+  aspect-ratio: 1/1;
+}
+
 </style>

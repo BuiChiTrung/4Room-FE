@@ -104,4 +104,9 @@ export default {
   border-radius: 50%;
 }
 
+img {
+  aspect-ratio: 1/1;
+}
+
+
 </style>

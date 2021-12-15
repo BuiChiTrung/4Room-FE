@@ -164,4 +164,9 @@ $breakpoint-tablet: 500px;
   border-radius: 50%;
 }
 
+img {
+  aspect-ratio: 1/1;
+}
+
+
 </style>
