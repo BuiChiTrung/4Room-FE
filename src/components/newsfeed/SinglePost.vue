@@ -299,9 +299,9 @@ export default {
 @import "../../assets/sass/style";
 
 /* dev */
-//div, div > * {
-//  border: 1px black solid;
-//}
+// div, div > * {
+//   border: 1px black solid;
+// }
 
 .single-post {
   margin-top: 1.5em;
@@ -415,6 +415,10 @@ textarea::-webkit-scrollbar-thumb {
 .dropdown-menu {
   font-size: 1.5rem;
   padding: 0;
+}
+
+img {
+  aspect-ratio: 1/1;
 }
 
 </style>

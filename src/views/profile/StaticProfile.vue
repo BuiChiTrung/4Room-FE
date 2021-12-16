@@ -1,7 +1,7 @@
 <template>
   <div id="profile-static">
     <div id="name-in-forum">{{userInfo.name_in_forum}}</div>
-    <div id="bio">{{userInfo.bio}}</div>
+    <div id="bio" style="white-space: pre-line;">{{userInfo.bio}}</div>
     <hr>
     <button v-show="profileOwner" class="btn btn-info" @click="toggleEditForm">Edit Profile</button>
 

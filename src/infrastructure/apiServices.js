@@ -145,7 +145,11 @@ function isUpvoted(postID) {
 }
 
 function avatarURL(avatarID) {
-    return `${baseStorageAPI}/avatar/${avatarID}.png`
+    return `${baseStorageAPI}/avatar/${avatarID}`
+}
+
+function changeAvatar(data) {
+    return axios.post(`${baseApiUrl}/change_avatar`, data, authApiConfig)
 }
 
 export {
@@ -161,5 +165,6 @@ export {
     updatePostContent,
     deleteAPost,
     deleteAComment,
-    avatarURL
+    avatarURL,
+    changeAvatar
 }

@@ -82,6 +82,7 @@ export default {
       .avatar {
         width: 4.5rem;
         margin-right: 1rem;
+        aspect-ratio: 1/1;
       }
       .name-in-forum {
         font-weight: bold;
