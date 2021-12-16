@@ -55,13 +55,13 @@ export default {
   methods: {
     ...mapMutations(['toggleSidebar']),
 
-    async logout() {
-      let response = await authApi.logout();
-      if (response.status === 200) {
+    logout() {
+      authApi.logout().then(() => {
         localStorage.removeItem('jwt');
         localStorage.removeItem('user_info');
         location.assign('/login');
-      }
+      })
+      .catch(err => console.log(err.response.data.message, err))
     },
 
     avtURL() {
