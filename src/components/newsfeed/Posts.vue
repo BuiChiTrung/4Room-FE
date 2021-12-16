@@ -12,6 +12,7 @@
         :upvote="item.upvote"
         :comments="item.comments"
         :indexInPostLists="index"
+        :hideAllComments="true"
         @delete-post="deletePost"
     />
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>

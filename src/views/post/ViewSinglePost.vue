@@ -18,6 +18,7 @@
                   :upvote="item.upvote"
                   :comments="item.comments"
                   :indexInPostLists="index"
+                  :hideAllComments="false"
                   @delete-post="deletePost"
               />
             </div>

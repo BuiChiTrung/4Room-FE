@@ -9,11 +9,9 @@
     </a>
     {{content}}
   </h5>
-  <div class="ms-auto" v-if="ownComment" style="display: inline;">
-    <figure class="delete-comment" style="cursor: pointer;" @click="deleteComment" @mousemove="turnOn('lightUpDel')" @mouseleave="turnOff('lightUpDel')">
+  <div class="ms-auto delete-comment" v-show="ownComment" style="display: inline; cursor: pointer;" @click="deleteComment" @mousemove="turnOn('lightUpDel')" @mouseleave="turnOff('lightUpDel')">
       <span v-if="!lightUpDel" class="material-icons-outlined" style="color: #f3425f;">remove_circle_outline</span>
       <span v-if="lightUpDel" class="material-icons-outlined" style="color: #f3425f;">remove_circle</span>
-    </figure>
   </div>
 </div>
 </template>
@@ -79,6 +77,10 @@ export default {
 
 <style lang="scss" scoped>
 
+// div, div > * {
+//   border: 1px black solid;
+// }
+
 .comment-avatar {
   height: 2.8em;
 }
@@ -91,6 +93,8 @@ export default {
   background-color: #F2F2F2;
   border-radius: 2.5em;
   box-shadow: 0.1em 0.1em 3px rgba(0, 0, 0, 0.2);
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
 }
 
 .single-comment .delete-comment {

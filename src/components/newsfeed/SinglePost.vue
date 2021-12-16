@@ -67,7 +67,7 @@
       <h5 data-bs-toggle="modal" :data-bs-target="`#upvote-modal-${postID}`" class="ms-auto" style="cursor: pointer;" @click="getUserUpvotePost">
         {{frontUpvote}} like{{frontUpvote > 1 ? 's' : ''}}
       </h5>
-      <h5 style="margin-left: 0.5em">{{frontComments.length}} comment{{frontComments.length > 1 ? 's' : ''}}</h5>
+      <h5 style="margin-left: 0.5em; cursor: pointer;" @click="hideComments=!hideComments">{{frontComments.length}} comment{{frontComments.length > 1 ? 's' : ''}}</h5>
     </div>
   </div>
   <div class="row edit-done" v-show="editMode">
@@ -157,6 +157,10 @@ export default {
     indexInPostLists: {
       type: Number,
       require: true
+    },
+    hideAllComments: {
+      type: Boolean,
+      require: true
     }
   },
   created() {
@@ -166,7 +170,7 @@ export default {
     return {
       liked: null,
       frontUpvote: this.$props.upvote,
-      hideComments: true,
+      hideComments: this.$props.hideAllComments,
       frontComments: this.$props.comments,
       user_info: JSON.parse(localStorage.getItem('user_info')),
       editMode: false,
