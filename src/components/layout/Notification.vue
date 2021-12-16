@@ -16,7 +16,6 @@
 
       <infinite-loading @infinite="infiniteHandler"></infinite-loading>
     </ul>
-
   </div>
 </template>
 
