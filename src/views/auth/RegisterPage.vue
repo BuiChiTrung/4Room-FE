@@ -49,7 +49,7 @@ export default {
             alert('Successfully register an account');
           })
           .catch(err => {
-            alert(err);
+            alert(err.response.data.message);
           })
     }
   }
