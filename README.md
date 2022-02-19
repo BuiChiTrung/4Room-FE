@@ -15,11 +15,15 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Demo
+### Home
+![](./demo/forum.png)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Profile
+![](./demo/profile.png)
 
+### Room, pomodoro clock
+![](./demo/room.png)
+
+### Realtime chat
+![](./demo/chat.png)
