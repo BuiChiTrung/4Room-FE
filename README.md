@@ -5,7 +5,7 @@
 
 ## Project setup - with Docker
 
-### Clone the Docker repo run docker-compose, then
+### Clone the BE, Docker repo run docker-compose, then
 ```
 docker exec -it 4room-docker-fe-1 sh -c "cp -Tr dist volume"
 ```
