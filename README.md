@@ -1,6 +1,15 @@
-# frontend
+# 4Room
++ Front-end: https://github.com/BuiChiTrung/4Room-FE
++ Back-end: https://github.com/superkink3124/4Room-BE
++ Docker: https://github.com/BuiChiTrung/4Room-Docker
 
-## Project setup
+## Project setup - with Docker
+
+### Clone the Docker repo run docker-compose, then
+```
+docker exec -it 4room-docker-fe-1 sh -c "cp -Tr dist volume"
+```
+## Project setup - without Docker
 ```
 npm install
 ```
@@ -15,9 +24,13 @@ npm run serve
 npm run build
 ```
 
+
 ## Demo
 ### Home
 ![](./demo/forum.png)
+
+### Markdown editor
+![](./demo/markdown.png)
 
 ### Profile
 ![](./demo/profile.png)
