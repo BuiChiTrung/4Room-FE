@@ -1,14 +1,13 @@
 # 4Room
++ Production: http://4room.tech
 + Front-end: https://github.com/BuiChiTrung/4Room-FE
 + Back-end: https://github.com/superkink3124/4Room-BE
 + Docker: https://github.com/BuiChiTrung/4Room-Docker
 
 ## Project setup - with Docker
 
-### Clone the BE, Docker repo run docker-compose, then
-```
-docker exec -it 4room-docker-fe-1 sh -c "cp -Tr dist volume"
-```
+### Clone and follow instruction on Docker, BE repo
+
 ## Project setup - without Docker
 ```
 npm install
